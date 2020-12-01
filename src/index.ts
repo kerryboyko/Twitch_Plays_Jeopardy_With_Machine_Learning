@@ -1,6 +1,24 @@
-export const hw = (): string => 'Hello World';
+/* eslint-disable no-console */
+import getClues from './api/jService';
 
-// eslint-disable-next-line no-console
-console.log(hw());
+const displayClues = async (): Promise<unknown> => {
+  const clues = await getClues();
+  console.log(clues);
+  return clues;
+};
 
-export default hw;
+const main = () => {
+  let count = 10;
+  displayClues();
+  setInterval(() => console.log('---'), 5000);
+  const timeout: NodeJS.Timeout = setInterval(() => {
+    displayClues();
+    count -= 1;
+    if (count <= 0) {
+      clearTimeout(timeout);
+      console.log('END!!!');
+    }
+  }, 30000);
+};
+
+main();

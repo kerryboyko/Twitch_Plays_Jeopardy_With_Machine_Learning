@@ -1,5 +1,5 @@
-import { hw } from './index';
+// import { hw } from './index';
 
-test('Hello World', () => {
-  expect(hw()).toBe('Hello World');
-});
+// test('Hello World', () => {
+//   expect(hw()).toBe('Hello World');
+// });
