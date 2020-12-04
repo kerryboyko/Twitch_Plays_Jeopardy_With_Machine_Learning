@@ -1,6 +1,3 @@
-export const hw = (): string => 'Hello World';
+import hw from './helloworld'
 
-// eslint-disable-next-line no-console
 console.log(hw());
-
-export default hw;
