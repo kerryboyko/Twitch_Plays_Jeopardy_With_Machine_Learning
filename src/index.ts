@@ -1,7 +1,3 @@
-import dotenv from 'dotenv';
-import hw from './helloworld';
+import { hydrateClues } from './hydrateDatabase';
 
-dotenv.config();
-
-// eslint-disable-next-line no-console
-console.log(hw());
+hydrateClues();

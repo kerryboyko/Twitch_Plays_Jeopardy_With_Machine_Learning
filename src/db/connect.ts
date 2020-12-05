@@ -11,7 +11,7 @@ export const connect = (
         return reject(err);
       }
       const db = client.db(dbName);
-      const { close } = client;
+      const close = () => client.close();
       resolve({
         db,
         close,
