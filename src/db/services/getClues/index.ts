@@ -50,14 +50,7 @@ export const getCluesByCategory = async (categoryTitleOrId: string | number): Pr
   return stripDuplicateClues(clues);
 };
 
-export const getCategoryById = async (id: number): Promise<JeopardyCategory | null> => {
-  const { db, close } = await connect(config.DB_URL, config.DB_NAME);
-  const category: JeopardyCategory | null = await db.collection('jeopardy_categories').findOne({ id });
-  close();
-  return category;
-};
-
-export const verifyCategory = (clues: JeopardyClue[]): boolean => {
+const verifyCategory = (clues: JeopardyClue[]): boolean => {
   if (clues.length !== 5) {
     return false; // we only want categories of length 5.
   }
@@ -106,5 +99,6 @@ export const getRandomCategories = async (
 
 const getClues = {
   byCategory: getCluesByCategory,
+  fullBoard: (seed?: string) => getRandomCategories(12, seed),
 };
 export default getClues;
