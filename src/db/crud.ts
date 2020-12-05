@@ -1,11 +1,11 @@
-import dotenv from 'dotenv';
 import { InsertWriteOpResult } from 'mongodb';
 import connect from './connect';
+import config from '../config';
 
-dotenv.config();
+// eslint-disable-next-line no-console
+console.log(config);
 
-const DB_URL = process.env.DB_URL || 'db-url-undefined';
-const DB_NAME = process.env.DB_NAME || 'db-name-undefined';
+const { DB_URL, DB_NAME } = config;
 
 export const insertDocuments = async <T>(
   collectionName: string,

@@ -1,0 +1,622 @@
+{
+  "\"jerk\"s": {
+    "1997-11-14T12:00:00.000Z": [
+      {
+        "_id": "5fcb54e54f6d209fc249ec8d",
+        "id": 25985,
+        "answer": "a tearjerker",
+        "question": "A 5-Kleenex film",
+        "value": 100,
+        "airdate": "1997-11-14T12:00:00.000Z",
+        "created_at": "2014-02-11T23:01:23.975Z",
+        "updated_at": "2014-02-11T23:01:23.975Z",
+        "category_id": 2849,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 2849,
+          "title": "\"jerk\"s",
+          "created_at": "2014-02-11T23:01:23.895Z",
+          "updated_at": "2014-02-11T23:01:23.895Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "_id": "5fcb54e54f6d209fc249ec93",
+        "id": 25991,
+        "answer": "Soda jerk",
+        "question": "A person behind the counter who prepared ice cream treats for your grandmother",
+        "value": 200,
+        "airdate": "1997-11-14T12:00:00.000Z",
+        "created_at": "2014-02-11T23:01:24.122Z",
+        "updated_at": "2014-02-11T23:01:24.122Z",
+        "category_id": 2849,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 2849,
+          "title": "\"jerk\"s",
+          "created_at": "2014-02-11T23:01:23.895Z",
+          "updated_at": "2014-02-11T23:01:23.895Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "_id": "5fcb54e54f6d209fc249ec99",
+        "id": 25997,
+        "answer": "Turkey jerky",
+        "question": "Rhyming name for dried pieces of poultry cut into strips",
+        "value": 300,
+        "airdate": "1997-11-14T12:00:00.000Z",
+        "created_at": "2014-02-11T23:01:24.246Z",
+        "updated_at": "2014-02-11T23:01:24.246Z",
+        "category_id": 2849,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 2849,
+          "title": "\"jerk\"s",
+          "created_at": "2014-02-11T23:01:23.895Z",
+          "updated_at": "2014-02-11T23:01:23.895Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "_id": "5fcb54e54f6d209fc249ec9f",
+        "id": 26003,
+        "answer": "Knee-jerk",
+        "question": "It's an unthinking reaction, like when the doctor hits you with a mallet",
+        "value": 400,
+        "airdate": "1997-11-14T12:00:00.000Z",
+        "created_at": "2014-02-11T23:01:24.347Z",
+        "updated_at": "2014-02-11T23:01:24.347Z",
+        "category_id": 2849,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 2849,
+          "title": "\"jerk\"s",
+          "created_at": "2014-02-11T23:01:23.895Z",
+          "updated_at": "2014-02-11T23:01:23.895Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "_id": "5fcb54e54f6d209fc249eca8",
+        "id": 26009,
+        "answer": "Jerky Boys",
+        "question": "John G. Brennan & Kamal Ahmed, \"Two Low-Lifes From Queens\", are better known as this crank-calling duo",
+        "value": 500,
+        "airdate": "1997-11-14T12:00:00.000Z",
+        "created_at": "2014-02-11T23:01:24.445Z",
+        "updated_at": "2014-02-11T23:01:24.445Z",
+        "category_id": 2849,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 2849,
+          "title": "\"jerk\"s",
+          "created_at": "2014-02-11T23:01:23.895Z",
+          "updated_at": "2014-02-11T23:01:23.895Z",
+          "clues_count": 5
+        }
+      }
+    ]
+  },
+  "hud": {
+    "2009-02-20T12:00:00.000Z": [
+      {
+        "_id": "5fcb56694f6d209fc24ae69c",
+        "id": 90955,
+        "answer": "Jack Kemp",
+        "question": "This onetime HUD secretary was also a Buffalo Bills QB, a N.Y. Congressman &--oh yeah--a 1996 VP candidate",
+        "value": null,
+        "airdate": "2009-02-20T12:00:00.000Z",
+        "created_at": "2014-02-14T01:56:38.043Z",
+        "updated_at": "2014-02-14T01:56:38.043Z",
+        "category_id": 12030,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 12030,
+          "title": "hud",
+          "created_at": "2014-02-14T01:56:37.207Z",
+          "updated_at": "2014-02-14T01:56:37.207Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "_id": "5fcb56694f6d209fc24ae68a",
+        "id": 90937,
+        "answer": "Johnson",
+        "question": "The Dept. of Housing & Urban Development's 1st secretary, Robert Weaver, joined this president's cabinet in 1966",
+        "value": 200,
+        "airdate": "2009-02-20T12:00:00.000Z",
+        "created_at": "2014-02-14T01:56:37.411Z",
+        "updated_at": "2014-02-14T01:56:37.411Z",
+        "category_id": 12030,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 12030,
+          "title": "hud",
+          "created_at": "2014-02-14T01:56:37.207Z",
+          "updated_at": "2014-02-14T01:56:37.207Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "_id": "5fcb56694f6d209fc24ae690",
+        "id": 90943,
+        "answer": "an eagle",
+        "question": "HUD's seal combines high-rise buildings for urban with one of these birds symbolizing federal authority",
+        "value": 400,
+        "airdate": "2009-02-20T12:00:00.000Z",
+        "created_at": "2014-02-14T01:56:37.616Z",
+        "updated_at": "2014-02-14T01:56:37.616Z",
+        "category_id": 12030,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 12030,
+          "title": "hud",
+          "created_at": "2014-02-14T01:56:37.207Z",
+          "updated_at": "2014-02-14T01:56:37.207Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "_id": "5fcb56694f6d209fc24ae696",
+        "id": 90949,
+        "answer": "Fannie Mae & Freddie Mac",
+        "question": "Until 2008, HUD was responsible for regulation of these 2 govt.-sponsored agencies with cutesy nicknames",
+        "value": 600,
+        "airdate": "2009-02-20T12:00:00.000Z",
+        "created_at": "2014-02-14T01:56:37.820Z",
+        "updated_at": "2014-02-14T01:56:37.820Z",
+        "category_id": 12030,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 12030,
+          "title": "hud",
+          "created_at": "2014-02-14T01:56:37.207Z",
+          "updated_at": "2014-02-14T01:56:37.207Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "_id": "5fcb56694f6d209fc24ae6a2",
+        "id": 90961,
+        "answer": "Expressionism",
+        "question": "The curves of HUD's headquarters exemplify this architectural style that shares its name with Munch's emotive painting style",
+        "value": 1000,
+        "airdate": "2009-02-20T12:00:00.000Z",
+        "created_at": "2014-02-14T01:56:38.252Z",
+        "updated_at": "2014-02-14T01:56:38.252Z",
+        "category_id": 12030,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 12030,
+          "title": "hud",
+          "created_at": "2014-02-14T01:56:37.207Z",
+          "updated_at": "2014-02-14T01:56:37.207Z",
+          "clues_count": 5
+        }
+      }
+    ]
+  },
+  "literary name droppers": {
+    "2015-01-12T12:00:00.000Z": [
+      {
+        "_id": "5fcb574e4f6d209fc24b797e",
+        "id": 129293,
+        "answer": "Gulliver",
+        "question": "A 1726 classic:\"____'s Travels\"",
+        "value": 200,
+        "airdate": "2015-01-12T12:00:00.000Z",
+        "created_at": "2015-01-18T18:16:05.658Z",
+        "updated_at": "2015-01-18T18:16:05.658Z",
+        "category_id": 17811,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 17811,
+          "title": "literary name droppers",
+          "created_at": "2015-01-18T18:16:05.509Z",
+          "updated_at": "2015-01-18T18:16:05.509Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "_id": "5fcb57dd4f6d209fc24bd339",
+        "id": 152752,
+        "answer": "Gulliver",
+        "question": "A 1726 classic:\"____'s Travels\"",
+        "value": 200,
+        "airdate": "2015-01-12T12:00:00.000Z",
+        "created_at": "2015-01-22T02:39:49.849Z",
+        "updated_at": "2015-01-22T02:39:49.849Z",
+        "category_id": 17811,
+        "game_id": 4779,
+        "invalid_count": null,
+        "category": {
+          "id": 17811,
+          "title": "literary name droppers",
+          "created_at": "2015-01-18T18:16:05.509Z",
+          "updated_at": "2015-01-18T18:16:05.509Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "_id": "5fcb574e4f6d209fc24b7984",
+        "id": 129299,
+        "answer": "Rosencrantz & Guildenstern",
+        "question": "By Tom Stoppard:\"____ and ____ Are Dead\"",
+        "value": 400,
+        "airdate": "2015-01-12T12:00:00.000Z",
+        "created_at": "2015-01-18T18:16:05.921Z",
+        "updated_at": "2015-01-18T18:16:05.921Z",
+        "category_id": 17811,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 17811,
+          "title": "literary name droppers",
+          "created_at": "2015-01-18T18:16:05.509Z",
+          "updated_at": "2015-01-18T18:16:05.509Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "_id": "5fcb57dd4f6d209fc24bd33f",
+        "id": 152758,
+        "answer": "Rosencrantz & Guildenstern",
+        "question": "By Tom Stoppard:\"____ and ____ Are Dead\"",
+        "value": 400,
+        "airdate": "2015-01-12T12:00:00.000Z",
+        "created_at": "2015-01-22T02:39:50.089Z",
+        "updated_at": "2015-01-22T02:39:50.089Z",
+        "category_id": 17811,
+        "game_id": 4779,
+        "invalid_count": null,
+        "category": {
+          "id": 17811,
+          "title": "literary name droppers",
+          "created_at": "2015-01-18T18:16:05.509Z",
+          "updated_at": "2015-01-18T18:16:05.509Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "_id": "5fcb574e4f6d209fc24b798a",
+        "id": 129305,
+        "answer": "Hannibal",
+        "question": "1999 bestseller by Thomas Harris:\"____\"",
+        "value": 600,
+        "airdate": "2015-01-12T12:00:00.000Z",
+        "created_at": "2015-01-18T18:16:06.209Z",
+        "updated_at": "2015-01-18T18:16:06.209Z",
+        "category_id": 17811,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 17811,
+          "title": "literary name droppers",
+          "created_at": "2015-01-18T18:16:05.509Z",
+          "updated_at": "2015-01-18T18:16:05.509Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "_id": "5fcb57dd4f6d209fc24bd345",
+        "id": 152764,
+        "answer": "Hannibal",
+        "question": "1999 bestseller by Thomas Harris:\"____\"",
+        "value": 600,
+        "airdate": "2015-01-12T12:00:00.000Z",
+        "created_at": "2015-01-22T02:39:50.325Z",
+        "updated_at": "2015-01-22T02:39:50.325Z",
+        "category_id": 17811,
+        "game_id": 4779,
+        "invalid_count": null,
+        "category": {
+          "id": 17811,
+          "title": "literary name droppers",
+          "created_at": "2015-01-18T18:16:05.509Z",
+          "updated_at": "2015-01-18T18:16:05.509Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "_id": "5fcb574e4f6d209fc24b7990",
+        "id": 129311,
+        "answer": "Owen Meany",
+        "question": "By John Irving:\"A Prayer for ____ ____\"",
+        "value": 800,
+        "airdate": "2015-01-12T12:00:00.000Z",
+        "created_at": "2015-01-18T18:16:06.450Z",
+        "updated_at": "2015-01-18T18:16:06.450Z",
+        "category_id": 17811,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 17811,
+          "title": "literary name droppers",
+          "created_at": "2015-01-18T18:16:05.509Z",
+          "updated_at": "2015-01-18T18:16:05.509Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "_id": "5fcb57dd4f6d209fc24bd34b",
+        "id": 152770,
+        "answer": "Owen Meany",
+        "question": "By John Irving:\"A Prayer for ____ ____\"",
+        "value": 800,
+        "airdate": "2015-01-12T12:00:00.000Z",
+        "created_at": "2015-01-22T02:39:50.559Z",
+        "updated_at": "2015-01-22T02:39:50.559Z",
+        "category_id": 17811,
+        "game_id": 4779,
+        "invalid_count": null,
+        "category": {
+          "id": 17811,
+          "title": "literary name droppers",
+          "created_at": "2015-01-18T18:16:05.509Z",
+          "updated_at": "2015-01-18T18:16:05.509Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "_id": "5fcb574e4f6d209fc24b7996",
+        "id": 129317,
+        "answer": "Beedle",
+        "question": "With a little help from J.K. Rowling: \"The Tales of ____ the Bard\"",
+        "value": 1000,
+        "airdate": "2015-01-12T12:00:00.000Z",
+        "created_at": "2015-01-18T18:16:06.692Z",
+        "updated_at": "2015-01-18T18:16:06.692Z",
+        "category_id": 17811,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 17811,
+          "title": "literary name droppers",
+          "created_at": "2015-01-18T18:16:05.509Z",
+          "updated_at": "2015-01-18T18:16:05.509Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "_id": "5fcb57dd4f6d209fc24bd351",
+        "id": 152776,
+        "answer": "Beedle",
+        "question": "With a little help from J.K. Rowling: \"The Tales of ____ the Bard\"",
+        "value": 1000,
+        "airdate": "2015-01-12T12:00:00.000Z",
+        "created_at": "2015-01-22T02:39:50.836Z",
+        "updated_at": "2015-01-22T02:39:50.836Z",
+        "category_id": 17811,
+        "game_id": 4779,
+        "invalid_count": null,
+        "category": {
+          "id": 17811,
+          "title": "literary name droppers",
+          "created_at": "2015-01-18T18:16:05.509Z",
+          "updated_at": "2015-01-18T18:16:05.509Z",
+          "clues_count": 10
+        }
+      }
+    ]
+  },
+  "with brotherhood": {
+    "2010-06-04T12:00:00.000Z": [
+      {
+        "_id": "5fcb56864f6d209fc24af900",
+        "id": 95738,
+        "answer": "Jonas",
+        "question": "Last name of Kevin, Joe & Nick, whose album \"Lines, Vines And Trying Times\" debuted at No. 1 in 2009",
+        "value": 200,
+        "airdate": "2010-06-04T12:00:00.000Z",
+        "created_at": "2014-02-14T02:01:23.603Z",
+        "updated_at": "2014-02-14T02:01:23.603Z",
+        "category_id": 12741,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 12741,
+          "title": "with brotherhood",
+          "created_at": "2014-02-14T02:01:23.305Z",
+          "updated_at": "2014-02-14T02:01:23.305Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "_id": "5fcb56864f6d209fc24af906",
+        "id": 95744,
+        "answer": "the Jacksons",
+        "question": "Originally formed as a trio in Gary, Indiana in 1963, these singing siblings gained fame as a quintet",
+        "value": 400,
+        "airdate": "2010-06-04T12:00:00.000Z",
+        "created_at": "2014-02-14T02:01:23.844Z",
+        "updated_at": "2014-02-14T02:01:23.844Z",
+        "category_id": 12741,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 12741,
+          "title": "with brotherhood",
+          "created_at": "2014-02-14T02:01:23.305Z",
+          "updated_at": "2014-02-14T02:01:23.305Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "_id": "5fcb56864f6d209fc24af90c",
+        "id": 95750,
+        "answer": "Nelson",
+        "question": "Twin brothers Matthew & Gunnar, Ozzie & Harriet's grandsons, had hits in the '90s under this name",
+        "value": 600,
+        "airdate": "2010-06-04T12:00:00.000Z",
+        "created_at": "2014-02-14T02:01:24.078Z",
+        "updated_at": "2014-02-14T02:01:24.078Z",
+        "category_id": 12741,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 12741,
+          "title": "with brotherhood",
+          "created_at": "2014-02-14T02:01:23.305Z",
+          "updated_at": "2014-02-14T02:01:23.305Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "_id": "5fcb56864f6d209fc24af912",
+        "id": 95756,
+        "answer": "the Allman Brothers",
+        "question": "2 motorcycle accidents, a year apart & 3 blocks from each other, claimed 2 lives of this \"Ramblin' Man\" band",
+        "value": 800,
+        "airdate": "2010-06-04T12:00:00.000Z",
+        "created_at": "2014-02-14T02:01:24.305Z",
+        "updated_at": "2014-02-14T02:01:24.305Z",
+        "category_id": 12741,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 12741,
+          "title": "with brotherhood",
+          "created_at": "2014-02-14T02:01:23.305Z",
+          "updated_at": "2014-02-14T02:01:23.305Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "_id": "5fcb56864f6d209fc24af918",
+        "id": 95762,
+        "answer": "Hanson",
+        "question": "The Dust Brothers produced this sibling band's \"Middle Of Nowhere\" which featured \"MMMBop\"",
+        "value": 1000,
+        "airdate": "2010-06-04T12:00:00.000Z",
+        "created_at": "2014-02-14T02:01:24.531Z",
+        "updated_at": "2014-02-14T02:01:24.531Z",
+        "category_id": 12741,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 12741,
+          "title": "with brotherhood",
+          "created_at": "2014-02-14T02:01:23.305Z",
+          "updated_at": "2014-02-14T02:01:23.305Z",
+          "clues_count": 5
+        }
+      }
+    ]
+  },
+  "armor": {
+    "2004-03-30T12:00:00.000Z": [
+      {
+        "_id": "5fcb55af4f6d209fc24a70fc",
+        "id": 60456,
+        "answer": "lance",
+        "question": "A bracket on the chest positioned this 12-foot spear that could be driven through another knight's armor",
+        "value": 200,
+        "airdate": "2004-03-30T12:00:00.000Z",
+        "created_at": "2014-02-11T23:24:00.378Z",
+        "updated_at": "2014-02-11T23:24:00.378Z",
+        "category_id": 7737,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 7737,
+          "title": "armor",
+          "created_at": "2014-02-11T23:24:00.266Z",
+          "updated_at": "2014-02-11T23:24:00.266Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "_id": "5fcb55af4f6d209fc24a7102",
+        "id": 60462,
+        "answer": "gauntlets",
+        "question": "These gloves were made in a fashionable hourglass shape, narrow at the wrist",
+        "value": 400,
+        "airdate": "2004-03-30T12:00:00.000Z",
+        "created_at": "2014-02-11T23:24:00.549Z",
+        "updated_at": "2014-02-11T23:24:00.549Z",
+        "category_id": 7737,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 7737,
+          "title": "armor",
+          "created_at": "2014-02-11T23:24:00.266Z",
+          "updated_at": "2014-02-11T23:24:00.266Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "_id": "5fcb55af4f6d209fc24a7109",
+        "id": 60468,
+        "answer": "chain mail",
+        "question": "Plate armor first covered, then replaced this protective wrap",
+        "value": 600,
+        "airdate": "2004-03-30T12:00:00.000Z",
+        "created_at": "2014-02-11T23:24:00.734Z",
+        "updated_at": "2014-02-11T23:24:00.734Z",
+        "category_id": 7737,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 7737,
+          "title": "armor",
+          "created_at": "2014-02-11T23:24:00.266Z",
+          "updated_at": "2014-02-11T23:24:00.266Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "_id": "5fcb55af4f6d209fc24a710f",
+        "id": 60474,
+        "answer": "the helmet",
+        "question": "The nasal, a piece on this item, could get you in trouble when the other guy grabbed it",
+        "value": 800,
+        "airdate": "2004-03-30T12:00:00.000Z",
+        "created_at": "2014-02-11T23:24:00.890Z",
+        "updated_at": "2014-02-11T23:24:00.890Z",
+        "category_id": 7737,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 7737,
+          "title": "armor",
+          "created_at": "2014-02-11T23:24:00.266Z",
+          "updated_at": "2014-02-11T23:24:00.266Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "_id": "5fcb55af4f6d209fc24a7115",
+        "id": 60480,
+        "answer": "the Holy Roman Empire",
+        "question": "The 16th century Maximilian style is named for a ruler of this empire who was called \"The Last of the Knights\"",
+        "value": 1000,
+        "airdate": "2004-03-30T12:00:00.000Z",
+        "created_at": "2014-02-11T23:24:01.097Z",
+        "updated_at": "2014-02-11T23:24:01.097Z",
+        "category_id": 7737,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 7737,
+          "title": "armor",
+          "created_at": "2014-02-11T23:24:00.266Z",
+          "updated_at": "2014-02-11T23:24:00.266Z",
+          "clues_count": 5
+        }
+      }
+    ]
+  }
+}

@@ -5,7 +5,7 @@ export const connect = (
   dbName: string
 ): Promise<{ db: mongodb.Db; close: mongodb.MongoClient['close'] }> =>
   new Promise((resolve, reject) => {
-    const client = new mongodb.MongoClient(url);
+    const client = new mongodb.MongoClient(url, { useUnifiedTopology: true });
     client.connect((err: mongodb.MongoError) => {
       if (err) {
         return reject(err);
