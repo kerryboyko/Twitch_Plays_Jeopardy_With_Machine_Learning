@@ -1,9 +1,5 @@
-import { connect } from './db/connect';
-import config from './config';
-
 import fs from 'fs';
-// /* eslint-disable no-console */
-// import { getCluesByCategoryName } from './db/services/getClues';
+import { getRandomCategories } from './db/services/getClues';
 
 const writeOut = (fileName: string, data: string): Promise<void> =>
   new Promise((resolve, reject) => {
@@ -16,9 +12,14 @@ const writeOut = (fileName: string, data: string): Promise<void> =>
     });
   });
 
-// const main = async () => {
-//   const data = await getCluesByCategoryName('star wars');
-//   await writeOut('starwars.json', JSON.stringify(data, null, 2));
-// };
+const main = async () => {
+  const board = await getRandomCategories(12, 'test seed');
+  const board2 = await getRandomCategories(12, 'test seed 2');
 
-// main();
+  await writeOut('testBoard.json', JSON.stringify(board, null, 2));
+  await writeOut('testBoard2.json', JSON.stringify(board2, null, 2));
+
+  return;
+};
+
+main().then(() => console.log('done'));

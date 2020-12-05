@@ -1,0 +1,1202 @@
+[
+  {
+    "category": "hit tv theme songs",
+    "clues": [
+      {
+        "id": 67775,
+        "answer": "Jed Clampett",
+        "question": "The theme song for \"The Beverly Hillbillies\", \"The Ballad of\" this man, went to No. 44 in 1962",
+        "value": 200,
+        "airdate": "2004-11-24T12:00:00.000Z",
+        "created_at": "2014-02-11T23:29:45.433Z",
+        "updated_at": "2014-02-11T23:29:45.433Z",
+        "category_id": 8760,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 8760,
+          "title": "hit tv theme songs",
+          "created_at": "2014-02-11T23:29:45.341Z",
+          "updated_at": "2014-02-11T23:29:45.341Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 67781,
+        "answer": "\"Bad Boys\"",
+        "question": "Whatcha gonna do?  This \"Cops\" theme song by Inner Circle peaked at No. 8 in 1993",
+        "value": 400,
+        "airdate": "2004-11-24T12:00:00.000Z",
+        "created_at": "2014-02-11T23:29:45.585Z",
+        "updated_at": "2014-02-11T23:29:45.585Z",
+        "category_id": 8760,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 8760,
+          "title": "hit tv theme songs",
+          "created_at": "2014-02-11T23:29:45.341Z",
+          "updated_at": "2014-02-11T23:29:45.341Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 67787,
+        "answer": "<i>Peter Gunn</i>",
+        "question": "Heard here, the theme to this TV show hit the charts 3 different times",
+        "value": 600,
+        "airdate": "2004-11-24T12:00:00.000Z",
+        "created_at": "2014-02-11T23:29:45.732Z",
+        "updated_at": "2014-02-11T23:29:45.732Z",
+        "category_id": 8760,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 8760,
+          "title": "hit tv theme songs",
+          "created_at": "2014-02-11T23:29:45.341Z",
+          "updated_at": "2014-02-11T23:29:45.341Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 67793,
+        "answer": "<i>Laverne & Shirley</i>",
+        "question": "Climbing to No. 25 in 1976, \"Making Our Dreams Come True\" was the hit them song for this TV show",
+        "value": 800,
+        "airdate": "2004-11-24T12:00:00.000Z",
+        "created_at": "2014-02-11T23:29:45.881Z",
+        "updated_at": "2014-02-11T23:29:45.881Z",
+        "category_id": 8760,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 8760,
+          "title": "hit tv theme songs",
+          "created_at": "2014-02-11T23:29:45.341Z",
+          "updated_at": "2014-02-11T23:29:45.341Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 67799,
+        "answer": "John Sebastian",
+        "question": "Appropriately, his 1976 No. 1 hit \"Welcome Back\" was the theme song to \"Welcome Back, Kotter\"",
+        "value": 1000,
+        "airdate": "2004-11-24T12:00:00.000Z",
+        "created_at": "2014-02-11T23:29:46.031Z",
+        "updated_at": "2014-02-11T23:29:46.031Z",
+        "category_id": 8760,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 8760,
+          "title": "hit tv theme songs",
+          "created_at": "2014-02-11T23:29:45.341Z",
+          "updated_at": "2014-02-11T23:29:45.341Z",
+          "clues_count": 5
+        }
+      }
+    ]
+  },
+  {
+    "category": "what i meant to say was...",
+    "clues": [
+      {
+        "id": 110889,
+        "answer": "Quayle",
+        "question": "\"We understand the importance of having the bondage between the parent & the child\", said this VP from Indiana",
+        "value": 200,
+        "airdate": "2012-04-05T12:00:00.000Z",
+        "created_at": "2014-02-14T02:41:03.933Z",
+        "updated_at": "2014-02-14T02:41:03.933Z",
+        "category_id": 15058,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 15058,
+          "title": "what i meant to say was...",
+          "created_at": "2014-02-14T02:41:03.719Z",
+          "updated_at": "2014-02-14T02:41:03.719Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 110895,
+        "answer": "dandruff",
+        "question": "Before the era of Head & Shoulders, Samuel Goldwyn said, \"this makes me so sore it gets my\" this \"up\"",
+        "value": 400,
+        "airdate": "2012-04-05T12:00:00.000Z",
+        "created_at": "2014-02-14T02:41:04.139Z",
+        "updated_at": "2014-02-14T02:41:04.139Z",
+        "category_id": 15058,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 15058,
+          "title": "what i meant to say was...",
+          "created_at": "2014-02-14T02:41:03.719Z",
+          "updated_at": "2014-02-14T02:41:03.719Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 110901,
+        "answer": "humidity",
+        "question": "An ex-speaker of the Texas House: \"I cannot tell you how grateful I am; I am filled with\" this; not the heat, it's the...",
+        "value": 600,
+        "airdate": "2012-04-05T12:00:00.000Z",
+        "created_at": "2014-02-14T02:41:04.349Z",
+        "updated_at": "2014-02-14T02:41:04.349Z",
+        "category_id": 15058,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 15058,
+          "title": "what i meant to say was...",
+          "created_at": "2014-02-14T02:41:03.719Z",
+          "updated_at": "2014-02-14T02:41:03.719Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 110907,
+        "answer": "Alcatraz",
+        "question": "Boston mayor Thomas Menino, on his city's parking space woes: \"it's like\" this prison \"around my neck\"",
+        "value": 800,
+        "airdate": "2012-04-05T12:00:00.000Z",
+        "created_at": "2014-02-14T02:41:04.548Z",
+        "updated_at": "2014-02-14T02:41:04.548Z",
+        "category_id": 15058,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 15058,
+          "title": "what i meant to say was...",
+          "created_at": "2014-02-14T02:41:03.719Z",
+          "updated_at": "2014-02-14T02:41:03.719Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 110913,
+        "answer": "Pandoras",
+        "question": "Mangling mythology, New Mexico governor Bruce King said a proposal would \"open a whole box of\" these women",
+        "value": 1000,
+        "airdate": "2012-04-05T12:00:00.000Z",
+        "created_at": "2014-02-14T02:41:04.773Z",
+        "updated_at": "2014-02-14T02:41:04.773Z",
+        "category_id": 15058,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 15058,
+          "title": "what i meant to say was...",
+          "created_at": "2014-02-14T02:41:03.719Z",
+          "updated_at": "2014-02-14T02:41:03.719Z",
+          "clues_count": 10
+        }
+      }
+    ]
+  },
+  {
+    "category": "let's have a drink... of water",
+    "clues": [
+      {
+        "id": 93472,
+        "answer": "fluoridation",
+        "question": "The American Dental Association is all for this process, practiced by cities since 1945",
+        "value": null,
+        "airdate": "2008-10-27T12:00:00.000Z",
+        "created_at": "2014-02-14T01:59:07.297Z",
+        "updated_at": "2014-02-14T01:59:07.297Z",
+        "category_id": 12402,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 12402,
+          "title": "let's have a drink... of water",
+          "created_at": "2014-02-14T01:59:06.447Z",
+          "updated_at": "2014-02-14T01:59:06.447Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 93454,
+        "answer": "the EPA (Environmental Protection Agency)",
+        "question": "This independent agency of the U.S. government is concerned with providing clean drinking water to all Americans",
+        "value": 200,
+        "airdate": "2008-10-27T12:00:00.000Z",
+        "created_at": "2014-02-14T01:59:06.543Z",
+        "updated_at": "2014-02-14T01:59:06.543Z",
+        "category_id": 12402,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 12402,
+          "title": "let's have a drink... of water",
+          "created_at": "2014-02-14T01:59:06.447Z",
+          "updated_at": "2014-02-14T01:59:06.447Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 93460,
+        "answer": "oxygen",
+        "question": "This element provides about 89% of the weight of a water molecule",
+        "value": 400,
+        "airdate": "2008-10-27T12:00:00.000Z",
+        "created_at": "2014-02-14T01:59:06.845Z",
+        "updated_at": "2014-02-14T01:59:06.845Z",
+        "category_id": 12402,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 12402,
+          "title": "let's have a drink... of water",
+          "created_at": "2014-02-14T01:59:06.447Z",
+          "updated_at": "2014-02-14T01:59:06.447Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 93466,
+        "answer": "Perrier",
+        "question": "This company's bottled water comes from a spring in the Gard district in Vergeze, France",
+        "value": 600,
+        "airdate": "2008-10-27T12:00:00.000Z",
+        "created_at": "2014-02-14T01:59:07.068Z",
+        "updated_at": "2014-02-14T01:59:07.068Z",
+        "category_id": 12402,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 12402,
+          "title": "let's have a drink... of water",
+          "created_at": "2014-02-14T01:59:06.447Z",
+          "updated_at": "2014-02-14T01:59:06.447Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 93478,
+        "answer": "an aquifer",
+        "question": "An underground layer of rock or soil that holds groundwater; the Ogallala one lies under almost all of Nebraska",
+        "value": 1000,
+        "airdate": "2008-10-27T12:00:00.000Z",
+        "created_at": "2014-02-14T01:59:07.526Z",
+        "updated_at": "2014-02-14T01:59:07.526Z",
+        "category_id": 12402,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 12402,
+          "title": "let's have a drink... of water",
+          "created_at": "2014-02-14T01:59:06.447Z",
+          "updated_at": "2014-02-14T01:59:06.447Z",
+          "clues_count": 5
+        }
+      }
+    ]
+  },
+  {
+    "category": "british ghosts",
+    "clues": [
+      {
+        "id": 2082,
+        "answer": "Henry VIII",
+        "question": "It's said that Catherine Howard, his 5th wife, still runs screaming thru his palace",
+        "value": 100,
+        "airdate": "1987-05-22T12:00:00.000Z",
+        "created_at": "2014-02-11T22:48:17.428Z",
+        "updated_at": "2014-02-11T22:48:17.428Z",
+        "category_id": 327,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 327,
+          "title": "british ghosts",
+          "created_at": "2014-02-11T22:48:17.352Z",
+          "updated_at": "2014-02-11T22:48:17.352Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 2088,
+        "answer": "female",
+        "question": "All banshees are of this sex",
+        "value": 200,
+        "airdate": "1987-05-22T12:00:00.000Z",
+        "created_at": "2014-02-11T22:48:17.502Z",
+        "updated_at": "2014-02-11T22:48:17.502Z",
+        "category_id": 327,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 327,
+          "title": "british ghosts",
+          "created_at": "2014-02-11T22:48:17.352Z",
+          "updated_at": "2014-02-11T22:48:17.352Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 2094,
+        "answer": "the hound of the Baskervilles",
+        "question": "Ghostly suspect in the slaying of Hugo Baskerville",
+        "value": 300,
+        "airdate": "1987-05-22T12:00:00.000Z",
+        "created_at": "2014-02-11T22:48:17.605Z",
+        "updated_at": "2014-02-11T22:48:17.605Z",
+        "category_id": 327,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 327,
+          "title": "british ghosts",
+          "created_at": "2014-02-11T22:48:17.352Z",
+          "updated_at": "2014-02-11T22:48:17.352Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 2100,
+        "answer": "the ghost of Jacob Marley",
+        "question": "The 1st spook to scare Scrooge on Christmas Eve",
+        "value": 400,
+        "airdate": "1987-05-22T12:00:00.000Z",
+        "created_at": "2014-02-11T22:48:17.682Z",
+        "updated_at": "2014-02-11T22:48:17.682Z",
+        "category_id": 327,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 327,
+          "title": "british ghosts",
+          "created_at": "2014-02-11T22:48:17.352Z",
+          "updated_at": "2014-02-11T22:48:17.352Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 2106,
+        "answer": "Ray Milland",
+        "question": "He was haunted by the D.T.s in \"The Lost Weekend\" & by English ghosts in \"The Uninvited\"",
+        "value": 500,
+        "airdate": "1987-05-22T12:00:00.000Z",
+        "created_at": "2014-02-11T22:48:17.754Z",
+        "updated_at": "2014-02-11T22:48:17.754Z",
+        "category_id": 327,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 327,
+          "title": "british ghosts",
+          "created_at": "2014-02-11T22:48:17.352Z",
+          "updated_at": "2014-02-11T22:48:17.352Z",
+          "clues_count": 5
+        }
+      }
+    ]
+  },
+  {
+    "category": "in the office fridge",
+    "clues": [
+      {
+        "id": 90697,
+        "answer": "ice",
+        "question": "There's an empty cup in the freezer to make scooping this more sanitary for all (yet no one refills the trays)",
+        "value": 200,
+        "airdate": "2009-03-04T12:00:00.000Z",
+        "created_at": "2014-02-14T01:56:24.334Z",
+        "updated_at": "2014-02-14T01:56:24.334Z",
+        "category_id": 11990,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 11990,
+          "title": "in the office fridge",
+          "created_at": "2014-02-14T01:56:24.134Z",
+          "updated_at": "2014-02-14T01:56:24.134Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 90703,
+        "answer": "soy sauce",
+        "question": "The butter compartment is filled with Kikkoman packets of this alliterative condiment",
+        "value": 400,
+        "airdate": "2009-03-04T12:00:00.000Z",
+        "created_at": "2014-02-14T01:56:24.540Z",
+        "updated_at": "2014-02-14T01:56:24.540Z",
+        "category_id": 11990,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 11990,
+          "title": "in the office fridge",
+          "created_at": "2014-02-14T01:56:24.134Z",
+          "updated_at": "2014-02-14T01:56:24.134Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 90709,
+        "answer": "Snickers",
+        "question": "Someone has this candy bar in the freezer because rock-hard it \"really satisfies\", as its slogan used to say",
+        "value": 600,
+        "airdate": "2009-03-04T12:00:00.000Z",
+        "created_at": "2014-02-14T01:56:24.755Z",
+        "updated_at": "2014-02-14T01:56:24.755Z",
+        "category_id": 11990,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 11990,
+          "title": "in the office fridge",
+          "created_at": "2014-02-14T01:56:24.134Z",
+          "updated_at": "2014-02-14T01:56:24.134Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 90715,
+        "answer": "Tupperware",
+        "question": "These containers named for a guy called Earl are crammed up; careful taking one out!",
+        "value": 800,
+        "airdate": "2009-03-04T12:00:00.000Z",
+        "created_at": "2014-02-14T01:56:24.973Z",
+        "updated_at": "2014-02-14T01:56:24.973Z",
+        "category_id": 11990,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 11990,
+          "title": "in the office fridge",
+          "created_at": "2014-02-14T01:56:24.134Z",
+          "updated_at": "2014-02-14T01:56:24.134Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 90721,
+        "answer": "falafel",
+        "question": "Made of chickpeas formed into balls, this street food of Israel has been in the fridge so long, I think it growled at me",
+        "value": 1000,
+        "airdate": "2009-03-04T12:00:00.000Z",
+        "created_at": "2014-02-14T01:56:25.196Z",
+        "updated_at": "2014-02-14T01:56:25.196Z",
+        "category_id": 11990,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 11990,
+          "title": "in the office fridge",
+          "created_at": "2014-02-14T01:56:24.134Z",
+          "updated_at": "2014-02-14T01:56:24.134Z",
+          "clues_count": 5
+        }
+      }
+    ]
+  },
+  {
+    "category": "men of letters",
+    "clues": [
+      {
+        "id": 32585,
+        "answer": "H.G. Wells",
+        "question": "Herbert George...",
+        "value": 100,
+        "airdate": "1998-12-02T12:00:00.000Z",
+        "created_at": "2014-02-11T23:05:06.533Z",
+        "updated_at": "2014-02-11T23:05:06.533Z",
+        "category_id": 2386,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 2386,
+          "title": "men of letters",
+          "created_at": "2014-02-11T22:59:21.590Z",
+          "updated_at": "2014-02-11T22:59:21.590Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 32591,
+        "answer": "P.G. Wodehouse",
+        "question": "Pelham Grenville...",
+        "value": 200,
+        "airdate": "1998-12-02T12:00:00.000Z",
+        "created_at": "2014-02-11T23:05:06.708Z",
+        "updated_at": "2014-02-11T23:05:06.708Z",
+        "category_id": 2386,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 2386,
+          "title": "men of letters",
+          "created_at": "2014-02-11T22:59:21.590Z",
+          "updated_at": "2014-02-11T22:59:21.590Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 32597,
+        "answer": "A.A. Milne",
+        "question": "Alan Alexander...",
+        "value": 300,
+        "airdate": "1998-12-02T12:00:00.000Z",
+        "created_at": "2014-02-11T23:05:06.829Z",
+        "updated_at": "2014-02-11T23:05:06.829Z",
+        "category_id": 2386,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 2386,
+          "title": "men of letters",
+          "created_at": "2014-02-11T22:59:21.590Z",
+          "updated_at": "2014-02-11T22:59:21.590Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 32603,
+        "answer": "C.S. Lewis",
+        "question": "Clive Staples...",
+        "value": 400,
+        "airdate": "1998-12-02T12:00:00.000Z",
+        "created_at": "2014-02-11T23:05:06.949Z",
+        "updated_at": "2014-02-11T23:05:06.949Z",
+        "category_id": 2386,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 2386,
+          "title": "men of letters",
+          "created_at": "2014-02-11T22:59:21.590Z",
+          "updated_at": "2014-02-11T22:59:21.590Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 32609,
+        "answer": "HP Lovecraft",
+        "question": "Howard Phillips...",
+        "value": 500,
+        "airdate": "1998-12-02T12:00:00.000Z",
+        "created_at": "2014-02-11T23:05:07.068Z",
+        "updated_at": "2014-02-11T23:05:07.068Z",
+        "category_id": 2386,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 2386,
+          "title": "men of letters",
+          "created_at": "2014-02-11T22:59:21.590Z",
+          "updated_at": "2014-02-11T22:59:21.590Z",
+          "clues_count": 10
+        }
+      }
+    ]
+  },
+  {
+    "category": "official languages",
+    "clues": [
+      {
+        "id": 81354,
+        "answer": "Arabic",
+        "question": "In Chad:French & this",
+        "value": null,
+        "airdate": "2006-12-11T12:00:00.000Z",
+        "created_at": "2014-02-11T23:40:00.108Z",
+        "updated_at": "2014-02-11T23:40:00.108Z",
+        "category_id": 3401,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 3401,
+          "title": "official languages",
+          "created_at": "2014-02-11T23:03:34.421Z",
+          "updated_at": "2014-02-11T23:03:34.421Z",
+          "clues_count": 55
+        }
+      },
+      {
+        "id": 81336,
+        "answer": "Spanish",
+        "question": "In Colombia:this",
+        "value": 200,
+        "airdate": "2006-12-11T12:00:00.000Z",
+        "created_at": "2014-02-11T23:39:59.578Z",
+        "updated_at": "2014-02-11T23:39:59.578Z",
+        "category_id": 3401,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 3401,
+          "title": "official languages",
+          "created_at": "2014-02-11T23:03:34.421Z",
+          "updated_at": "2014-02-11T23:03:34.421Z",
+          "clues_count": 55
+        }
+      },
+      {
+        "id": 81342,
+        "answer": "Portuguese",
+        "question": "In Brazil:this",
+        "value": 400,
+        "airdate": "2006-12-11T12:00:00.000Z",
+        "created_at": "2014-02-11T23:39:59.745Z",
+        "updated_at": "2014-02-11T23:39:59.745Z",
+        "category_id": 3401,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 3401,
+          "title": "official languages",
+          "created_at": "2014-02-11T23:03:34.421Z",
+          "updated_at": "2014-02-11T23:03:34.421Z",
+          "clues_count": 55
+        }
+      },
+      {
+        "id": 81348,
+        "answer": "Russian",
+        "question": "In Kyrgyzstan:Kyrgyz & this",
+        "value": 600,
+        "airdate": "2006-12-11T12:00:00.000Z",
+        "created_at": "2014-02-11T23:39:59.922Z",
+        "updated_at": "2014-02-11T23:39:59.922Z",
+        "category_id": 3401,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 3401,
+          "title": "official languages",
+          "created_at": "2014-02-11T23:03:34.421Z",
+          "updated_at": "2014-02-11T23:03:34.421Z",
+          "clues_count": 55
+        }
+      },
+      {
+        "id": 81360,
+        "answer": "English",
+        "question": "In Fiji:this",
+        "value": 1000,
+        "airdate": "2006-12-11T12:00:00.000Z",
+        "created_at": "2014-02-11T23:40:00.299Z",
+        "updated_at": "2014-02-11T23:40:00.299Z",
+        "category_id": 3401,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 3401,
+          "title": "official languages",
+          "created_at": "2014-02-11T23:03:34.421Z",
+          "updated_at": "2014-02-11T23:03:34.421Z",
+          "clues_count": 55
+        }
+      }
+    ]
+  },
+  {
+    "category": "a whole new ballgame",
+    "clues": [
+      {
+        "id": 131277,
+        "answer": "home plate",
+        "question": "In 1900 baseball changed the shape of this from a 12-inch square to a 5-sided figure 17 inches wide",
+        "value": 200,
+        "airdate": "2014-10-10T12:00:00.000Z",
+        "created_at": "2015-01-18T18:18:04.802Z",
+        "updated_at": "2015-01-18T18:18:04.802Z",
+        "category_id": 18091,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 18091,
+          "title": "a whole new ballgame",
+          "created_at": "2015-01-18T18:18:04.539Z",
+          "updated_at": "2015-01-18T18:18:04.539Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 131283,
+        "answer": "saves",
+        "question": "In 1969 MLB adopted its first new statistic since 1920, this one for relief pitchers",
+        "value": 400,
+        "airdate": "2014-10-10T12:00:00.000Z",
+        "created_at": "2015-01-18T18:18:05.107Z",
+        "updated_at": "2015-01-18T18:18:05.107Z",
+        "category_id": 18091,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 18091,
+          "title": "a whole new ballgame",
+          "created_at": "2015-01-18T18:18:04.539Z",
+          "updated_at": "2015-01-18T18:18:04.539Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 131289,
+        "answer": "a designated hitter",
+        "question": "The American League adopted this new rule & new role in 1973; the National League declined",
+        "value": 600,
+        "airdate": "2014-10-10T12:00:00.000Z",
+        "created_at": "2015-01-18T18:18:05.404Z",
+        "updated_at": "2015-01-18T18:18:05.404Z",
+        "category_id": 18091,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 18091,
+          "title": "a whole new ballgame",
+          "created_at": "2015-01-18T18:18:04.539Z",
+          "updated_at": "2015-01-18T18:18:04.539Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 131295,
+        "answer": "slugging percentage",
+        "question": "A sports page looks like a stock page, with a three-part stat, including this measure of power--total bases divided by at-bats",
+        "value": 800,
+        "airdate": "2014-10-10T12:00:00.000Z",
+        "created_at": "2015-01-18T18:18:05.660Z",
+        "updated_at": "2015-01-18T18:18:05.660Z",
+        "category_id": 18091,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 18091,
+          "title": "a whole new ballgame",
+          "created_at": "2015-01-18T18:18:04.539Z",
+          "updated_at": "2015-01-18T18:18:04.539Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 131301,
+        "answer": "the infield fly rule",
+        "question": "In 1895 baseball adopted this rule by which a batter can be called out for popping up with runners on first & second",
+        "value": 1000,
+        "airdate": "2014-10-10T12:00:00.000Z",
+        "created_at": "2015-01-18T18:18:05.922Z",
+        "updated_at": "2015-01-18T18:18:05.922Z",
+        "category_id": 18091,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 18091,
+          "title": "a whole new ballgame",
+          "created_at": "2015-01-18T18:18:04.539Z",
+          "updated_at": "2015-01-18T18:18:04.539Z",
+          "clues_count": 10
+        }
+      }
+    ]
+  },
+  {
+    "category": "may 26",
+    "clues": [
+      {
+        "id": 35615,
+        "answer": "Napoleon",
+        "question": "On May 26, 1805 this crown-crazy Corsican became king of Italy",
+        "value": 100,
+        "airdate": "2000-05-26T12:00:00.000Z",
+        "created_at": "2014-02-11T23:07:03.471Z",
+        "updated_at": "2014-02-11T23:07:03.471Z",
+        "category_id": 4212,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 4212,
+          "title": "may 26",
+          "created_at": "2014-02-11T23:07:03.321Z",
+          "updated_at": "2014-02-11T23:07:03.321Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 35621,
+        "answer": "Stevie Nix",
+        "question": "You can talk to me & tell me it's the birthday of this singer seen here:",
+        "value": 200,
+        "airdate": "2000-05-26T12:00:00.000Z",
+        "created_at": "2014-02-11T23:07:03.656Z",
+        "updated_at": "2014-02-11T23:07:03.656Z",
+        "category_id": 4212,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 4212,
+          "title": "may 26",
+          "created_at": "2014-02-11T23:07:03.321Z",
+          "updated_at": "2014-02-11T23:07:03.321Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 35627,
+        "answer": "The sacraments",
+        "question": "On May 26, 1967 the Vatican decreed Protestants could receive these, including penance & extreme unction, in some cases",
+        "value": 300,
+        "airdate": "2000-05-26T12:00:00.000Z",
+        "created_at": "2014-02-11T23:07:03.934Z",
+        "updated_at": "2014-02-11T23:07:03.934Z",
+        "category_id": 4212,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 4212,
+          "title": "may 26",
+          "created_at": "2014-02-11T23:07:03.321Z",
+          "updated_at": "2014-02-11T23:07:03.321Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 35633,
+        "answer": "Montana",
+        "question": "This future \"Treasure State\" became the \"Treasure Territory\" May 26, 1864",
+        "value": 400,
+        "airdate": "2000-05-26T12:00:00.000Z",
+        "created_at": "2014-02-11T23:07:04.093Z",
+        "updated_at": "2014-02-11T23:07:04.093Z",
+        "category_id": 4212,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 4212,
+          "title": "may 26",
+          "created_at": "2014-02-11T23:07:03.321Z",
+          "updated_at": "2014-02-11T23:07:03.321Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 35639,
+        "answer": "Portugal",
+        "question": "In this country's \"War of the Two Brothers\", Dom Miguel capitulated to Dom Pedro May 26, 1834",
+        "value": 500,
+        "airdate": "2000-05-26T12:00:00.000Z",
+        "created_at": "2014-02-11T23:07:04.241Z",
+        "updated_at": "2014-02-11T23:07:04.241Z",
+        "category_id": 4212,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 4212,
+          "title": "may 26",
+          "created_at": "2014-02-11T23:07:03.321Z",
+          "updated_at": "2014-02-11T23:07:03.321Z",
+          "clues_count": 5
+        }
+      }
+    ]
+  },
+  {
+    "category": "way back in 1999",
+    "clues": [
+      {
+        "id": 34687,
+        "answer": "the Sistine Chapel",
+        "question": "A 20-year-long restoration of this chapel, home to Michelangelo's \"The Last Judgment\", was wrapped up",
+        "value": 100,
+        "airdate": "2000-07-11T12:00:00.000Z",
+        "created_at": "2014-02-11T23:06:29.084Z",
+        "updated_at": "2014-02-11T23:06:29.084Z",
+        "category_id": 4087,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 4087,
+          "title": "way back in 1999",
+          "created_at": "2014-02-11T23:06:28.994Z",
+          "updated_at": "2014-02-11T23:06:28.994Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 34693,
+        "answer": "an iceberg",
+        "question": "In August one of these, the size of Rhode Island, threatened ships between South America & Antarctica",
+        "value": 200,
+        "airdate": "2000-07-11T12:00:00.000Z",
+        "created_at": "2014-02-11T23:06:29.203Z",
+        "updated_at": "2014-02-11T23:06:29.203Z",
+        "category_id": 4087,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 4087,
+          "title": "way back in 1999",
+          "created_at": "2014-02-11T23:06:28.994Z",
+          "updated_at": "2014-02-11T23:06:28.994Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 34699,
+        "answer": "pandas",
+        "question": "As part of a 10-year research project, the Atlanta Zoo got Lun-Lun & Yang-Yang, a pair of these",
+        "value": 300,
+        "airdate": "2000-07-11T12:00:00.000Z",
+        "created_at": "2014-02-11T23:06:29.353Z",
+        "updated_at": "2014-02-11T23:06:29.353Z",
+        "category_id": 4087,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 4087,
+          "title": "way back in 1999",
+          "created_at": "2014-02-11T23:06:28.994Z",
+          "updated_at": "2014-02-11T23:06:28.994Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 34705,
+        "answer": "the Senate",
+        "question": "The 100 jurors William Rehnquist swore in on January 7, 1999 were all members of this",
+        "value": 400,
+        "airdate": "2000-07-11T12:00:00.000Z",
+        "created_at": "2014-02-11T23:06:29.473Z",
+        "updated_at": "2014-02-11T23:06:29.473Z",
+        "category_id": 4087,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 4087,
+          "title": "way back in 1999",
+          "created_at": "2014-02-11T23:06:28.994Z",
+          "updated_at": "2014-02-11T23:06:28.994Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 34711,
+        "answer": "Kosovo",
+        "question": "This province's capital of Pristina wasn't so pristine; it was bombed by NATO",
+        "value": 500,
+        "airdate": "2000-07-11T12:00:00.000Z",
+        "created_at": "2014-02-11T23:06:29.598Z",
+        "updated_at": "2014-02-11T23:06:29.598Z",
+        "category_id": 4087,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 4087,
+          "title": "way back in 1999",
+          "created_at": "2014-02-11T23:06:28.994Z",
+          "updated_at": "2014-02-11T23:06:28.994Z",
+          "clues_count": 5
+        }
+      }
+    ]
+  },
+  {
+    "category": "computer abbreviations",
+    "clues": [
+      {
+        "id": 124854,
+        "answer": "business",
+        "question": "The \"B\" in COBOL",
+        "value": 200,
+        "airdate": "2014-04-04T12:00:00.000Z",
+        "created_at": "2015-01-18T18:11:36.634Z",
+        "updated_at": "2015-01-18T18:11:36.634Z",
+        "category_id": 17140,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 17140,
+          "title": "computer abbreviations",
+          "created_at": "2015-01-18T18:11:36.437Z",
+          "updated_at": "2015-01-18T18:11:36.437Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 124860,
+        "answer": "photographic",
+        "question": "The \"P\" in jpeg",
+        "value": 400,
+        "airdate": "2014-04-04T12:00:00.000Z",
+        "created_at": "2015-01-18T18:11:36.871Z",
+        "updated_at": "2015-01-18T18:11:36.871Z",
+        "category_id": 17140,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 17140,
+          "title": "computer abbreviations",
+          "created_at": "2015-01-18T18:11:36.437Z",
+          "updated_at": "2015-01-18T18:11:36.437Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 124866,
+        "answer": "denial",
+        "question": "The \"D\" in a DoS attack",
+        "value": 600,
+        "airdate": "2014-04-04T12:00:00.000Z",
+        "created_at": "2015-01-18T18:11:37.111Z",
+        "updated_at": "2015-01-18T18:11:37.111Z",
+        "category_id": 17140,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 17140,
+          "title": "computer abbreviations",
+          "created_at": "2015-01-18T18:11:36.437Z",
+          "updated_at": "2015-01-18T18:11:36.437Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 124872,
+        "answer": "transfer or transport",
+        "question": "The second \"T\" in HTTP",
+        "value": 800,
+        "airdate": "2014-04-04T12:00:00.000Z",
+        "created_at": "2015-01-18T18:11:37.347Z",
+        "updated_at": "2015-01-18T18:11:37.347Z",
+        "category_id": 17140,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 17140,
+          "title": "computer abbreviations",
+          "created_at": "2015-01-18T18:11:36.437Z",
+          "updated_at": "2015-01-18T18:11:36.437Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 124878,
+        "answer": "real-time",
+        "question": "The \"RT\" in \"RTOS\"",
+        "value": 1000,
+        "airdate": "2014-04-04T12:00:00.000Z",
+        "created_at": "2015-01-18T18:11:37.580Z",
+        "updated_at": "2015-01-18T18:11:37.580Z",
+        "category_id": 17140,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 17140,
+          "title": "computer abbreviations",
+          "created_at": "2015-01-18T18:11:36.437Z",
+          "updated_at": "2015-01-18T18:11:36.437Z",
+          "clues_count": 10
+        }
+      }
+    ]
+  },
+  {
+    "category": "abbreviated video game titles",
+    "clues": [
+      {
+        "id": 128185,
+        "answer": "<i>World of Warcraft</i>",
+        "question": "Oh, wow, \"W.O.W.\" stands for this bestselling multiplayer game",
+        "value": 200,
+        "airdate": "2013-10-31T12:00:00.000Z",
+        "created_at": "2015-01-18T18:14:59.514Z",
+        "updated_at": "2015-01-18T18:14:59.514Z",
+        "category_id": 17641,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 17641,
+          "title": "abbreviated video game titles",
+          "created_at": "2015-01-18T18:14:59.321Z",
+          "updated_at": "2015-01-18T18:14:59.321Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 128191,
+        "answer": "<i>Call of Duty</i>",
+        "question": "We'll need to enlist your knowledge of \"C.O.D.\". this action game series",
+        "value": 400,
+        "airdate": "2013-10-31T12:00:00.000Z",
+        "created_at": "2015-01-18T18:14:59.760Z",
+        "updated_at": "2015-01-18T18:14:59.760Z",
+        "category_id": 17641,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 17641,
+          "title": "abbreviated video game titles",
+          "created_at": "2015-01-18T18:14:59.321Z",
+          "updated_at": "2015-01-18T18:14:59.321Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 128197,
+        "answer": "<i>Second Life</i>",
+        "question": "\"S.L.\" is this game where you can virtually build a whole other existence",
+        "value": 600,
+        "airdate": "2013-10-31T12:00:00.000Z",
+        "created_at": "2015-01-18T18:15:00.034Z",
+        "updated_at": "2015-01-18T18:15:00.034Z",
+        "category_id": 17641,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 17641,
+          "title": "abbreviated video game titles",
+          "created_at": "2015-01-18T18:14:59.321Z",
+          "updated_at": "2015-01-18T18:14:59.321Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 128203,
+        "answer": "<i>EverQuest</i>",
+        "question": "You can be a troll, an elf, or whatever suits your fantasy when playing this popular game from Sony, abbreviated \"E.Q.\"",
+        "value": 800,
+        "airdate": "2013-10-31T12:00:00.000Z",
+        "created_at": "2015-01-18T18:15:00.271Z",
+        "updated_at": "2015-01-18T18:15:00.271Z",
+        "category_id": 17641,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 17641,
+          "title": "abbreviated video game titles",
+          "created_at": "2015-01-18T18:14:59.321Z",
+          "updated_at": "2015-01-18T18:14:59.321Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 128209,
+        "answer": "<i>Assassin\\'s Creed</i>",
+        "question": "The \"III\" version of \"A.C.\", this game, takes place in part in 1775 Colonial America",
+        "value": 1000,
+        "airdate": "2013-10-31T12:00:00.000Z",
+        "created_at": "2015-01-18T18:15:00.577Z",
+        "updated_at": "2015-01-18T18:15:00.577Z",
+        "category_id": 17641,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 17641,
+          "title": "abbreviated video game titles",
+          "created_at": "2015-01-18T18:14:59.321Z",
+          "updated_at": "2015-01-18T18:14:59.321Z",
+          "clues_count": 10
+        }
+      }
+    ]
+  }
+]

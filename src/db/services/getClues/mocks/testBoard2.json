@@ -1,0 +1,1202 @@
+[
+  {
+    "category": "international cuisine",
+    "clues": [
+      {
+        "id": 10478,
+        "answer": "anchovies",
+        "question": "Traditionally, pizza napoletana is topped with these little fish",
+        "value": 100,
+        "airdate": "1993-04-01T12:00:00.000Z",
+        "created_at": "2014-02-11T22:52:41.606Z",
+        "updated_at": "2014-02-11T22:52:41.606Z",
+        "category_id": 656,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 656,
+          "title": "international cuisine",
+          "created_at": "2014-02-11T22:49:41.838Z",
+          "updated_at": "2014-02-11T22:49:41.838Z",
+          "clues_count": 60
+        }
+      },
+      {
+        "id": 10484,
+        "answer": "India",
+        "question": "Ghee, a type of clarified butter used in curry paste, originated in this country",
+        "value": 200,
+        "airdate": "1993-04-01T12:00:00.000Z",
+        "created_at": "2014-02-11T22:52:41.690Z",
+        "updated_at": "2014-02-11T22:52:41.690Z",
+        "category_id": 656,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 656,
+          "title": "international cuisine",
+          "created_at": "2014-02-11T22:49:41.838Z",
+          "updated_at": "2014-02-11T22:49:41.838Z",
+          "clues_count": 60
+        }
+      },
+      {
+        "id": 10490,
+        "answer": "a tortilla",
+        "question": "To make a simple quesadilla, start by folding one of these around a cheese filling",
+        "value": 300,
+        "airdate": "1993-04-01T12:00:00.000Z",
+        "created_at": "2014-02-11T22:52:41.773Z",
+        "updated_at": "2014-02-11T22:52:41.773Z",
+        "category_id": 656,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 656,
+          "title": "international cuisine",
+          "created_at": "2014-02-11T22:49:41.838Z",
+          "updated_at": "2014-02-11T22:49:41.838Z",
+          "clues_count": 60
+        }
+      },
+      {
+        "id": 10496,
+        "answer": "the Netherlands",
+        "question": "Kaasdopen, a cheese fondue dish from this country, is made with Gouda & served with bread",
+        "value": 400,
+        "airdate": "1993-04-01T12:00:00.000Z",
+        "created_at": "2014-02-11T22:52:41.869Z",
+        "updated_at": "2014-02-11T22:52:41.869Z",
+        "category_id": 656,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 656,
+          "title": "international cuisine",
+          "created_at": "2014-02-11T22:49:41.838Z",
+          "updated_at": "2014-02-11T22:49:41.838Z",
+          "clues_count": 60
+        }
+      },
+      {
+        "id": 10502,
+        "answer": "couscous",
+        "question": "Tunisians like to eat this ubiquitous North African semolina dish with spicy harissa sauce",
+        "value": 500,
+        "airdate": "1993-04-01T12:00:00.000Z",
+        "created_at": "2014-02-11T22:52:42.525Z",
+        "updated_at": "2014-02-11T22:52:42.525Z",
+        "category_id": 656,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 656,
+          "title": "international cuisine",
+          "created_at": "2014-02-11T22:49:41.838Z",
+          "updated_at": "2014-02-11T22:49:41.838Z",
+          "clues_count": 60
+        }
+      }
+    ]
+  },
+  {
+    "category": "make room",
+    "clues": [
+      {
+        "id": 131391,
+        "answer": "\"...Boudoir\"",
+        "question": "This French room completes the title of a book by the Marquis de Sade, \"La Philopsophie Dans Le...\"",
+        "value": null,
+        "airdate": "2014-10-07T12:00:00.000Z",
+        "created_at": "2015-01-18T18:18:12.072Z",
+        "updated_at": "2015-01-18T18:18:12.072Z",
+        "category_id": 18105,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 18105,
+          "title": "make room",
+          "created_at": "2015-01-18T18:18:10.596Z",
+          "updated_at": "2015-01-18T18:18:10.596Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 131367,
+        "answer": "an attic",
+        "question": "In England, loft & garret are terms for this room in a house",
+        "value": 200,
+        "airdate": "2014-10-07T12:00:00.000Z",
+        "created_at": "2015-01-18T18:18:10.905Z",
+        "updated_at": "2015-01-18T18:18:10.905Z",
+        "category_id": 18105,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 18105,
+          "title": "make room",
+          "created_at": "2015-01-18T18:18:10.596Z",
+          "updated_at": "2015-01-18T18:18:10.596Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 131373,
+        "answer": "a throne room",
+        "question": "A formal audience chamber containing a monarch's chair",
+        "value": 400,
+        "airdate": "2014-10-07T12:00:00.000Z",
+        "created_at": "2015-01-18T18:18:11.220Z",
+        "updated_at": "2015-01-18T18:18:11.220Z",
+        "category_id": 18105,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 18105,
+          "title": "make room",
+          "created_at": "2015-01-18T18:18:10.596Z",
+          "updated_at": "2015-01-18T18:18:10.596Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 131379,
+        "answer": "eating (or dining)",
+        "question": "In a monastery or convent, a refectory is the room communally used for this",
+        "value": 600,
+        "airdate": "2014-10-07T12:00:00.000Z",
+        "created_at": "2015-01-18T18:18:11.498Z",
+        "updated_at": "2015-01-18T18:18:11.498Z",
+        "category_id": 18105,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 18105,
+          "title": "make room",
+          "created_at": "2015-01-18T18:18:10.596Z",
+          "updated_at": "2015-01-18T18:18:10.596Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 131385,
+        "answer": "guest rooms",
+        "question": "In ancient Rome, the hospitalia were these rooms in a villa",
+        "value": 800,
+        "airdate": "2014-10-07T12:00:00.000Z",
+        "created_at": "2015-01-18T18:18:11.793Z",
+        "updated_at": "2015-01-18T18:18:11.793Z",
+        "category_id": 18105,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 18105,
+          "title": "make room",
+          "created_at": "2015-01-18T18:18:10.596Z",
+          "updated_at": "2015-01-18T18:18:10.596Z",
+          "clues_count": 10
+        }
+      }
+    ]
+  },
+  {
+    "category": "the author twitters",
+    "clues": [
+      {
+        "id": 97747,
+        "answer": "Tolstoy",
+        "question": "Da, \"War and Peace\" published in complete form 2day.  Liking 1869.  Is very good year",
+        "value": 200,
+        "airdate": "2010-03-03T12:00:00.000Z",
+        "created_at": "2014-02-14T02:03:35.963Z",
+        "updated_at": "2014-02-14T02:03:35.963Z",
+        "category_id": 13056,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 13056,
+          "title": "the author twitters",
+          "created_at": "2014-02-14T02:03:35.747Z",
+          "updated_at": "2014-02-14T02:03:35.747Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 97753,
+        "answer": "(Norman) Mailer",
+        "question": "Only 25 when \"The Naked and the Dead\" makes me famous. Feel like I'm gonna win 2 Pulitzers b4 I'm thru",
+        "value": 400,
+        "airdate": "2010-03-03T12:00:00.000Z",
+        "created_at": "2014-02-14T02:03:36.240Z",
+        "updated_at": "2014-02-14T02:03:36.240Z",
+        "category_id": 13056,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 13056,
+          "title": "the author twitters",
+          "created_at": "2014-02-14T02:03:35.747Z",
+          "updated_at": "2014-02-14T02:03:35.747Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 97759,
+        "answer": "Vonnegut",
+        "question": "What am I doing?! Screaming!  Itz 1945 & I'm U.S. soldier @ bombing of Dresden!  (Will write 1969 novel about it)",
+        "value": 600,
+        "airdate": "2010-03-03T12:00:00.000Z",
+        "created_at": "2014-02-14T02:03:36.485Z",
+        "updated_at": "2014-02-14T02:03:36.485Z",
+        "category_id": 13056,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 13056,
+          "title": "the author twitters",
+          "created_at": "2014-02-14T02:03:35.747Z",
+          "updated_at": "2014-02-14T02:03:35.747Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 97765,
+        "answer": "Jonathan Swift",
+        "question": "Made dean of St. Pat's @ Dublin.  Will pen \"Travels\". Pls publish \"Journal to Stella\" after my death",
+        "value": 800,
+        "airdate": "2010-03-03T12:00:00.000Z",
+        "created_at": "2014-02-14T02:03:36.733Z",
+        "updated_at": "2014-02-14T02:03:36.733Z",
+        "category_id": 13056,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 13056,
+          "title": "the author twitters",
+          "created_at": "2014-02-14T02:03:35.747Z",
+          "updated_at": "2014-02-14T02:03:35.747Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 97771,
+        "answer": "(Franz) Kafka",
+        "question": "Czech out my short story \"A Hunger Artist\"!  Tweet done.  Max Brod, pls burn my laptop",
+        "value": 1000,
+        "airdate": "2010-03-03T12:00:00.000Z",
+        "created_at": "2014-02-14T02:03:37.045Z",
+        "updated_at": "2014-02-14T02:03:37.045Z",
+        "category_id": 13056,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 13056,
+          "title": "the author twitters",
+          "created_at": "2014-02-14T02:03:35.747Z",
+          "updated_at": "2014-02-14T02:03:35.747Z",
+          "clues_count": 5
+        }
+      }
+    ]
+  },
+  {
+    "category": "europe",
+    "clues": [
+      {
+        "id": 89137,
+        "answer": "Sicily",
+        "question": "This Italian island's provinces include Syracuse, Messina & Palermo",
+        "value": 200,
+        "airdate": "2009-05-15T12:00:00.000Z",
+        "created_at": "2014-02-14T01:54:45.511Z",
+        "updated_at": "2014-02-14T01:54:45.511Z",
+        "category_id": 301,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 301,
+          "title": "europe",
+          "created_at": "2014-02-11T22:48:12.882Z",
+          "updated_at": "2014-02-11T22:48:12.882Z",
+          "clues_count": 55
+        }
+      },
+      {
+        "id": 89143,
+        "answer": "an Ice Age",
+        "question": "From about 1500 to 1850, glaciers advanced in the Alps in what's called a \"Little\" this period",
+        "value": 400,
+        "airdate": "2009-05-15T12:00:00.000Z",
+        "created_at": "2014-02-14T01:54:45.734Z",
+        "updated_at": "2014-02-14T01:54:45.734Z",
+        "category_id": 301,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 301,
+          "title": "europe",
+          "created_at": "2014-02-11T22:48:12.882Z",
+          "updated_at": "2014-02-11T22:48:12.882Z",
+          "clues_count": 55
+        }
+      },
+      {
+        "id": 89149,
+        "answer": "Finland",
+        "question": "From 1714 to 1721 Russia occupied this neighbor in what has been called the \"Great Wrath\"",
+        "value": 600,
+        "airdate": "2009-05-15T12:00:00.000Z",
+        "created_at": "2014-02-14T01:54:45.998Z",
+        "updated_at": "2014-02-14T01:54:45.998Z",
+        "category_id": 301,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 301,
+          "title": "europe",
+          "created_at": "2014-02-11T22:48:12.882Z",
+          "updated_at": "2014-02-11T22:48:12.882Z",
+          "clues_count": 55
+        }
+      },
+      {
+        "id": 89155,
+        "answer": "(Slobodan) Miloevi&#263;",
+        "question": "In 1998 this president of Yugoslavia sent troops into Kosovo to crush an ethnic Albanian uprising",
+        "value": 800,
+        "airdate": "2009-05-15T12:00:00.000Z",
+        "created_at": "2014-02-14T01:54:46.221Z",
+        "updated_at": "2014-02-14T01:54:46.221Z",
+        "category_id": 301,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 301,
+          "title": "europe",
+          "created_at": "2014-02-11T22:48:12.882Z",
+          "updated_at": "2014-02-11T22:48:12.882Z",
+          "clues_count": 55
+        }
+      },
+      {
+        "id": 89161,
+        "answer": "Romania",
+        "question": "In 1859 Moldavia & Walachia united to form this country with Prince Alexandru Ioan Cuza as its ruler",
+        "value": 1000,
+        "airdate": "2009-05-15T12:00:00.000Z",
+        "created_at": "2014-02-14T01:54:46.489Z",
+        "updated_at": "2014-02-14T01:54:46.489Z",
+        "category_id": 301,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 301,
+          "title": "europe",
+          "created_at": "2014-02-11T22:48:12.882Z",
+          "updated_at": "2014-02-11T22:48:12.882Z",
+          "clues_count": 55
+        }
+      }
+    ]
+  },
+  {
+    "category": "one-word shout outs",
+    "clues": [
+      {
+        "id": 115565,
+        "answer": "timber!",
+        "question": "Freshly cut tree about to fall!",
+        "value": 200,
+        "airdate": "2013-07-17T12:00:00.000Z",
+        "created_at": "2014-02-14T02:45:11.214Z",
+        "updated_at": "2014-02-14T02:45:11.214Z",
+        "category_id": 15763,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 15763,
+          "title": "one-word shout outs",
+          "created_at": "2014-02-14T02:45:11.035Z",
+          "updated_at": "2014-02-14T02:45:11.035Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 115571,
+        "answer": "sit!",
+        "question": "Down on your haunches, Rin Tin Tin!",
+        "value": 400,
+        "airdate": "2013-07-17T12:00:00.000Z",
+        "created_at": "2014-02-14T02:45:11.468Z",
+        "updated_at": "2014-02-14T02:45:11.468Z",
+        "category_id": 15763,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 15763,
+          "title": "one-word shout outs",
+          "created_at": "2014-02-14T02:45:11.035Z",
+          "updated_at": "2014-02-14T02:45:11.035Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 115577,
+        "answer": "help!",
+        "question": "Paul & Ringo, assist me!",
+        "value": 600,
+        "airdate": "2013-07-17T12:00:00.000Z",
+        "created_at": "2014-02-14T02:45:11.680Z",
+        "updated_at": "2014-02-14T02:45:11.680Z",
+        "category_id": 15763,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 15763,
+          "title": "one-word shout outs",
+          "created_at": "2014-02-14T02:45:11.035Z",
+          "updated_at": "2014-02-14T02:45:11.035Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 115583,
+        "answer": "Cheers!",
+        "question": "Skal! or a Beacon Street bar where you'd say it!",
+        "value": 800,
+        "airdate": "2013-07-17T12:00:00.000Z",
+        "created_at": "2014-02-14T02:45:11.904Z",
+        "updated_at": "2014-02-14T02:45:11.904Z",
+        "category_id": 15763,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 15763,
+          "title": "one-word shout outs",
+          "created_at": "2014-02-14T02:45:11.035Z",
+          "updated_at": "2014-02-14T02:45:11.035Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 115589,
+        "answer": "action!",
+        "question": "David Cronenberg calls it to get a scene started!",
+        "value": 1000,
+        "airdate": "2013-07-17T12:00:00.000Z",
+        "created_at": "2014-02-14T02:45:12.118Z",
+        "updated_at": "2014-02-14T02:45:12.118Z",
+        "category_id": 15763,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 15763,
+          "title": "one-word shout outs",
+          "created_at": "2014-02-14T02:45:11.035Z",
+          "updated_at": "2014-02-14T02:45:11.035Z",
+          "clues_count": 10
+        }
+      }
+    ]
+  },
+  {
+    "category": "dawn",
+    "clues": [
+      {
+        "id": 43237,
+        "answer": "Dishwashing liquid",
+        "question": "Dawn Special Care is a type of this that's good for hands",
+        "value": 100,
+        "airdate": "2001-04-11T12:00:00.000Z",
+        "created_at": "2014-02-11T23:11:51.319Z",
+        "updated_at": "2014-02-11T23:11:51.319Z",
+        "category_id": 5320,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 5320,
+          "title": "dawn",
+          "created_at": "2014-02-11T23:11:51.228Z",
+          "updated_at": "2014-02-11T23:11:51.228Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 43243,
+        "answer": "<i>Red Dawn</i>",
+        "question": "This film with Patrick Swayze & Jennifer Grey was about a Communist invasion",
+        "value": 200,
+        "airdate": "2001-04-11T12:00:00.000Z",
+        "created_at": "2014-02-11T23:11:51.440Z",
+        "updated_at": "2014-02-11T23:11:51.440Z",
+        "category_id": 5320,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 5320,
+          "title": "dawn",
+          "created_at": "2014-02-11T23:11:51.228Z",
+          "updated_at": "2014-02-11T23:11:51.228Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 43249,
+        "answer": "\"The Age Of Aquarius\"",
+        "question": "In 1969 the Fifth Dimension sang about \"The Dawning Of\" this & hit No. 1",
+        "value": 300,
+        "airdate": "2001-04-11T12:00:00.000Z",
+        "created_at": "2014-02-11T23:11:51.581Z",
+        "updated_at": "2014-02-11T23:11:51.581Z",
+        "category_id": 5320,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 5320,
+          "title": "dawn",
+          "created_at": "2014-02-11T23:11:51.228Z",
+          "updated_at": "2014-02-11T23:11:51.228Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 43255,
+        "answer": "Michelangelo",
+        "question": "On the Medici tomb he designed, he had nudes representing dawn & dusk under the seated Lorenzo",
+        "value": 400,
+        "airdate": "2001-04-11T12:00:00.000Z",
+        "created_at": "2014-02-11T23:11:51.700Z",
+        "updated_at": "2014-02-11T23:11:51.700Z",
+        "category_id": 5320,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 5320,
+          "title": "dawn",
+          "created_at": "2014-02-11T23:11:51.228Z",
+          "updated_at": "2014-02-11T23:11:51.228Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 43261,
+        "answer": "W.E.B. Du Bois",
+        "question": "\"Dusk Of Dawn\" was a 1940 autobiography of this first black American to get a doctoral degree from Harvard",
+        "value": 500,
+        "airdate": "2001-04-11T12:00:00.000Z",
+        "created_at": "2014-02-11T23:11:51.815Z",
+        "updated_at": "2014-02-11T23:11:51.815Z",
+        "category_id": 5320,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 5320,
+          "title": "dawn",
+          "created_at": "2014-02-11T23:11:51.228Z",
+          "updated_at": "2014-02-11T23:11:51.228Z",
+          "clues_count": 5
+        }
+      }
+    ]
+  },
+  {
+    "category": "the losing ticket",
+    "clues": [
+      {
+        "id": 86587,
+        "answer": "Richard Nixon",
+        "question": "In 1960 it was him & Henry Cabot Lodge Jr.",
+        "value": 200,
+        "airdate": "2008-02-25T12:00:00.000Z",
+        "created_at": "2014-02-11T23:44:01.230Z",
+        "updated_at": "2014-02-11T23:44:01.230Z",
+        "category_id": 11357,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 11357,
+          "title": "the losing ticket",
+          "created_at": "2014-02-11T23:44:01.076Z",
+          "updated_at": "2014-02-11T23:44:01.076Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 86593,
+        "answer": "Barry Goldwater",
+        "question": "William Miller shared his ticket in 1964",
+        "value": 400,
+        "airdate": "2008-02-25T12:00:00.000Z",
+        "created_at": "2014-02-11T23:44:01.414Z",
+        "updated_at": "2014-02-11T23:44:01.414Z",
+        "category_id": 11357,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 11357,
+          "title": "the losing ticket",
+          "created_at": "2014-02-11T23:44:01.076Z",
+          "updated_at": "2014-02-11T23:44:01.076Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 86599,
+        "answer": "1968",
+        "question": "Humphrey & Muskie were edged out in this year",
+        "value": 600,
+        "airdate": "2008-02-25T12:00:00.000Z",
+        "created_at": "2014-02-11T23:44:01.599Z",
+        "updated_at": "2014-02-11T23:44:01.599Z",
+        "category_id": 11357,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 11357,
+          "title": "the losing ticket",
+          "created_at": "2014-02-11T23:44:01.076Z",
+          "updated_at": "2014-02-11T23:44:01.076Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 86605,
+        "answer": "(Bob) Dole",
+        "question": "In 1976 Ford & this man were a pair of 4-letter words to voters",
+        "value": 800,
+        "airdate": "2008-02-25T12:00:00.000Z",
+        "created_at": "2014-02-11T23:44:01.783Z",
+        "updated_at": "2014-02-11T23:44:01.783Z",
+        "category_id": 11357,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 11357,
+          "title": "the losing ticket",
+          "created_at": "2014-02-11T23:44:01.076Z",
+          "updated_at": "2014-02-11T23:44:01.076Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 86611,
+        "answer": "(Adlai) Stevenson",
+        "question": "Running mate Sparkman failed to spark this Democrat's 1952 campaign",
+        "value": 1000,
+        "airdate": "2008-02-25T12:00:00.000Z",
+        "created_at": "2014-02-11T23:44:01.996Z",
+        "updated_at": "2014-02-11T23:44:01.996Z",
+        "category_id": 11357,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 11357,
+          "title": "the losing ticket",
+          "created_at": "2014-02-11T23:44:01.076Z",
+          "updated_at": "2014-02-11T23:44:01.076Z",
+          "clues_count": 5
+        }
+      }
+    ]
+  },
+  {
+    "category": "nonmusical mtv",
+    "clues": [
+      {
+        "id": 67985,
+        "answer": "<i>The Osbournes</i>",
+        "question": "This show that debuted in '02 has cursing by mom, dad, son & daughter, & dogs that aren't housebroken",
+        "value": 200,
+        "airdate": "2004-11-15T12:00:00.000Z",
+        "created_at": "2014-02-11T23:29:53.773Z",
+        "updated_at": "2014-02-11T23:29:53.773Z",
+        "category_id": 8785,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 8785,
+          "title": "nonmusical mtv",
+          "created_at": "2014-02-11T23:29:53.679Z",
+          "updated_at": "2014-02-11T23:29:53.679Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 67991,
+        "answer": "Jessica Simpson",
+        "question": "On \"Newlyweds\", Nick Lachey had to explain to her that Chicken of the Sea is actually fish",
+        "value": 400,
+        "airdate": "2004-11-15T12:00:00.000Z",
+        "created_at": "2014-02-11T23:29:53.921Z",
+        "updated_at": "2014-02-11T23:29:53.921Z",
+        "category_id": 8785,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 8785,
+          "title": "nonmusical mtv",
+          "created_at": "2014-02-11T23:29:53.679Z",
+          "updated_at": "2014-02-11T23:29:53.679Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 67997,
+        "answer": "<i>The Real World</i>",
+        "question": "Each season, 7 strangers share a home, as well as their lives, loves & libidos, on this long-running series",
+        "value": 600,
+        "airdate": "2004-11-15T12:00:00.000Z",
+        "created_at": "2014-02-11T23:29:54.073Z",
+        "updated_at": "2014-02-11T23:29:54.073Z",
+        "category_id": 8785,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 8785,
+          "title": "nonmusical mtv",
+          "created_at": "2014-02-11T23:29:53.679Z",
+          "updated_at": "2014-02-11T23:29:53.679Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 68003,
+        "answer": "<i>Punk\\'d</i>",
+        "question": "On one episode, Halle Berry is denied entrance to her own movie premiere on this prank-filled show",
+        "value": 800,
+        "airdate": "2004-11-15T12:00:00.000Z",
+        "created_at": "2014-02-11T23:29:54.280Z",
+        "updated_at": "2014-02-11T23:29:54.280Z",
+        "category_id": 8785,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 8785,
+          "title": "nonmusical mtv",
+          "created_at": "2014-02-11T23:29:53.679Z",
+          "updated_at": "2014-02-11T23:29:53.679Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 68009,
+        "answer": "<i>Road Rules</i>",
+        "question": "Contestants must complete a mission in order to get to a new location on this x-treme travel adventure series",
+        "value": 1000,
+        "airdate": "2004-11-15T12:00:00.000Z",
+        "created_at": "2014-02-11T23:29:54.493Z",
+        "updated_at": "2014-02-11T23:29:54.493Z",
+        "category_id": 8785,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 8785,
+          "title": "nonmusical mtv",
+          "created_at": "2014-02-11T23:29:53.679Z",
+          "updated_at": "2014-02-11T23:29:53.679Z",
+          "clues_count": 5
+        }
+      }
+    ]
+  },
+  {
+    "category": "the 1950 emmys",
+    "clues": [
+      {
+        "id": 12996,
+        "answer": "Groucho Marx",
+        "question": "\"You Bet Your Life\" he was the \"Most Outstanding Personality\"",
+        "value": 100,
+        "airdate": "1994-11-04T12:00:00.000Z",
+        "created_at": "2014-02-11T22:53:57.083Z",
+        "updated_at": "2014-02-11T22:53:57.083Z",
+        "category_id": 1424,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 1424,
+          "title": "the 1950 emmys",
+          "created_at": "2014-02-11T22:53:57.030Z",
+          "updated_at": "2014-02-11T22:53:57.030Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 13002,
+        "answer": "Korea",
+        "question": "Coverage of the departure of marines to this country won a special events Emmy",
+        "value": 200,
+        "airdate": "1994-11-04T12:00:00.000Z",
+        "created_at": "2014-02-11T22:53:57.164Z",
+        "updated_at": "2014-02-11T22:53:57.164Z",
+        "category_id": 1424,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 1424,
+          "title": "the 1950 emmys",
+          "created_at": "2014-02-11T22:53:57.030Z",
+          "updated_at": "2014-02-11T22:53:57.030Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 13008,
+        "answer": "Cecil",
+        "question": "In the Best Actor category, Jose Ferrer competed against Stan Freberg, the voice of this sea serpent",
+        "value": 300,
+        "airdate": "1994-11-04T12:00:00.000Z",
+        "created_at": "2014-02-11T22:53:57.248Z",
+        "updated_at": "2014-02-11T22:53:57.248Z",
+        "category_id": 1424,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 1424,
+          "title": "the 1950 emmys",
+          "created_at": "2014-02-11T22:53:57.030Z",
+          "updated_at": "2014-02-11T22:53:57.030Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 13014,
+        "answer": "Alan Young",
+        "question": "The best variety show was hosted by this man who later starred with \"Mr. Ed\"",
+        "value": 400,
+        "airdate": "1994-11-04T12:00:00.000Z",
+        "created_at": "2014-02-11T22:53:57.330Z",
+        "updated_at": "2014-02-11T22:53:57.330Z",
+        "category_id": 1424,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 1424,
+          "title": "the 1950 emmys",
+          "created_at": "2014-02-11T22:53:57.030Z",
+          "updated_at": "2014-02-11T22:53:57.030Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 13020,
+        "answer": "<i>Truth or Consequences</i>",
+        "question": "It was the first program to win as Best Game Show; host Ralph Edwards picked up the award",
+        "value": 500,
+        "airdate": "1994-11-04T12:00:00.000Z",
+        "created_at": "2014-02-11T22:53:57.412Z",
+        "updated_at": "2014-02-11T22:53:57.412Z",
+        "category_id": 1424,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 1424,
+          "title": "the 1950 emmys",
+          "created_at": "2014-02-11T22:53:57.030Z",
+          "updated_at": "2014-02-11T22:53:57.030Z",
+          "clues_count": 5
+        }
+      }
+    ]
+  },
+  {
+    "category": "weapons",
+    "clues": [
+      {
+        "id": 3457,
+        "answer": "torpedos",
+        "question": "In submarine slang, they're called \"fish\"",
+        "value": 100,
+        "airdate": "1986-10-03T12:00:00.000Z",
+        "created_at": "2014-02-11T22:48:58.343Z",
+        "updated_at": "2014-02-11T22:48:58.343Z",
+        "category_id": 255,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 255,
+          "title": "weapons",
+          "created_at": "2014-02-11T22:48:02.691Z",
+          "updated_at": "2014-02-11T22:48:02.691Z",
+          "clues_count": 55
+        }
+      },
+      {
+        "id": 3463,
+        "answer": "a jackknife (or the pike)",
+        "question": "1 of 2 common weapons that are also common dives in competition",
+        "value": 200,
+        "airdate": "1986-10-03T12:00:00.000Z",
+        "created_at": "2014-02-11T22:48:58.416Z",
+        "updated_at": "2014-02-11T22:48:58.416Z",
+        "category_id": 255,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 255,
+          "title": "weapons",
+          "created_at": "2014-02-11T22:48:02.691Z",
+          "updated_at": "2014-02-11T22:48:02.691Z",
+          "clues_count": 55
+        }
+      },
+      {
+        "id": 3469,
+        "answer": "star",
+        "question": "Shape of a ninja's shuriken, it's what \"shuriken\" means in Japanese",
+        "value": 300,
+        "airdate": "1986-10-03T12:00:00.000Z",
+        "created_at": "2014-02-11T22:48:58.520Z",
+        "updated_at": "2014-02-11T22:48:58.520Z",
+        "category_id": 255,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 255,
+          "title": "weapons",
+          "created_at": "2014-02-11T22:48:02.691Z",
+          "updated_at": "2014-02-11T22:48:02.691Z",
+          "clues_count": 55
+        }
+      },
+      {
+        "id": 3475,
+        "answer": "a whip",
+        "question": "To \"speed up\" the flying Dumbos at Disneyland, Timothy, the mouse on top of the ride, has 1 of these",
+        "value": 400,
+        "airdate": "1986-10-03T12:00:00.000Z",
+        "created_at": "2014-02-11T22:48:58.592Z",
+        "updated_at": "2014-02-11T22:48:58.592Z",
+        "category_id": 255,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 255,
+          "title": "weapons",
+          "created_at": "2014-02-11T22:48:02.691Z",
+          "updated_at": "2014-02-11T22:48:02.691Z",
+          "clues_count": 55
+        }
+      },
+      {
+        "id": 3481,
+        "answer": "Emperor Ming (the Merciless)",
+        "question": "As part of plan to conquer the universe in a 1940 movie serial, he spread purple death dust over the earth",
+        "value": 500,
+        "airdate": "1986-10-03T12:00:00.000Z",
+        "created_at": "2014-02-11T22:48:58.668Z",
+        "updated_at": "2014-02-11T22:48:58.668Z",
+        "category_id": 255,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 255,
+          "title": "weapons",
+          "created_at": "2014-02-11T22:48:02.691Z",
+          "updated_at": "2014-02-11T22:48:02.691Z",
+          "clues_count": 55
+        }
+      }
+    ]
+  },
+  {
+    "category": "gangsters",
+    "clues": [
+      {
+        "id": 30069,
+        "answer": "Al Capone",
+        "question": "He's quoted as saying, \"They've hung everything on me but the Chicago Fire\"",
+        "value": 100,
+        "airdate": "1999-03-31T12:00:00.000Z",
+        "created_at": "2014-02-11T23:03:39.527Z",
+        "updated_at": "2014-02-11T23:03:39.527Z",
+        "category_id": 3427,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 3427,
+          "title": "gangsters",
+          "created_at": "2014-02-11T23:03:39.416Z",
+          "updated_at": "2014-02-11T23:03:39.416Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 30075,
+        "answer": "World Series",
+        "question": "Arnold \"The Brain\" Rothstein was accused of masterminding the big fix of this in 1919; it wasn't proved",
+        "value": 200,
+        "airdate": "1999-03-31T12:00:00.000Z",
+        "created_at": "2014-02-11T23:03:39.640Z",
+        "updated_at": "2014-02-11T23:03:39.640Z",
+        "category_id": 3427,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 3427,
+          "title": "gangsters",
+          "created_at": "2014-02-11T23:03:39.416Z",
+          "updated_at": "2014-02-11T23:03:39.416Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 30081,
+        "answer": "Clyde Barrow",
+        "question": "His brother Buck was part of his gang, as was his moll Bonnie",
+        "value": 300,
+        "airdate": "1999-03-31T12:00:00.000Z",
+        "created_at": "2014-02-11T23:03:39.754Z",
+        "updated_at": "2014-02-11T23:03:39.754Z",
+        "category_id": 3427,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 3427,
+          "title": "gangsters",
+          "created_at": "2014-02-11T23:03:39.416Z",
+          "updated_at": "2014-02-11T23:03:39.416Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 30087,
+        "answer": "John Dillinger",
+        "question": "His fateful July 22, 1934 night at Chicago's Biograph Theater might be featured on \"Biography\"",
+        "value": 400,
+        "airdate": "1999-03-31T12:00:00.000Z",
+        "created_at": "2014-02-11T23:03:39.862Z",
+        "updated_at": "2014-02-11T23:03:39.862Z",
+        "category_id": 3427,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 3427,
+          "title": "gangsters",
+          "created_at": "2014-02-11T23:03:39.416Z",
+          "updated_at": "2014-02-11T23:03:39.416Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 30093,
+        "answer": "Coast Guard",
+        "question": "Bribes from Big Bill Dwyer turned members of this armed service into rum-runners",
+        "value": 500,
+        "airdate": "1999-03-31T12:00:00.000Z",
+        "created_at": "2014-02-11T23:03:40.008Z",
+        "updated_at": "2014-02-11T23:03:40.008Z",
+        "category_id": 3427,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 3427,
+          "title": "gangsters",
+          "created_at": "2014-02-11T23:03:39.416Z",
+          "updated_at": "2014-02-11T23:03:39.416Z",
+          "clues_count": 5
+        }
+      }
+    ]
+  },
+  {
+    "category": "true religion",
+    "clues": [
+      {
+        "id": 123293,
+        "answer": "a mosque",
+        "question": "In the Sahara desert, this Islamic house of worship may be no more than a semicircle of stones",
+        "value": 200,
+        "airdate": "2014-06-17T12:00:00.000Z",
+        "created_at": "2015-01-18T18:10:03.821Z",
+        "updated_at": "2015-01-18T18:10:03.821Z",
+        "category_id": 16909,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 16909,
+          "title": "true religion",
+          "created_at": "2015-01-18T18:10:03.698Z",
+          "updated_at": "2015-01-18T18:10:03.698Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 123299,
+        "answer": "The Last Supper",
+        "question": "At this event, Jesus handed a cup to his disciples, saying, \"Drink ye all of it; for this is my blood\"",
+        "value": 400,
+        "airdate": "2014-06-17T12:00:00.000Z",
+        "created_at": "2015-01-18T18:10:04.086Z",
+        "updated_at": "2015-01-18T18:10:04.086Z",
+        "category_id": 16909,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 16909,
+          "title": "true religion",
+          "created_at": "2015-01-18T18:10:03.698Z",
+          "updated_at": "2015-01-18T18:10:03.698Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 123305,
+        "answer": "Shinto",
+        "question": "The Inari shrines of this religion are usually guarded by statues of foxes",
+        "value": 600,
+        "airdate": "2014-06-17T12:00:00.000Z",
+        "created_at": "2015-01-18T18:10:04.320Z",
+        "updated_at": "2015-01-18T18:10:04.320Z",
+        "category_id": 16909,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 16909,
+          "title": "true religion",
+          "created_at": "2015-01-18T18:10:03.698Z",
+          "updated_at": "2015-01-18T18:10:03.698Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 123311,
+        "answer": "the Shakers",
+        "question": "In the 19th century members of this celibate religion created a type of circular saw & invented the clothespin",
+        "value": 800,
+        "airdate": "2014-06-17T12:00:00.000Z",
+        "created_at": "2015-01-18T18:10:04.550Z",
+        "updated_at": "2015-01-18T18:10:04.550Z",
+        "category_id": 16909,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 16909,
+          "title": "true religion",
+          "created_at": "2015-01-18T18:10:03.698Z",
+          "updated_at": "2015-01-18T18:10:03.698Z",
+          "clues_count": 10
+        }
+      },
+      {
+        "id": 123317,
+        "answer": "Elizabeth Ann Seton",
+        "question": "Now a saint, she founded the first free Catholic school for girls in America",
+        "value": 1000,
+        "airdate": "2014-06-17T12:00:00.000Z",
+        "created_at": "2015-01-18T18:10:04.787Z",
+        "updated_at": "2015-01-18T18:10:04.787Z",
+        "category_id": 16909,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 16909,
+          "title": "true religion",
+          "created_at": "2015-01-18T18:10:03.698Z",
+          "updated_at": "2015-01-18T18:10:03.698Z",
+          "clues_count": 10
+        }
+      }
+    ]
+  }
+]

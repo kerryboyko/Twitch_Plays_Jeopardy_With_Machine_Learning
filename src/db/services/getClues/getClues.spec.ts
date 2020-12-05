@@ -1,6 +1,8 @@
-import { stripDuplicateClues, groupByAirdate, getRandomCategories } from '.';
+import { groupByAirdate, getRandomCategories, stripDuplicateClues } from '.';
 import { JeopardyClue } from '../../../types';
-import { duplicateClues, starwars } from './getClues.mocks';
+import starwars from './mocks/starwars.json';
+import testBoard from './mocks/testBoard.json';
+import duplicateClues from './mocks/duplicateClues.json';
 
 test('stripDuplicateClues', () => {
   expect(duplicateClues).toHaveLength(10);
@@ -8,7 +10,7 @@ test('stripDuplicateClues', () => {
 });
 
 test('groupByAirdate', () => {
-  const groupedSW = groupByAirdate(starwars as JeopardyClue[]);
+  const groupedSW = groupByAirdate(starwars['star wars'] as JeopardyClue[]);
   expect(Object.keys(groupedSW).sort()).toEqual([
     '1998-04-29T12:00:00.000Z',
     '1999-02-23T12:00:00.000Z',
@@ -19,13 +21,6 @@ test('groupByAirdate', () => {
 });
 
 test('getRandomCategories', async () => {
-  const cats = await getRandomCategories(6, 'this is a seed');
-  expect(cats.map(({ id, title }) => [id, title])).toEqual([
-    [14639, 'the comedic calvin coolidge'],
-    [11898, 'when politicians speak'],
-    [11595, 'sex & the kitty'],
-    [15890, 'text me'],
-    [5639, 'books about presidents'],
-    [16622, 'the rum diaries'],
-  ]);
+  const board = await getRandomCategories(12, 'test seed');
+  expect(board).toEqual(testBoard);
 });
