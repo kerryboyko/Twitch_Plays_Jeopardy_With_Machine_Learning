@@ -1,6 +1,9 @@
+import { connect } from './db/connect';
+import config from './config';
+
 import fs from 'fs';
-/* eslint-disable no-console */
-import { getRandomCategories } from './appendCluesToCategories';
+// /* eslint-disable no-console */
+// import { getCluesByCategoryName } from './db/services/getClues';
 
 const writeOut = (fileName: string, data: string): Promise<void> =>
   new Promise((resolve, reject) => {
@@ -13,9 +16,9 @@ const writeOut = (fileName: string, data: string): Promise<void> =>
     });
   });
 
-const main = async () => {
-  const cats = await getRandomCategories(5);
-  await writeOut('output.json', JSON.stringify(cats, null, 2));
-};
+// const main = async () => {
+//   const data = await getCluesByCategoryName('star wars');
+//   await writeOut('starwars.json', JSON.stringify(data, null, 2));
+// };
 
-main();
+// main();
