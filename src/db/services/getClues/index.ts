@@ -36,6 +36,14 @@ export const groupByAirdate = (clues: JeopardyClue[]): Record<string, JeopardyCl
   return byAirdate;
 };
 
+const getClueById = async (id: number): Promise<JeopardyClue | null> => {
+  const {db, close} = await connect(config.DB_URL, config.DB_NAME);
+  const clue = JeopardyClue | null = await db.collection('jeopardy_clues').findOne({id});
+  close();
+  return clue;
+}
+
+
 export const getCluesByCategory = async (categoryTitleOrId: string | number): Promise<JeopardyClue[] | null> => {
   const { db, close } = await connect(config.DB_URL, config.DB_NAME);
   const query = typeof categoryTitleOrId === 'number' ? { id: categoryTitleOrId } : { title: categoryTitleOrId };
@@ -65,13 +73,18 @@ const verifyCategory = (clues: JeopardyClue[]): boolean => {
 };
 
 export const getRandomCategories = async (
-  count = 12,
+  count = 13, // 6 Jeopardy, 6 Double Jeopardy, and 1 Final Jeopardy.
   seed?: string
 ): Promise<Array<{ category: string; clues: JeopardyClue[] }>> => {
   const rand = seed ? randomSeed.create(seed) : randomSeed.create();
   const categories: Map<string, JeopardyClue[]> = new Map();
+  const selectedCategories = new Set<number>();
   while (categories.size < count) {
     const catId = rand(LARGEST_CATEGORY_ID) + 1;
+    // avoid duplicates
+    if (selectedCategories.has(catId)) {
+      continue;
+    }
     let category = await getCluesByCategory(catId);
     // some categories just will simply be null or incomplete;
     // we don't want to use them.
@@ -90,9 +103,11 @@ export const getRandomCategories = async (
         continue;
       }
     }
+    // some entries are incomplete or are just wrong. We verify them here.
     if (!verifyCategory(category)) {
       continue;
     }
+    selectedCategories.add(catId);
     categories.set(
       category[0].category.title,
       category.map((c) => omit(c, ['_id']) as JeopardyClue)
@@ -101,8 +116,12 @@ export const getRandomCategories = async (
   return Array.from(categories, ([title, clues]) => ({ category: title, clues: clueSorter(clues) }));
 };
 
+
+const fullBoard = (seed?: string): ReturnType<getRandomCategories> => getRandomCategories(13, seed);
+
 const getClues = {
   byCategory: getCluesByCategory,
-  fullBoard: (seed?: string) => getRandomCategories(12, seed),
+  fullBoard,
+  byId: getClueById
 };
 export default getClues;
