@@ -37,12 +37,11 @@ export const groupByAirdate = (clues: JeopardyClue[]): Record<string, JeopardyCl
 };
 
 const getClueById = async (id: number): Promise<JeopardyClue | null> => {
-  const {db, close} = await connect(config.DB_URL, config.DB_NAME);
-  const clue = JeopardyClue | null = await db.collection('jeopardy_clues').findOne({id});
+  const { db, close } = await connect(config.DB_URL, config.DB_NAME);
+  const clue: JeopardyClue | null = await db.collection('jeopardy_clues').findOne({ id });
   close();
   return clue;
-}
-
+};
 
 export const getCluesByCategory = async (categoryTitleOrId: string | number): Promise<JeopardyClue[] | null> => {
   const { db, close } = await connect(config.DB_URL, config.DB_NAME);
@@ -116,12 +115,11 @@ export const getRandomCategories = async (
   return Array.from(categories, ([title, clues]) => ({ category: title, clues: clueSorter(clues) }));
 };
 
-
-const fullBoard = (seed?: string): ReturnType<getRandomCategories> => getRandomCategories(13, seed);
+const fullBoard = (seed?: string): ReturnType<typeof getRandomCategories> => getRandomCategories(13, seed);
 
 const getClues = {
   byCategory: getCluesByCategory,
   fullBoard,
-  byId: getClueById
+  byId: getClueById,
 };
 export default getClues;

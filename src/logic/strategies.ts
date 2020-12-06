@@ -30,4 +30,7 @@ export const mostConsInRightOrderStrategy: Strategy (c, p) => {
   return false;  
 }
 
-export default strategies = [directStrategy, mostConsInRightOrderStrategy, thirdSubstringStrategy]
+// for right now we'll just hardcode these three strategies.  We'll add tensorflow later. 
+const strategies: Strategy[] = [directStrategy, mostConsInRightOrderStrategy, thirdSubstringStrategy];
+
+export default strategies
