@@ -1,7 +1,10 @@
 import { groupByAirdate, getRandomCategories, stripDuplicateClues } from '.';
 import { JeopardyClue } from '../../../types';
+
+// mocks
 import starwars from './mocks/starwars.json';
 import testBoard from './mocks/testBoard.json';
+import testBoard2 from './mocks/testBoard.json';
 import duplicateClues from './mocks/duplicateClues.json';
 
 test('stripDuplicateClues', () => {
@@ -23,4 +26,7 @@ test('groupByAirdate', () => {
 test('getRandomCategories', async () => {
   const board = await getRandomCategories(12, 'test seed');
   expect(board).toEqual(testBoard);
+  const board2 = await getRandomCategories(12, 'test seed 2');
+  expect(board2).not.toEqual(board);
+  expect(board2).toEqual(testBoard2);
 });

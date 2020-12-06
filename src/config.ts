@@ -1,9 +1,17 @@
-const config = {
-  DB_URL: `mongodb://localhost:27017`,
-  DB_NAME: `jeopardy_questions`,
-  JSERVICE_URL: `http://jservice.io/`,
-  SMALLEST_CATEGORY_ID: 1,
-  LARGEST_CATEGORY_ID: 18430,
-};
+import { assert } from 'console';
+import dotenv from 'dotenv';
+import pick from 'lodash/pick';
+dotenv.config();
+
+assert(process.env.CANARY === 'true');
+
+const config: Record<string, string> = pick(process.env, [
+  'DB_URL',
+  'DB_NAME',
+  'JSERVICE_URL',
+  'BOT_USERNAME',
+  'CHANNEL_NAME',
+  'OAUTH_TOKEN',
+]) as Record<string, string>;
 
 export default config;

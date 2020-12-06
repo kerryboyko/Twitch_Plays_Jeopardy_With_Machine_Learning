@@ -5,6 +5,10 @@ import randomSeed from 'random-seed';
 import omit from 'lodash/omit';
 import { JeopardyCategory, JeopardyClue } from '../../../types';
 
+// const SMALLEST_CATEGORY_ID = 1;
+
+const LARGEST_CATEGORY_ID = 18430;
+
 const uidClue = (clue: JeopardyClue) => `${clue.question}||${clue.answer}`;
 
 export const stripDuplicateClues = (clues: JeopardyClue[]): JeopardyClue[] => {
@@ -67,7 +71,7 @@ export const getRandomCategories = async (
   const rand = seed ? randomSeed.create(seed) : randomSeed.create();
   const categories: Map<string, JeopardyClue[]> = new Map();
   while (categories.size < count) {
-    const catId = rand(config.LARGEST_CATEGORY_ID) + 1;
+    const catId = rand(LARGEST_CATEGORY_ID) + 1;
     let category = await getCluesByCategory(catId);
     // some categories just will simply be null or incomplete;
     // we don't want to use them.
