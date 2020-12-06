@@ -1198,5 +1198,105 @@
         }
       }
     ]
+  },
+  {
+    "category": "we the \"people\"",
+    "clues": [
+      {
+        "id": 22690,
+        "answer": "the luckiest people in the world",
+        "question": "According to lyricist Bob Merrill, \"People who need people are\" this",
+        "value": 100,
+        "airdate": "1998-04-20T12:00:00.000Z",
+        "created_at": "2014-02-11T22:59:21.753Z",
+        "updated_at": "2014-02-11T22:59:21.753Z",
+        "category_id": 2391,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 2391,
+          "title": "we the \"people\"",
+          "created_at": "2014-02-11T22:59:21.649Z",
+          "updated_at": "2014-02-11T22:59:21.649Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 22696,
+        "answer": "the People\\'s Choice Awards",
+        "question": "In 1997 Bill Cosby won Favorite Male in a New Series, his 15th of these awards",
+        "value": 200,
+        "airdate": "1998-04-20T12:00:00.000Z",
+        "created_at": "2014-02-11T22:59:21.846Z",
+        "updated_at": "2014-02-11T22:59:21.846Z",
+        "category_id": 2391,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 2391,
+          "title": "we the \"people\"",
+          "created_at": "2014-02-11T22:59:21.649Z",
+          "updated_at": "2014-02-11T22:59:21.649Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 22702,
+        "answer": "the Chosen People",
+        "question": "This phrase for the Jews refers to Exodus 19:6, \"Ye shall be unto me... a holy nation\"",
+        "value": 300,
+        "airdate": "1998-04-20T12:00:00.000Z",
+        "created_at": "2014-02-11T22:59:21.968Z",
+        "updated_at": "2014-02-11T22:59:21.968Z",
+        "category_id": 2391,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 2391,
+          "title": "we the \"people\"",
+          "created_at": "2014-02-11T22:59:21.649Z",
+          "updated_at": "2014-02-11T22:59:21.649Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 22708,
+        "answer": "Up with People",
+        "question": "A song from this international program's festival is heard here:\"Everybody's everybody /And nobody is the same, no, no no no...\"",
+        "value": 400,
+        "airdate": "1998-04-20T12:00:00.000Z",
+        "created_at": "2014-02-11T22:59:22.063Z",
+        "updated_at": "2014-02-11T22:59:22.063Z",
+        "category_id": 2391,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 2391,
+          "title": "we the \"people\"",
+          "created_at": "2014-02-11T22:59:21.649Z",
+          "updated_at": "2014-02-11T22:59:21.649Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 22714,
+        "answer": "a people mover",
+        "question": "You can tour scenic downtown Detroit or Miami on this type of mass transit system",
+        "value": 500,
+        "airdate": "1998-04-20T12:00:00.000Z",
+        "created_at": "2014-02-11T22:59:22.159Z",
+        "updated_at": "2014-02-11T22:59:22.159Z",
+        "category_id": 2391,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 2391,
+          "title": "we the \"people\"",
+          "created_at": "2014-02-11T22:59:21.649Z",
+          "updated_at": "2014-02-11T22:59:21.649Z",
+          "clues_count": 5
+        }
+      }
+    ]
   }
 ]

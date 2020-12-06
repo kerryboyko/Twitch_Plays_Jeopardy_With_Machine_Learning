@@ -16,21 +16,29 @@ export const thirdSubstringStrategy: Strategy = (c, p) => {
   return false;
 };
 
-export const mostConsInRightOrderStrategy: Strategy (c, p) => {  
-  const strippedC = c.split(' ').filter(w => w.length > 3).join('').replace(/[aeiou]/ig,'');
-  const strippedP = p.split(' ').filter(w => w.length > 3).join('').replace(/[aeiou]/ig,'');
+export const mostConsInRightOrderStrategy: Strategy = (c, p) => {
+  const strippedC = c
+    .split(' ')
+    .filter((w) => w.length > 3)
+    .join('')
+    .replace(/[aeiou]/gi, '');
+  const strippedP = p
+    .split(' ')
+    .filter((w) => w.length > 3)
+    .join('')
+    .replace(/[aeiou]/gi, '');
   let cursor = 0;
-  const half = Math.ceil(strippedC.length /2);
-  while(cursor + half <= strippedC.length){
-    if(strippedP.includes(strippedP.substring(cursor, cursor + half))){
+  const half = Math.ceil(strippedC.length / 2);
+  while (cursor + half <= strippedC.length) {
+    if (strippedP.includes(strippedP.substring(cursor, cursor + half))) {
       return true;
     }
     cursor += 1;
   }
-  return false;  
-}
+  return false;
+};
 
-// for right now we'll just hardcode these three strategies.  We'll add tensorflow later. 
+// for right now we'll just hardcode these three strategies.  We'll add tensorflow later.
 const strategies: Strategy[] = [directStrategy, mostConsInRightOrderStrategy, thirdSubstringStrategy];
 
-export default strategies
+export default strategies;

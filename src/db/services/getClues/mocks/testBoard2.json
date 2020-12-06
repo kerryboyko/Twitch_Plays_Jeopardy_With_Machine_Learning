@@ -1198,5 +1198,105 @@
         }
       }
     ]
+  },
+  {
+    "category": "amphibians",
+    "clues": [
+      {
+        "id": 45157,
+        "answer": "South America",
+        "question": "Phyllobates terribilis, from this continent, is one of the more lethal of the poison dart frogs",
+        "value": 100,
+        "airdate": "2001-01-11T12:00:00.000Z",
+        "created_at": "2014-02-11T23:13:06.078Z",
+        "updated_at": "2014-02-11T23:13:06.078Z",
+        "category_id": 5593,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 5593,
+          "title": "amphibians",
+          "created_at": "2014-02-11T23:13:05.983Z",
+          "updated_at": "2014-02-11T23:13:05.983Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 45163,
+        "answer": "Eel",
+        "question": "The long, slithery amphiuma is also called the Congo snake or the Congo type of this fish",
+        "value": 200,
+        "airdate": "2001-01-11T12:00:00.000Z",
+        "created_at": "2014-02-11T23:13:06.204Z",
+        "updated_at": "2014-02-11T23:13:06.204Z",
+        "category_id": 5593,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 5593,
+          "title": "amphibians",
+          "created_at": "2014-02-11T23:13:05.983Z",
+          "updated_at": "2014-02-11T23:13:05.983Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 45169,
+        "answer": "Goliath",
+        "question": "Appropriately, a foot-long, 7-lb. African frog bears the name of this 6-cubits-&-a-span Biblical person",
+        "value": 300,
+        "airdate": "2001-01-11T12:00:00.000Z",
+        "created_at": "2014-02-11T23:13:06.331Z",
+        "updated_at": "2014-02-11T23:13:06.331Z",
+        "category_id": 5593,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 5593,
+          "title": "amphibians",
+          "created_at": "2014-02-11T23:13:05.983Z",
+          "updated_at": "2014-02-11T23:13:05.983Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 45175,
+        "answer": "Newt",
+        "question": "The smooth type of this common variety of salamander is seen here",
+        "value": 400,
+        "airdate": "2001-01-11T12:00:00.000Z",
+        "created_at": "2014-02-11T23:13:06.457Z",
+        "updated_at": "2014-02-11T23:13:06.457Z",
+        "category_id": 5593,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 5593,
+          "title": "amphibians",
+          "created_at": "2014-02-11T23:13:05.983Z",
+          "updated_at": "2014-02-11T23:13:05.983Z",
+          "clues_count": 5
+        }
+      },
+      {
+        "id": 45181,
+        "answer": "Undulate",
+        "question": "This word, from the Latin for \"wave\", describes the way some amphibians move",
+        "value": 500,
+        "airdate": "2001-01-11T12:00:00.000Z",
+        "created_at": "2014-02-11T23:13:06.580Z",
+        "updated_at": "2014-02-11T23:13:06.580Z",
+        "category_id": 5593,
+        "game_id": null,
+        "invalid_count": null,
+        "category": {
+          "id": 5593,
+          "title": "amphibians",
+          "created_at": "2014-02-11T23:13:05.983Z",
+          "updated_at": "2014-02-11T23:13:05.983Z",
+          "clues_count": 5
+        }
+      }
+    ]
   }
 ]

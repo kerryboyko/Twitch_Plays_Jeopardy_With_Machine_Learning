@@ -1,11 +1,21 @@
 import { groupByAirdate, getRandomCategories, stripDuplicateClues } from '.';
 import { JeopardyClue } from '../../../types';
-
+import fs from 'fs';
 // mocks
 import starwars from './mocks/starwars.json';
 import testBoard from './mocks/testBoard.json';
-import testBoard2 from './mocks/testBoard.json';
+import testBoard2 from './mocks/testBoard2.json';
 import duplicateClues from './mocks/duplicateClues.json';
+
+const writeOut = (filename: string, data: string): Promise<void> =>
+  new Promise((resolve, reject) => {
+    fs.writeFile(filename, data, 'utf8', (err) => {
+      if (err) {
+        reject(err);
+      }
+      resolve();
+    });
+  });
 
 test('stripDuplicateClues', () => {
   expect(duplicateClues).toHaveLength(10);
@@ -24,9 +34,8 @@ test('groupByAirdate', () => {
 });
 
 test('getRandomCategories', async () => {
-  const board = await getRandomCategories(12, 'test seed');
+  const board = await getRandomCategories(13, 'test seed');
   expect(board).toEqual(testBoard);
-  const board2 = await getRandomCategories(12, 'test seed 2');
-  expect(board2).not.toEqual(board);
+  const board2 = await getRandomCategories(13, 'test seed 2');
   expect(board2).toEqual(testBoard2);
 });
