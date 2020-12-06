@@ -1,7 +1,7 @@
-import { Client } from 'tmi.js';
+import { ChatUserstate, Client } from 'tmi.js';
 import config from '../config';
 
-export const launchClient = () => {
+export const connectClient = () => {
   const client = Client({
     options: { debug: true },
     connection: {
@@ -14,23 +14,21 @@ export const launchClient = () => {
       password: config.OAUTH_TOKEN,
     },
   });
-
   client.on('connected', (addr, port) => {
     console.log(`* Connected to ${addr}:${port}`);
   });
-
-  client.on('message', (target, context, message, self) => {
-    if (self) {
+  client.on('message', (target, context: ChatUserstate, message: string, isSelf: boolean) => {
+    if (isSelf) {
       return;
     }
     console.log(`${context['display-name']}: ${message}`);
-    if (message.trim().toLowerCase() === '!whatis') {
-      client.say(target, `Answers must be in the form of a question`);
+
+    if (['!whois', '!whatis', '!whenis', '!whereis'].some((key: string) => message.startsWith(key))) {
+      client.say(target, `What is: ${message}`);
     }
   });
-
   client.connect();
   return client;
 };
 
-export default launchClient;
+export default connectClient;

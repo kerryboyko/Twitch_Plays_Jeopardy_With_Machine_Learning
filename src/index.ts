@@ -1,5 +1,3 @@
-import config from './config';
+import { connectClient } from './alexTrebot/connectClient';
 
-import { launchClient } from './alexTrebot';
-
-launchClient();
+connectClient();
