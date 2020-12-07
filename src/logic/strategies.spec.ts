@@ -15,6 +15,7 @@ describe('strategies', () => {
       expect(thirdSubstringStrategy('henry viii', 'henry viii')).toBe(true);
       expect(thirdSubstringStrategy('henry viii', 'henry tudor')).toBe(true);
       expect(thirdSubstringStrategy('henry viii', 'henry the 8th')).toBe(true);
+      expect(thirdSubstringStrategy('henry viii', 'henry vi')).toBe(true); // false positive
       expect(thirdSubstringStrategy('henry viii', 'henry ford')).toBe(true); // false positive
       expect(thirdSubstringStrategy('henry viii', 'steve buschemi')).toBe(false);
       expect(thirdSubstringStrategy('independence day', '4th of july')).toBe(false); // false negative
@@ -27,6 +28,7 @@ describe('strategies', () => {
       expect(majorityConsonantsInRightOrderStrategy('henry viii', 'henry viii')).toBe(true);
       expect(majorityConsonantsInRightOrderStrategy('henry viii', 'henry tudor')).toBe(true);
       expect(majorityConsonantsInRightOrderStrategy('henry viii', 'henry the 8th')).toBe(true);
+      expect(majorityConsonantsInRightOrderStrategy('henry viii', 'henry vi')).toBe(true); // false positive
       expect(majorityConsonantsInRightOrderStrategy('henry viii', 'henry ford')).toBe(true); // false positive
       expect(majorityConsonantsInRightOrderStrategy('henry viii', 'steve buschemi')).toBe(false);
       expect(majorityConsonantsInRightOrderStrategy('independence day', '4th of july')).toBe(false); // false negative
