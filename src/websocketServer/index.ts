@@ -3,13 +3,13 @@ import config from '../config';
 
 const startWebsocketServer = (port = config.WEBSOCKET_SERVER_PORT) => {
   const wss = new WebsocketServer({ port });
-  wss.on('connection', (client) => {
-    client.on('message', (message) => {
-      console.log(`recieved ${message}`);
-      client.send(`message recieved: ${message}`);
-      client.emit('MESSAGE_RECIEVED', message, new Date().toISOString());
+  wss.on('connection', (ws, request, client) => {
+    ws.on('message', (message) => {
+      console.info(`websocket recieved ${message}`);
+      ws.send(`message recieved: ${message} from client ${client  @}`);
+      ws.emit('MESSAGE_RECIEVED', message, new Date().toISOString());
     });
 
-    client.send(`Connected to websocket server`);
+    ws.send(`Connected to websocket server`);
   });
 };

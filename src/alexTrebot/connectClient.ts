@@ -15,13 +15,13 @@ export const connectClient = () => {
     },
   });
   client.on('connected', (addr, port) => {
-    console.log(`* Connected to ${addr}:${port}`);
+    console.info(`* Connected to ${addr}:${port}`);
   });
   client.on('message', (target, context: ChatUserstate, message: string, isSelf: boolean) => {
     if (isSelf) {
       return;
     }
-    console.log(`${context['display-name']}: ${message}`);
+    console.info(`${context['display-name']}: ${message}`);
 
     if (['!whois', '!whatis', '!whenis', '!whereis'].some((key: string) => message.startsWith(key))) {
       client.say(target, `What is: ${message}`);
