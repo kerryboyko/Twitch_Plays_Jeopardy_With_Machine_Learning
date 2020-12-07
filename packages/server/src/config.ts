@@ -1,7 +1,9 @@
 import { assert } from "console";
 import dotenv from "dotenv";
 import pick from "lodash/pick";
-dotenv.config();
+import path from "path";
+console.log(path.resolve(__dirname, "../../../", ".env"));
+dotenv.config({ path: path.resolve(__dirname, "../../../", ".env") });
 
 assert(process.env.CANARY === "true");
 
@@ -12,8 +14,7 @@ const config: Record<string, string> = pick(process.env, [
   "BOT_USERNAME",
   "CHANNEL_NAME",
   "OAUTH_TOKEN",
-  "REST_SERVER_PORT",
-  "WEBSOCKET_SERVER_PORT",
+  "SERVER_PORT",
 ]) as Record<string, string>;
 
 export default config;

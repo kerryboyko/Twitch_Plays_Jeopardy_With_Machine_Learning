@@ -19,10 +19,11 @@
     "lodash": "^4.17.20",
     "mongodb": "^3.6.3",
     "random-seed": "^0.3.0",
-    "tmi.js": "^1.5.0",
-    "ws": "^7.4.1"
+    "socket.io": "^3.0.4",
+    "tmi.js": "^1.5.0"
   },
   "devDependencies": {
+    "@jeopardai/types": "workspace:packages/types",
     "@types/axios": "^0.14.0",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.9",
@@ -31,8 +32,8 @@
     "@types/mongodb": "^3.6.1",
     "@types/node": "^14.14.10",
     "@types/random-seed": "^0.3.3",
+    "@types/socket.io": "^2.1.11",
     "@types/tmi.js": "^1.4.2",
-    "@types/ws": "^7.4.0",
     "@typescript-eslint/eslint-plugin": "^4.8.2",
     "@typescript-eslint/parser": "^4.8.2",
     "concurrently": "^5.3.0",
