@@ -17,8 +17,6 @@
 import { io, Socket } from "socket.io-client";
 import { defineComponent, onMounted, reactive } from "vue";
 
-const socket: Socket = io("http://localhost:8000");
-
 export default defineComponent({
   name: "Main",
   setup() {
