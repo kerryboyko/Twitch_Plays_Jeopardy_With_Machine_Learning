@@ -31,16 +31,13 @@ export const majorityConsonantsInRightOrderStrategy: Strategy = (c, p) => {
     .filter((w) => w.length > 3)
     .join('')
     .replace(/[aeiou]/gi, '');
-  console.log(strippedC, strippedP);
   if (strippedC.length < 3 || strippedP.length < 3) {
     return null; // not enough data to use strategy;
   }
   let cursor = 0;
   const half = Math.ceil(strippedC.length / 2);
   while (cursor + half <= strippedP.length) {
-    console.log(strippedP.substring(cursor, cursor + half));
     if (strippedC.includes(strippedP.substring(cursor, cursor + half))) {
-      console.log(`sc: ${strippedC}, sp: ${strippedP}, match ${strippedP.substring(cursor, cursor + half)}`);
       return true;
     }
     cursor += 1;
@@ -49,6 +46,10 @@ export const majorityConsonantsInRightOrderStrategy: Strategy = (c, p) => {
 };
 
 // for right now we'll just hardcode these three strategies.  We'll add tensorflow later.
-const strategies: Strategy[] = [directStrategy, majorityConsonantsInRightOrderStrategy, thirdSubstringStrategy];
+const strategies: Record<string, Strategy> = {
+  directStrategy,
+  majorityConsonantsInRightOrderStrategy,
+  thirdSubstringStrategy,
+};
 
 export default strategies;
