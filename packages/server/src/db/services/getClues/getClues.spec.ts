@@ -1,5 +1,5 @@
 import { groupByAirdate, getRandomCategories, stripDuplicateClues } from ".";
-import { JeopardyClue } from "@jeopardai/types";
+import { JeopardyClue } from "../../../types";
 import fs from "fs";
 // mocks
 import starwars from "./mocks/starwars.json";

@@ -1,7 +1,7 @@
 import getClues from "../db/services/getClues";
 import answerEvaluator from "../logic/answerEvaluator";
 import type { Express, Request, Response } from "express";
-import type { JeopardyClue } from "@jeopardai/types";
+import type { JeopardyClue } from "../types";
 
 interface EvaluateAnswersBody {
   id: number; // question id

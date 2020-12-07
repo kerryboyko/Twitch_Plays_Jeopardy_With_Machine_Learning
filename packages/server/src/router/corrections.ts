@@ -1,12 +1,6 @@
-import getClues from "../db/services/getClues";
 import saveCorrections from "../db/services/saveCorrections";
-import answerEvaluator from "../logic/answerEvaluator";
 import type { Express, Request, Response } from "express";
-import type {
-  JeopardyClue,
-  CorrectionReport,
-  CorrectionsBody,
-} from "@jeopardai/types";
+import type { CorrectionsBody } from "../types";
 
 export const corrections = (app: Express) => {
   app.post("/corrections", async (req: Request, res: Response) => {

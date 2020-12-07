@@ -1,5 +1,5 @@
 import { saveCorrections, getCorrections, dropCorrection } from ".";
-import { JeopardyClue, CorrectionReport } from "@jeopardai/types";
+import { CorrectionReport } from "../../../types";
 const oprahq = {
   _id: "5fcb54d24f6d209fc249df10",
   id: 22478,

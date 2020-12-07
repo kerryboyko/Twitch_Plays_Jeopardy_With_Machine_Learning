@@ -3,7 +3,7 @@ import connect from "../../connect";
 import config from "../../../config";
 import randomSeed from "random-seed";
 import omit from "lodash/omit";
-import { JeopardyCategory, JeopardyClue } from "@jeopardai/types";
+import { JeopardyCategory, JeopardyClue } from "../../../types";
 
 // const SMALLEST_CATEGORY_ID = 1;
 

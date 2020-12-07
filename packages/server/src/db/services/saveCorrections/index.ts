@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import connect from "../../connect";
 import config from "../../../config";
-import { JeopardyClue, CorrectionReport } from "@jeopardai/types";
+import { CorrectionReport } from "../../../types";
 
 export const dropCorrection = async (id: number) => {
   const { db, close } = await connect(config.DB_URL, config.DB_NAME);
