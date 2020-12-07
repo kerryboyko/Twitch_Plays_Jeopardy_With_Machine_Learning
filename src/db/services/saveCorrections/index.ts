@@ -1,14 +1,7 @@
 /* eslint-disable no-console */
 import connect from '../../connect';
 import config from '../../../config';
-import { JeopardyClue } from '../../../types';
-
-export interface CorrectionReport {
-  reporter: string; // username of reporter;
-  provided: string; // the answer that was provided
-  type: string; // typeof report - thinking this might be enum 'NOT_WRONG' | 'NOT_RIGHT' | 'INVALID_CLUE' | 'OUTDATED_CLUE'
-  date?: Date;
-}
+import { JeopardyClue, CorrectionReport } from '../../../types';
 
 export const dropCorrection = async (id: number) => {
   const { db, close } = await connect(config.DB_URL, config.DB_NAME);
@@ -17,10 +10,13 @@ export const dropCorrection = async (id: number) => {
   return result;
 };
 
-export const saveCorrections = async (id: number, canonical: string, reports: CorrectionReport[]) => {
+export const saveCorrections = async (id: number, corrections: CorrectionReport[]) => {
   const { db, close } = await connect(config.DB_URL, config.DB_NAME);
   const d = new Date();
-  reports = reports.map((report) => ({ ...report, date: d }));
+  const clue = await db.collection('jeopardy_clues').findOne({ id });
+  const canonical = clue.answer.toLowerCase();
+
+  const reports = corrections.map((report) => ({ ...report, date: d }));
   const result = await db.collection('corrections').findOneAndUpdate(
     { id },
     {

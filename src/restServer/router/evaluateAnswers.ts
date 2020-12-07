@@ -8,7 +8,7 @@ interface EvaluateAnswersBody {
   id: number; // question id
   answers: [string, string][]; // array of [username, answer]
 }
-export const answers = (app: Express) => {
+export const evaluateAnswers = (app: Express) => {
   app.post('/evaluate_answers', async (req: Request, res: Response) => {
     const { id, answers }: EvaluateAnswersBody = req.body;
     const clue: JeopardyClue | null = await getClues.byId(id);
@@ -22,4 +22,4 @@ export const answers = (app: Express) => {
   return app;
 };
 
-export default answers;
+export default evaluateAnswers;

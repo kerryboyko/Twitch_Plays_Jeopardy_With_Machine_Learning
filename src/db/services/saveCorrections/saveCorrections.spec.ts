@@ -1,5 +1,5 @@
-import { saveCorrections, getCorrections, dropCorrection, CorrectionReport } from '.';
-import { JeopardyClue } from '../../../types';
+import { saveCorrections, getCorrections, dropCorrection } from '.';
+import { JeopardyClue, CorrectionReport } from '../../../types';
 
 const oprahq = {
   _id: '5fcb54d24f6d209fc249df10',
@@ -33,7 +33,7 @@ const testCorrections: CorrectionReport[] = [
 
 test('saveCorrections', async () => {
   await dropCorrection(22478);
-  await saveCorrections(oprahq.id, oprahq.answer.toLowerCase(), testCorrections);
+  await saveCorrections(oprahq.id, testCorrections);
 
   const retrieved = await getCorrections(oprahq.id);
   expect(retrieved.id).toBe(22478);
@@ -52,7 +52,6 @@ test('saveCorrections', async () => {
   ]);
   await saveCorrections(
     oprahq.id,
-    oprahq.answer.toLowerCase(),
     testCorrections.map((c: CorrectionReport) => ({ ...c, reporter: c.reporter.split('').reverse().join('') }))
   );
 

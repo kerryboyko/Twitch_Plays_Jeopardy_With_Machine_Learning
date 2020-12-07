@@ -34,3 +34,10 @@ export interface JServiceCategoryParams {
   count?: number;
   offset?: number;
 }
+
+export interface CorrectionReport {
+  reporter: string; // username of reporter;
+  provided: string; // the answer that was provided
+  type: string; // typeof report - thinking this might be enum 'NOT_WRONG' | 'NOT_RIGHT' | 'INVALID_CLUE' | 'OUTDATED_CLUE'
+  date?: Date;
+}
