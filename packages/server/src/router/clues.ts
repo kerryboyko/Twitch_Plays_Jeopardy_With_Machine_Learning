@@ -1,7 +1,7 @@
-import { Express, Request, Response } from "express";
+import { Application, Request, Response } from "express";
 import getClues from "../db/services/getClues";
 
-export const clues = (app: Express) => {
+export const clues = (app: Application): Application => {
   app.get("/clues", async (req: Request, res: Response) => {
     const seed = req.query.seed as string;
     const categories = await getClues.fullBoard(seed);

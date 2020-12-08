@@ -1,8 +1,8 @@
-/* eslint-disable no-console */
+/* eslint-disable no-continue */
+import randomSeed, { RandomSeed } from "random-seed";
+import omit from "lodash/omit";
 import connect from "../../connect";
 import config from "../../../config";
-import randomSeed from "random-seed";
-import omit from "lodash/omit";
 import { JeopardyCategory, JeopardyClue } from "../../../types";
 
 // const SMALLEST_CATEGORY_ID = 1;
@@ -92,17 +92,21 @@ const verifyCategory = (clues: JeopardyClue[]): boolean => {
 
 export const getRandomCategories = async (
   count = 13, // 6 Jeopardy, 6 Double Jeopardy, and 1 Final Jeopardy.
-  seed?: string
+  rand: RandomSeed = randomSeed.create()
 ): Promise<Array<{ category: string; clues: JeopardyClue[] }>> => {
-  const rand = seed ? randomSeed.create(seed) : randomSeed.create();
   const categories: Map<string, JeopardyClue[]> = new Map();
   const selectedCategories = new Set<number>();
+  /* Note that this while loop makes use of the continue statement,
+     normally forbidden by eslint */
   while (categories.size < count) {
     const catId = rand(LARGEST_CATEGORY_ID) + 1;
     // avoid duplicates
     if (selectedCategories.has(catId)) {
       continue;
     }
+    /* this could be made more efficient by grabbing multiple candidate ids
+    / and Promise.all them -- BUUUUUT that's a refactor that's premature optimization */
+    // eslint-disable-next-line no-await-in-loop
     let category = await getCluesByCategory(catId);
     // some categories just will simply be null or incomplete;
     // we don't want to use them.
@@ -137,8 +141,9 @@ export const getRandomCategories = async (
   }));
 };
 
-const fullBoard = (seed?: string): ReturnType<typeof getRandomCategories> =>
-  getRandomCategories(13, seed);
+const fullBoard = (
+  rand: RandomSeed = randomSeed.create()
+): ReturnType<typeof getRandomCategories> => getRandomCategories(13, rand);
 
 const getClues = {
   byCategory: getCluesByCategory,

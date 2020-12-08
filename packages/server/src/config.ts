@@ -2,7 +2,7 @@ import { assert } from "console";
 import dotenv from "dotenv";
 import pick from "lodash/pick";
 import path from "path";
-console.log(path.resolve(__dirname, "../../../", ".env"));
+
 dotenv.config({ path: path.resolve(__dirname, "../../../", ".env") });
 
 assert(process.env.CANARY === "true");

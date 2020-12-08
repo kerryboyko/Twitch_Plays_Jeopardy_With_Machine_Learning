@@ -1,9 +1,11 @@
-import config from "./config";
+import { createServer } from "http";
+import cors from "cors";
 import express from "express";
+import config from "./config";
 import router from "./router";
 import sockets from "./sockets";
-import { createServer } from "http";
-import cors from 'cors';
+
+// export the websocket commands -- these will also be used by the client.
 
 const PORT = parseInt(config.SERVER_PORT, 10);
 const main = () => {

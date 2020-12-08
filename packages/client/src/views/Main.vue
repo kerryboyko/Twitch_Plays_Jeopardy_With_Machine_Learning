@@ -14,9 +14,8 @@
 </template>
 
 <script lang="ts">
-import { io, Socket } from "socket.io-client";
-import { defineComponent, onMounted, reactive } from "vue";
-
+import { defineComponent, reactive, onBeforeMount } from "vue";
+import useSocket from "../hooks/useSocket";
 export default defineComponent({
   name: "Main",
   setup() {
@@ -24,19 +23,11 @@ export default defineComponent({
       responses: [],
       inputField: "",
     });
-    socket.on("message", (msg: string) => {
-      console.log("msg:", msg);
-      state.responses.push(msg);
+    onBeforeMount(() => {
+      useSocket();
     });
-    socket.on("connected", () => {
-      console.log("connected");
-    });
-    const sendMessage = () => {
-      socket.emit("message", state.inputField);
-    };
     return {
       state,
-      sendMessage,
     };
   },
 });

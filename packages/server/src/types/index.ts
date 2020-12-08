@@ -46,3 +46,5 @@ export interface CorrectionsBody {
   id: number; // question id
   corrections: CorrectionReport[]; // [reporter, providedAnswer, typeOfCorrection];
 }
+
+export type ClueCategory = { category: string; clues: JeopardyClue[] };
