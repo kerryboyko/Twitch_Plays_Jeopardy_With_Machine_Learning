@@ -18,7 +18,8 @@
   "scripts": {
     "dev:client": "yarn workspace @jeopardai/client dev",
     "dev:server": "yarn workspace @jeopardai/server dev",
-    "dev": "concurrently --kill-others-on-fail \"yarn dev:server\"  \"yarn dev:client\""
+    "dev": "concurrently --kill-others-on-fail \"yarn dev:server\"  \"yarn dev:client\"",
+    "format": "prettier \"packages/**/*.{js,ts,jsx,tsx,vue}\""
   },
   "dependencies": {
     "commitizen": "^4.2.2",

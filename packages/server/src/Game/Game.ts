@@ -6,13 +6,14 @@ import createBoard from "./utils/createBoard";
 import { MINUTE } from "./utils/constants";
 import { JeopardyClue, ClueCategory } from "../types";
 import { wsServer } from "../sockets/commands";
+import genSeedString from "./utils/genSeedString";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const fakeEmit = (...stuff: any[]) => console.log(...stuff);
 
 enum GameState {
-  LoadingQuestions = "Loading Questions",
-  PreGame = "PreGame",
+  None = "None",
+  LoadingGame = "LoadingGame",
   Jeopardy = "Jeopardy",
   DoubleJeopardy = "Double Jeopardy",
   FinalJeopardy = "Final Jeopardy",
@@ -39,7 +40,11 @@ enum ClueState {
 // }
 
 class Game {
-  private readonly rand: RandomSeed;
+  private rand: RandomSeed;
+
+  private gameState = GameState.None;
+
+  private clueState = ClueState.NoClue;
 
   private gameStartTime = 0;
 
@@ -47,12 +52,10 @@ class Game {
 
   private clues: ClueCategory[] = [];
 
-  private gameState = GameState.LoadingQuestions;
-
-  private clueState = ClueState.NoClue;
+  private dailyDoubles: [number, number][] = [];
 
   private board: {
-    clueSet: { category: string; clues: (JeopardyClue | null)[] }[];
+    clueSet: ClueCategory[];
     lookup: Record<string, number>;
   } = { clueSet: [], lookup: {} };
 
@@ -74,13 +77,25 @@ class Game {
 
   public scoreboard: Record<string, number> = {};
 
-  constructor(seed?: string) {
-    this.rand = seed ? randomSeed.create(seed) : randomSeed.create();
-    getClues.fullBoard(this.rand).then((clues) => {
-      this.clues = clues;
-      this.prepGame();
-    });
+  constructor(public seed: string = genSeedString()) {
+    this.rand = randomSeed.create(seed);
+    this.changeGameState(GameState.LoadingGame);
   }
+
+  private valuesToIndexes = (key: string, value: number): [number, number] => [this.board.lookup[key], value / (this.gameState === GameState.DoubleJeopardy ? 400 : 200)]
+
+  // used to grab the next clue automatically
+  // as well as check to see if we should go to next round. 
+  private nextClue = (): [number, number] | null => {
+    for (let cat = 0, catL = this.board.clueSet.length; cat < catL; cat++){
+      for(let cluIndex = 0, cluL = this.board.clueSet[cat].clues.length; cluIndex < cluL; cluIndex++){
+        if(this.board.clueSet[cat].clues[cluIndex] !== null){
+          return [cat, cluIndex]
+        }
+      }
+    }
+    return null;
+  };
 
   public registerPlayer = (playerName: string): void => {
     if (!this.scoreboard[playerName]) {
@@ -88,106 +103,108 @@ class Game {
     }
   };
 
-  public prepGame = (): void => {
-    this.board = createBoard(this.clues.slice(0, 6));
-    this.changeGameState(GameState.PreGame);
-    this.changeClueState(ClueState.NoClue);
+  private onLoadingGame = async (): Promise<void> => {
+    this.gameStartTime = Date.now() + 3 * MINUTE;
+    fakeEmit(wsServer.GAME_START_TIME, this.gameStartTime);
+    fakeEmit(
+      wsServer.INFO,
+      `Type !register to register to play. Game will start in 3 minutes`
+    );
+    const clues = await getClues.fullBoard(this.rand);
+    this.clues = clues;
+    this.board = createBoard(this.clues.slice(0, 6), this.rand, false);
+    this.timeouts.jeopardy = setTimeout(() => {
+      this.changeGameState(GameState.Jeopardy);
+    }, 3 * MINUTE);
   };
 
-  public startGame = (): void => {
-    this.changeGameState(GameState.Jeopardy);
+  private onJeopardy = (): void => {
+    // we may run this early, so we clear the timeout if we haven't already.
+    clearTimeout(this.timeouts.jeopardy);
+    fakeEmit(
+      wsServer.SEND_CATEGORIES,
+      this.board.clueSet.map((clueCategory: ClueCategory) => [
+        clueCategory.key,
+        clueCategory.category,
+      ])
+    );
+    const players = Object.keys(this.scoreboard);
+    this.controllingPlayer =
+      players[Math.floor(Math.random() * players.length)];
+    fakeEmit(wsServer.CHANGE_CONTROLLER, {
+      controllingPlayer: this.controllingPlayer,
+      message: `We flipped a coin to determine who will go first, and so we'll start with ${this.controllingPlayer}`,
+    });
     this.changeClueState(ClueState.SelectClue);
   };
 
-  /* We probably want to put the emits here. */
-  public changeGameState = (gameState: GameState): void => {
+  private changeGameState = (gameState: GameState): void => {
     this.gameState = gameState;
     fakeEmit(wsServer.GAME_STATE_CHANGE, gameState);
-    if (gameState === GameState.PreGame) {
-      this.gameStartTime = Date.now() + 3 * MINUTE;
-      fakeEmit(wsServer.GAME_START_TIME, this.gameStartTime);
-      fakeEmit(
-        wsServer.INFO,
-        `Type !register to register to play. Game will start in 3 minutes`
-      );
-      this.timeouts.twoMinuteWarning = setTimeout(() => {
-        fakeEmit(
-          wsServer.INFO,
-          `Type !register to register to play. Game will start in 2 minutes`
-        );
-      }, 1 * MINUTE);
-      this.timeouts.oneMinuteWarning = setTimeout(() => {
-        fakeEmit(
-          wsServer.INFO,
-          `Type !register to register to play. Game will start in 1 minute`
-        );
-      }, 2 * MINUTE);
-      this.timeouts.startGame = setTimeout(() => {
-        this.startGame();
-        for (const timeout of Object.values(this.timeouts)) {
-          clearTimeout(timeout);
-        }
-      }, 3 * MINUTE);
-    }
-    if (gameState === GameState.Jeopardy) {
-      // in case we start early
-      for (const timeout of Object.values(this.timeouts)) {
-        clearTimeout(timeout);
-      }
-    }
+    const handlers = {
+      [GameState.LoadingGame]: this.onLoadingGame,
+      [GameState.Jeopardy]: this.onJeopardy,
+      [GameState.DoubleJeopardy]: this.onDoubleJeopardy,
+      [GameState.FinalJeopardy]: this.onFinalJeopardy,
+      [GameState.FinalScores]: this.onFinalScores,
+    };
+    handlers[gameState]();
   };
 
   /* Same - put emits in here.  */
-  public changeClueState = (clueState: ClueState): void => {
+  private changeClueState = (clueState: ClueState): void => {
     this.clueState = clueState;
     fakeEmit(wsServer.CLUE_STATE_CHANGE, clueState);
-    if (clueState === ClueState.SelectClue) {
-      fakeEmit(
-        wsServer.SelectClue,
-        `${
-          this.controllingPlayer || "this.controllingPlayer"
-        }, you have control of the board, select a category.`
-      );
+    const handlers = {
+      [ClueState.SelectClue]: this.onPromptSelectClue,
+      [ClueState.DisplayClue]: this.onDisplayClue,
+      [ClueState.DisplayAnswer]: this.onDisplayAnswer,
+      [ClueState.NoClue]: this.onNoClue,
     }
-    if (clueState === ClueState.DisplayClue) {
-      fakeEmit(
-        wsServer.DisplayClue,
-        pick(this.currentClue, ["question", "category", "value"])
-      );
-    }
-  };
+    handlers[clueState]()
+  }
 
-  public selectClue = (categoryKeyword: string, value: number): void => {
-    try {
-      const valueIndex =
-        value / (this.gameState === GameState.Jeopardy ? 200 : 400);
-      const categoryIndex = this.board.lookup[categoryKeyword];
-      if (
-        categoryIndex === undefined ||
-        !isInteger(valueIndex) ||
-        valueIndex < 0 ||
-        valueIndex > 4 ||
-        this.board.clueSet[categoryIndex].clues[valueIndex] === null
-      ) {
-        throw new Error(`Invalid selection - Please Try Again`);
-      }
-      const { question, answer, category } = pick(
-        this.board.clueSet[categoryIndex].clues[valueIndex],
-        ["question", "answer", "category"]
+  private onPromptSelectClue = () => {
+    fakeEmit(
+      wsServer.SelectClue,
+      `${this.controllingPlayer}, you have control of the board, select a category.`
+    );
+
+    this.timeouts.selectClue = setTimeout(() => {
+      const nextClue = this.nextClue() as [number, number];
+      fakeEmit(
+        wsServer.NoClueSelectionResponse,
+        `No response: Selecting next clue automatically`
       );
-      this.currentClue = {
-        category: category?.title as string,
-        question: question as string,
-        answer: answer as string,
-        value,
-        indices: [categoryIndex, valueIndex],
-      };
-      // probably want to emit on setting the current clue.
-      this.changeClueState(ClueState.DisplayClue);
-    } catch (e) {
-      throw new Error(e); // we'll have some websocket handlers to prompt the user to try again here.
+      this.onClueSelected(nextClue);
+    }, MINUTE)
+  }
+
+  public onClueSelected = ([categoryIndex, valueIndex]: [number, number]):void => {
+    if (
+      categoryIndex === undefined ||
+      !isInteger(valueIndex) ||
+      valueIndex < 0 ||
+      valueIndex > 4 ||
+      this.board.clueSet[categoryIndex].clues[valueIndex] === null
+    ) {
+      throw new Error(`Invalid selection - Please Try Again`);
     }
-  };
+    const { question, answer, category } = pick(
+      this.board.clueSet[categoryIndex].clues[valueIndex],
+      ["question", "answer", "category"]
+    );
+    this.currentClue = {
+      category: category?.title as string,
+      question: question as string,
+      answer: answer as string,
+      value: (valueIndex + 1) * (this.gameState === GameState.DoubleJeopardy ? 400 : 200),
+      indices: [categoryIndex, valueIndex],
+    };
+    // probably want to emit on setting the current clue.
+    this.changeClueState(ClueState.DisplayClue);
+  }
+  
 }
 
 export default Game;

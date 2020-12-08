@@ -1,20 +1,34 @@
 import invert from "lodash/invert";
+import { RandomSeed } from "random-seed";
 import { ClueCategory } from "../../types";
 import getCategoryKeywords from "./getCategoryKeywords";
+import getDailyDoubles from "./getDailyDoubles";
 
 export const createBoard = (
-  clueSet: ClueCategory[]
+  inputClueSet: ClueCategory[],
+  rand: RandomSeed,
+  isDoubleJeopardy = false
 ): {
   lookup: Record<string, number>;
   clueSet: ClueCategory[];
 } => {
-  const invertedKeys = invert(
-    getCategoryKeywords(clueSet.map(({ category }) => category))
+  const dailyDoubles = getDailyDoubles(rand, isDoubleJeopardy);
+  const keys = getCategoryKeywords(
+    inputClueSet.map(({ category }) => category)
   );
-  const lookup = clueSet.reduce((accum, { category }, index) => {
+  const invertedKeys = invert(keys);
+  const outputClueSet: ClueCategory[] = inputClueSet.map((categoryObj) => ({
+    ...categoryObj,
+    key: invertedKeys[categoryObj.category],
+  }));
+  for (const dd of dailyDoubles) {
+    const [cat, val] = dd;
+    outputClueSet[cat].clues[val].isDailyDouble = true;
+  }
+  const lookup = inputClueSet.reduce((accum, { category }, index) => {
     return { ...accum, [invertedKeys[category]]: index };
   }, {});
-  return { lookup, clueSet };
+  return { lookup, clueSet: outputClueSet };
 };
 
 export default createBoard;

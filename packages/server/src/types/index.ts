@@ -20,6 +20,7 @@ export interface JeopardyClue {
   game_id: null | unknown;
   invalid_count: null | number;
   category: JeopardyCategory;
+  isDailyDouble?: boolean;
 }
 
 export interface JServiceClueParams {
@@ -47,4 +48,8 @@ export interface CorrectionsBody {
   corrections: CorrectionReport[]; // [reporter, providedAnswer, typeOfCorrection];
 }
 
-export type ClueCategory = { category: string; clues: JeopardyClue[] };
+export interface ClueCategory {
+  key?: string;
+  category: string;
+  clues: JeopardyClue[];
+};
