@@ -52,4 +52,41 @@ export interface ClueCategory {
   key?: string;
   category: string;
   clues: JeopardyClue[];
-};
+}
+
+export enum GameState {
+  None = "None",
+  LoadingGame = "LoadingGame",
+  Jeopardy = "Jeopardy",
+  DoubleJeopardy = "Double Jeopardy",
+  FinalJeopardy = "Final Jeopardy",
+  FinalScores = "Final Scores",
+}
+
+export enum ClueState {
+  None = "No Clue Loaded",
+  PromptSelectClue = "Prompt Select Clue",
+  ClueSelected = "Clue Selected",
+  DailyDouble = "Daily Double",
+  DisplayClue = "Display Clue",
+  DisplayAnswer = "Display Answer",
+}
+
+export enum FinalJeopardyState {
+  None = "None",
+  DisplayFinalCategory = "Display FJ Category",
+  DisplayClue = "Display FJ Clue",
+  DisplayAnswer = "Display FJ Answer",
+}
+
+export enum DailyDoubleState {
+  None = "None",
+  DisplayClue = "Display DD Clue",
+  DisplayAnswer = "Display DD Answer",
+}
+
+export type States =
+  | GameState
+  | ClueState
+  | FinalJeopardyState
+  | DailyDoubleState;
