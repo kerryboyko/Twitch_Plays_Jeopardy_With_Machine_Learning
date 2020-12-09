@@ -1,22 +1,22 @@
 import randomSeed, { RandomSeed } from "random-seed";
 import isInteger from "lodash/isInteger";
-import noop from "lodash/noop";
 import pick from "lodash/pick";
 import get from "lodash/get";
 import getClues from "../db/services/getClues";
 import createBoard from "./utils/createBoard";
-import { MINUTE } from "./utils/constants";
+import { JTiming } from "./utils/constants";
 import genSeedString from "./utils/genSeedString";
 import getNextClue from "./utils/getNextClue";
 import pickOneAtRandom from "./utils/pickOneAtRandom";
 import { wsServer } from "../sockets/commands";
+import answerEvaluator from "../logic/answerEvaluator";
 
 import {
   ClueCategory,
   GameState,
   ClueState,
   FinalJeopardyState,
-  DailyDoubleState,
+  ProvidedAnswers,
   States,
 } from "../types";
 
@@ -32,8 +32,6 @@ class Game {
   private gameState: GameState = GameState.None;
 
   private clueState: ClueState = ClueState.None;
-
-  private dailyDoubleState: DailyDoubleState = DailyDoubleState.None;
 
   private finalJeopardyState: FinalJeopardyState = FinalJeopardyState.None;
 
@@ -51,18 +49,24 @@ class Game {
   } = { clueSet: [], lookup: {} };
 
   public currentClue: {
+    id: number;
     category: string;
     question: string;
     answer: string;
     value: number;
     indices: [number, number]; // index value on board, stored for convenience.
+    isDailyDouble: boolean;
   } = {
+    id: -1,
     category: "",
     question: "",
     answer: "",
     value: 0, // usually determined by indices, but not in the case of daily double or final jeopardy
     indices: [-1, -1],
+    isDailyDouble: false,
   };
+
+  public currentPlayerAnswers: ProvidedAnswers = {};
 
   public controllingPlayer = ""; // player has control of the board. Only the controlling player can play a Daily Double.
 
@@ -88,7 +92,7 @@ class Game {
 
   // GAME STATE HANDLERS
   private onLoadingGame = async (): Promise<void> => {
-    this.gameStartTime = Date.now() + 3 * MINUTE;
+    this.gameStartTime = Date.now() + JTiming.startGame;
     fakeEmit(wsServer.GAME_START_TIME, this.gameStartTime);
     fakeEmit(
       wsServer.INFO,
@@ -98,7 +102,7 @@ class Game {
     this.clues = clues;
     this.timeouts.startGame = setTimeout(() => {
       this.changeGameState(GameState.Jeopardy);
-    }, 3 * MINUTE);
+    }, 3 * JTiming.StartGame);
   };
 
   private onJeopardy = (isDoubleJeopardy: boolean): void => {
@@ -138,9 +142,26 @@ class Game {
     this.changeClueState(ClueState.PromptSelectClue);
   };
 
-  private onFinalJeopardy = noop;
+  private onFinalJeopardy = () => {
+    const fjCategory = this.clues[12].category;
+    const fjClue = this.clues[12].clues[4]; // most difficult question in the last category.
+    this.currentClue = {
+      ...pick(fjClue, ["id", "question", "answer"]),
+      value: 0,
+      isDailyDouble: false,
+      indices: [-1, -1],
+      category: fjCategory,
+    };
+    this.changeFinalJeopardyState(FinalJeopardyState.DisplayFinalCategory);
+  };
 
-  private onFinalScores = noop;
+  private onFinalScores = () => {
+    fakeEmit(wsServer.FINAL_SCORES, {
+      currentScores: this.scoreboard,
+      message:
+        "Thanks for playing! A new game will start soon, type !register to join, or !judge to register as a judge",
+    });
+  };
 
   private advanceRound = (): void | never => {
     if (this.gameState === GameState.Jeopardy) {
@@ -163,13 +184,68 @@ class Game {
 
   // CLUE STATE HANDLERS
 
-  private onDisplayClue = noop;
+  private onDisplayClue = () => {
+    clearTimeout(this.timeouts.wagerTime); // for DDs and FJ
+    fakeEmit(wsServer.DISPLAY_CLUE, {
+      question: this.currentClue.question,
+      id: this.currentClue.id,
+      value: this.currentClue.value,
+    });
+    this.timeouts.answerTime = setTimeout(() => {
+      this.changeClueState(ClueState.DisplayAnswer);
+    }, JTiming.answerTime);
+  };
 
-  private onDailyDouble = noop;
+  private onDailyDouble = () => {
+    fakeEmit(wsServer.GET_DD_WAGER, {
+      maxValue: Math.max(
+        this.gameState === GameState.Jeopardy ? 1000 : 2000,
+        this.scoreboard[this.controllingPlayer]
+      ),
+    });
+    // TODO: listen for wager and set this. to wager!
+    this.timeouts.wagerTime = setTimeout(() => {
+      this.onDisplayClue();
+    }, JTiming.wagerTime);
+  };
 
-  private onDisplayAnswer = noop;
+  private onDisplayAnswer = async () => {
+    clearTimeout(this.timeouts.answerTime);
+    // judge recieved answers
+    await Promise.all(
+      Object.keys(this.currentPlayerAnswers).map(async (playerName: string) => {
+        const { final } = await answerEvaluator(
+          this.currentClue.answer,
+          this.currentPlayerAnswers[playerName].provided
+        );
+        this.currentPlayerAnswers[playerName].evaluated = final;
+        // adjust scores
+        if (final !== null) {
+          this.scoreboard[playerName] +=
+            this.currentClue.value * (final ? 1 : -1);
+        }
+      })
+    );
+    // TODO: We may want to push the results to memory here,
+    // or even store in the DB.
+
+    // display the results
+    fakeEmit(wsServer.DISPLAY_ANSWER, {
+      answer: this.currentClue.answer,
+      provided: this.currentPlayerAnswers,
+      question: this.currentClue.question,
+      id: this.currentClue.id,
+      value: this.currentClue.value,
+      currentScores: this.scoreboard,
+    });
+    this.timeouts.afterAnswer = setTimeout(() => {
+      this.changeClueState(ClueState.PromptSelectClue);
+    }, JTiming.afterAnswer);
+  };
 
   private onPromptSelectClue = () => {
+    // clear answers
+    this.currentPlayerAnswers = {} as ProvidedAnswers;
     const nextClue = this.getNextClue();
     // check if we should advance to the next round.
     if (nextClue === null) {
@@ -182,10 +258,10 @@ class Game {
     this.timeouts.promptSelectClue = setTimeout(() => {
       fakeEmit(
         wsServer.CLUE_SELECTION_TIMEOUT,
-        `We're Selecting next clue automatically`
+        `Selecting next clue automatically`
       );
-      this.onClueSelected(nextClue);
-    }, MINUTE);
+      this.changeClueState(ClueState.ClueSelected, ...nextClue);
+    }, JTiming.selectTime);
   };
 
   public onClueSelected = ([categoryIndex, valueIndex]: [
@@ -204,13 +280,14 @@ class Game {
         wsServer.INVALID_CLUE_SELECTION,
         `${this.controllingPlayer}, you have control of the board, select a category.`
       );
-      return this.onPromptSelectClue();
+      return this.changeClueState(ClueState.PromptSelectClue);
     }
-    const { question, answer, category } = pick(
+    const { question, answer, category, isDailyDouble, id } = pick(
       this.board.clueSet[categoryIndex].clues[valueIndex],
-      ["question", "answer", "category"]
+      ["question", "answer", "category", "isDailyDouble", "id"]
     );
     this.currentClue = {
+      id,
       category: category?.title as string,
       question: question as string,
       answer: answer as string,
@@ -218,24 +295,71 @@ class Game {
         (valueIndex + 1) *
         (this.gameState === GameState.DoubleJeopardy ? 400 : 200),
       indices: [categoryIndex, valueIndex],
+      isDailyDouble: isDailyDouble || false,
     };
-    // probably want to emit on setting the current clue.
-    this.changeClueState(ClueState.DisplayClue);
+    if (this.currentClue.isDailyDouble) {
+      this.changeClueState(ClueState.DailyDouble);
+    } else {
+      // probably want to emit on setting the current clue.
+      this.changeClueState(ClueState.DisplayClue);
+    }
   };
-
-  // daily double state handlers
-
-  private onDisplayDailyDoubleClue = noop;
-
-  private onDisplayDailyDoubleAnswer = noop;
 
   // final jeopardy state handlers
 
-  private onDisplayFinalCategory = noop;
+  private onDisplayFinalCategory = () => {
+    fakeEmit(wsServer.FJ_DISPLAY_CATEGORY, {
+      message: `And now, the Final Jeopardy category.  Place your final wagers`,
+      category: this.currentClue.category,
+    });
+    this.timeouts.finalJeopardyWager = setTimeout(() => {
+      this.changeFinalJeopardyState(FinalJeopardyState.DisplayClue);
+    }, JTiming.wagerTime);
+  };
 
-  private onDisplayFinalClue = noop;
+  private onDisplayFinalClue = () => {
+    clearTimeout(this.timeouts.wagerTime); // for DDs and FJ
+    fakeEmit(wsServer.FJ_DISPLAY_CLUE, {
+      question: this.currentClue.question,
+      id: this.currentClue.id,
+      value: this.currentClue.value,
+    });
+    fakeEmit(wsServer.PLAY_THINK_MUSIC);
+    this.timeouts.answerTime = setTimeout(() => {
+      this.changeClueState(ClueState.DisplayAnswer);
+    }, JTiming.answerTime);
+  };
 
-  private onDisplayFinalAnswer = noop;
+  private onDisplayFinalAnswer = async () => {
+    clearTimeout(this.timeouts.answerTime);
+    // judge recieved answers
+    await Promise.all(
+      Object.keys(this.currentPlayerAnswers).map(async (playerName: string) => {
+        const { final } = await answerEvaluator(
+          this.currentClue.answer,
+          this.currentPlayerAnswers[playerName].provided
+        );
+        this.currentPlayerAnswers[playerName].evaluated = final;
+        // adjust scores
+        if (final !== null) {
+          this.scoreboard[playerName] +=
+            this.currentPlayerAnswers[playerName].wager * (final ? 1 : -1);
+        }
+      })
+    );
+    // TODO: We may want to push the results to memory here,
+    // or even store in the DB.
+
+    // display the results
+    fakeEmit(wsServer.DISPLAY_ANSWER, {
+      answer: this.currentClue.answer,
+      provided: this.currentPlayerAnswers,
+      question: this.currentClue.question,
+      id: this.currentClue.id,
+      currentScores: this.scoreboard,
+    });
+    this.changeGameState(GameState.FinalScores);
+  };
 
   // Game State Machine (must be public to use abstraction);
   public gameStateMachine = {
@@ -278,15 +402,6 @@ class Game {
     },
   };
 
-  public dailyDoubleStateMachine = {
-    [DailyDoubleState.None]: {
-      [DailyDoubleState.DisplayClue]: this.onDisplayDailyDoubleClue,
-    },
-    [DailyDoubleState.DisplayClue]: {
-      [DailyDoubleState.DisplayAnswer]: this.onDisplayDailyDoubleAnswer,
-    },
-  };
-
   public finalJeopardyStateMachine = {
     [FinalJeopardyState.None]: {
       [FinalJeopardyState.DisplayFinalCategory]: this.onDisplayFinalCategory,
@@ -303,7 +418,7 @@ class Game {
     currentState: TEnum,
     stateMachine: TMachine,
     emitOnChange: (arg1: TEnum) => void
-  ) => (nextState: TEnum) => {
+  ) => (nextState: TEnum, ...args: unknown[]) => {
     const next = get(stateMachine, [currentState, nextState], null);
     if (next === null) {
       throw new Error(
@@ -314,7 +429,7 @@ class Game {
     // eslint-disable-next-line no-param-reassign
     currentState = nextState;
     emitOnChange(nextState);
-    next();
+    next(...args);
   };
 
   public changeGameState = this.initStateMachine<
@@ -329,13 +444,6 @@ class Game {
     Game["clueStateMachine"]
   >(this.clueState, this.clueStateMachine, (state) =>
     fakeEmit(wsServer.CLUE_STATE_CHANGE, state)
-  );
-
-  public changeDailyDoubleState = this.initStateMachine<
-    DailyDoubleState,
-    Game["dailyDoubleStateMachine"]
-  >(this.dailyDoubleState, this.dailyDoubleStateMachine, (state) =>
-    fakeEmit(wsServer.DAILYDOUBLE_STATE_CHANGE, state)
   );
 
   public changeFinalJeopardyState = this.initStateMachine<

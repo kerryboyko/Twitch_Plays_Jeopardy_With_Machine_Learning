@@ -54,6 +54,14 @@ export interface ClueCategory {
   clues: JeopardyClue[];
 }
 
+export interface ProvidedAnswers {
+  [playerName: string]: {
+    provided: string;
+    evaluated: boolean | null;
+    wager: number;
+  };
+}
+
 export enum GameState {
   None = "None",
   LoadingGame = "LoadingGame",
