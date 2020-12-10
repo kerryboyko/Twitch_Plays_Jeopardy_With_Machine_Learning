@@ -10,6 +10,8 @@ export const wsServer = makeEnum(
   "FINAL_SCORES",
   "END_OF_ROUND",
   "GET_DD_WAGER",
+  "WAGER_RECEIVED",
+  "DISPLAY_CLUE",
   "DISPLAY_ANSWER",
   "PROMPT_SELECT_CLUE",
   "CLUE_SELECTION_TIMEOUT",

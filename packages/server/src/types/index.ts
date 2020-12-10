@@ -55,11 +55,10 @@ export interface ClueCategory {
 }
 
 export interface ProvidedAnswers {
-  [playerName: string]: {
-    provided: string;
-    evaluated: boolean | null;
-    wager: number;
-  };
+  playerName: string;
+  provided: string;
+  evaluated: boolean | null;
+  wager?: number;
 }
 
 export enum GameState {

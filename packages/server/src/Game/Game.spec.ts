@@ -132,6 +132,238 @@ describe("Class Game", () => {
         "Prompt Select Clue",
       ]);
       expect(log[4][0]).toBe("wsServer.PROMPT_SELECT_CLUE");
+      expect(game.clueState).toBe(ClueState.PromptSelectClue);
+    });
+  });
+  describe("public async onClueSelected", () => {
+    it("reprompts on an invalid clue", async () => {
+      await game.changeClueState(ClueState.ClueSelected, [7, 8]);
+      const log = getLatestLog();
+      expect(log.map((el) => el[0])).toEqual([
+        "wsServer.CLUE_STATE_CHANGE",
+        "wsServer.INVALID_CLUE_SELECTION",
+        "wsServer.CLUE_STATE_CHANGE",
+        "wsServer.PROMPT_SELECT_CLUE",
+      ]);
+      expect(game.clueState).toBe(ClueState.PromptSelectClue);
+    });
+    it("grabs a valid clue", async () => {
+      await game.changeClueState(ClueState.ClueSelected, [0, 0]);
+      expect(game.currentClue).toEqual({
+        answer: "Jackie Robinson",
+        category: "42",
+        id: 120457,
+        indices: [0, 0],
+        isDailyDouble: false,
+        question:
+          "The Dodgers retired his no. 42 jersey number in 1972 & all of MLB did in 1997",
+        value: 200,
+      });
+      const log = getLatestLog();
+      expect(log).toEqual([
+        ["wsServer.CLUE_STATE_CHANGE", "Clue Selected"],
+        ["wsServer.CLUE_STATE_CHANGE", "Display Clue"],
+        [
+          "wsServer.DISPLAY_CLUE",
+          {
+            category: "42",
+            id: 120457,
+            question:
+              "The Dodgers retired his no. 42 jersey number in 1972 & all of MLB did in 1997",
+            value: 200,
+          },
+        ],
+      ]);
+      expect(game.clueState).toBe(ClueState.DisplayClue);
+    });
+    describe("public handleAnswer", () => {
+      it("grabs and stores answers", () => {
+        expect(game.currentPlayerAnswers).toEqual([]);
+        game.handleAnswer("alpha", "jackie robinson");
+        game.handleAnswer("beta", "jackie robinette");
+        game.handleAnswer("gamma", "babe ruth");
+        expect(game.currentPlayerAnswers).toEqual([
+          {
+            playerName: "alpha",
+            evaluated: null,
+            provided: "jackie robinson",
+          },
+          {
+            playerName: "beta",
+            evaluated: null,
+            provided: "jackie robinette",
+          },
+          {
+            playerName: "gamma",
+            evaluated: null,
+            provided: "babe ruth",
+          },
+        ]);
+      });
+    });
+    describe("public async onDisplayAnswer", () => {
+      it("displays the answer and scores, queues up the next", async () => {
+        await game.changeClueState(ClueState.DisplayAnswer);
+        expect(game.clueState).toBe(ClueState.DisplayAnswer);
+        expect(game.board.clueSet[0].clues[0]).toBe(null);
+        expect(game.currentPlayerAnswers).toEqual([
+          {
+            playerName: "alpha",
+            evaluated: true,
+            provided: "jackie robinson",
+          },
+          {
+            playerName: "beta",
+            evaluated: true,
+            provided: "jackie robinette",
+          },
+          {
+            playerName: "gamma",
+            evaluated: false,
+            provided: "babe ruth",
+          },
+        ]);
+        expect(game.scoreboard).toEqual({
+          alpha: 200,
+          beta: 200,
+          gamma: -200,
+        });
+        const log = getLatestLog();
+        expect(log).toEqual([
+          ["wsServer.CLUE_STATE_CHANGE", "Display Answer"],
+          [
+            "wsServer.DISPLAY_ANSWER",
+            {
+              answer: "Jackie Robinson",
+              currentScores: {
+                alpha: 200,
+                beta: 200,
+                gamma: -200,
+              },
+              id: 120457,
+              provided: [
+                {
+                  playerName: "alpha",
+                  evaluated: true,
+                  provided: "jackie robinson",
+                },
+                {
+                  playerName: "beta",
+                  evaluated: true,
+                  provided: "jackie robinette",
+                },
+                {
+                  playerName: "gamma",
+                  evaluated: false,
+                  provided: "babe ruth",
+                },
+              ],
+              question:
+                "The Dodgers retired his no. 42 jersey number in 1972 & all of MLB did in 1997",
+              value: 200,
+            },
+          ],
+        ]);
+        expect(game.controllingPlayer).toBe("alpha");
+      });
+    });
+    describe("public async onDailyDouble", () => {
+      it("displays the answer and scores, queues up the next", async () => {
+        // have to do this manually in tests.
+        await game.changeClueState(ClueState.PromptSelectClue);
+        // let's manually edit the score
+        game.scoreboard.alpha = 1600;
+        // this is a Daily Double!
+        await game.changeClueState(ClueState.ClueSelected, [5, 2]);
+        expect(game.currentClue.isDailyDouble).toBe(true);
+        expect(game.clueState).toBe(ClueState.DailyDouble);
+        const log = getLatestLog();
+        expect(log).toEqual([
+          ["wsServer.CLUE_STATE_CHANGE", "Prompt Select Clue"],
+          [
+            "wsServer.PROMPT_SELECT_CLUE",
+            "alpha, you have control of the board, select a category.",
+          ],
+          ["wsServer.CLUE_STATE_CHANGE", "Clue Selected"],
+          ["wsServer.CLUE_STATE_CHANGE", "Daily Double"],
+          [
+            "wsServer.GET_DD_WAGER",
+            {
+              maxValue: 1600,
+              player: "alpha",
+            },
+          ],
+        ]);
+      });
+    });
+    describe("handleWager", () => {
+      it("does nothing if the wager isn't real", async () => {
+        await game.handleWager("beta", 1000);
+        expect(game.clueState).toBe(ClueState.DailyDouble);
+      });
+      it("handles the controlling player's wager and moves forward", async () => {
+        await game.handleWager("alpha", 1200);
+        expect(game.wagers).toEqual({ alpha: 1200 });
+        expect(game.clueState).toEqual(ClueState.DisplayClue);
+        const log = getLatestLog();
+        expect(log).toEqual([
+          ["wsServer.WAGER_RECEIVED", "alpha", 1200],
+          ["wsServer.CLUE_STATE_CHANGE", "Display Clue"],
+          [
+            "wsServer.DISPLAY_CLUE",
+            {
+              category: "biblical who's who",
+              id: 127984,
+              question:
+                "That must have been some exorcism when Jesus cast 7 devils out of her",
+              value: 600,
+            },
+          ],
+        ]);
+      });
+      it("ignores answers not from the controlling player", async () => {
+        await game.handleAnswer("beta", "betty white");
+        expect(game.currentPlayerAnswers).toEqual([]);
+        expect(game.clueState).toBe(ClueState.DisplayClue);
+        await game.handleAnswer("alpha", "mary magdeline");
+        expect(game.clueState).toBe(ClueState.DisplayAnswer);
+        expect(game.currentPlayerAnswers).toEqual([
+          { evaluated: true, playerName: "alpha", provided: "mary magdeline" },
+        ]);
+        expect(game.board.clueSet[5].clues[2]).toBe(null);
+        expect(game.scoreboard).toEqual({
+          alpha: 2800,
+          beta: 200,
+          gamma: -200,
+        });
+        expect(game.controllingPlayer).toBe("alpha");
+        const log = getLatestLog();
+        expect(log).toEqual([
+          ["wsServer.CLUE_STATE_CHANGE", "Display Answer"],
+          [
+            "wsServer.DISPLAY_ANSWER",
+            {
+              answer: "Mary Magdelene",
+              currentScores: {
+                alpha: 2800,
+                beta: 200,
+                gamma: -200,
+              },
+              id: 127984,
+              provided: [
+                {
+                  evaluated: true,
+                  playerName: "alpha",
+                  provided: "mary magdeline",
+                },
+              ],
+              question:
+                "That must have been some exorcism when Jesus cast 7 devils out of her",
+              value: 600,
+            },
+          ],
+        ]);
+      });
     });
   });
 });

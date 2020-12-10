@@ -78,11 +78,13 @@ class Game {
     isDailyDouble: false,
   };
 
-  public currentPlayerAnswers: ProvidedAnswers = {};
+  public currentPlayerAnswers: ProvidedAnswers[] = [];
 
   public controllingPlayer = ""; // player has control of the board. Only the controlling player can play a Daily Double.
 
   public scoreboard: Record<string, number> = {};
+
+  public wagers: Record<string, number> = {};
 
   constructor(public seed: string = genSeedString()) {
     this.rand = randomSeed.create(seed);
@@ -105,6 +107,7 @@ class Game {
   private getNextClue = (): [number, number] | null =>
     getNextClue(this.board.clueSet);
 
+  // WS Event Handlers
   public registerPlayer = (playerName: string): void => {
     if (Object.keys(this.scoreboard).length === 0) {
       this.controllingPlayer = playerName;
@@ -112,6 +115,57 @@ class Game {
     if (!this.scoreboard[playerName]) {
       this.scoreboard[playerName] = 0;
       fakeEmit(wsServer.PLAYER_REGISTERED, playerName);
+    }
+  };
+
+  public handleAnswer = async (
+    playerName: string,
+    provided: string
+  ): Promise<void> => {
+    if (
+      !this.currentClue.isDailyDouble ||
+      this.controllingPlayer === playerName
+    )
+      this.currentPlayerAnswers.push({
+        playerName,
+        provided,
+        evaluated: null,
+      });
+
+    if (
+      this.currentClue.isDailyDouble &&
+      this.controllingPlayer === playerName
+    ) {
+      return this.changeClueState(ClueState.DisplayAnswer);
+    }
+  };
+
+  public handleWager = async (
+    playerName: string,
+    wager: number
+  ): Promise<void> => {
+    if (
+      [GameState.Jeopardy, GameState.DoubleJeopardy].includes(this.gameState) &&
+      this.clueState === ClueState.DailyDouble
+    ) {
+      if (playerName !== this.controllingPlayer) {
+        return;
+      }
+      const maxWager = Math.max(
+        this.gameState === GameState.Jeopardy ? 1000 : 2000,
+        this.scoreboard[playerName]
+      );
+      this.wagers[playerName] = Math.min(wager, maxWager);
+      fakeEmit(wsServer.WAGER_RECEIVED, playerName, wager);
+      clearTimeout(this.timeouts.wagerTime);
+      return this.changeClueState(ClueState.DisplayClue);
+    }
+    if (this.gameState === GameState.FinalJeopardy) {
+      if (this.scoreboard[playerName] <= 0) {
+        return;
+      }
+      this.wagers[playerName] = Math.min(wager, this.scoreboard[playerName]);
+      fakeEmit(wsServer.WAGER_RECEIVED, playerName);
     }
   };
 
@@ -154,7 +208,7 @@ class Game {
       }
       fakeEmit(wsServer.CHANGE_CONTROLLER, {
         controllingPlayer: this.controllingPlayer,
-        message: `${this.controllingPlayer}, you'll go first in Double Jeopardy.`,
+        message: `At the end of the last round, ${this.controllingPlayer} was in last place, so they will go first in Double Jeopardy.`,
       });
     }
 
@@ -207,68 +261,9 @@ class Game {
 
   // CLUE STATE HANDLERS
 
-  private onDisplayClue = () => {
-    clearTimeout(this.timeouts.wagerTime); // for DDs and FJ
-    fakeEmit(wsServer.DISPLAY_CLUE, {
-      question: this.currentClue.question,
-      id: this.currentClue.id,
-      value: this.currentClue.value,
-    });
-    this.timeouts.answerTime = setTimeout(() => {
-      this.changeClueState(ClueState.DisplayAnswer);
-    }, JTiming.answerTime);
-  };
-
-  private onDailyDouble = () => {
-    fakeEmit(wsServer.GET_DD_WAGER, {
-      maxValue: Math.max(
-        this.gameState === GameState.Jeopardy ? 1000 : 2000,
-        this.scoreboard[this.controllingPlayer]
-      ),
-    });
-    // TODO: listen for wager and set this. to wager!
-    this.timeouts.wagerTime = setTimeout(() => {
-      this.onDisplayClue();
-    }, JTiming.wagerTime);
-  };
-
-  private onDisplayAnswer = async () => {
-    clearTimeout(this.timeouts.answerTime);
-    // judge recieved answers
-    await Promise.all(
-      Object.keys(this.currentPlayerAnswers).map(async (playerName: string) => {
-        const { final } = await answerEvaluator(
-          this.currentClue.answer,
-          this.currentPlayerAnswers[playerName].provided
-        );
-        this.currentPlayerAnswers[playerName].evaluated = final;
-        // adjust scores
-        if (final !== null) {
-          this.scoreboard[playerName] +=
-            this.currentClue.value * (final ? 1 : -1);
-        }
-      })
-    );
-    // TODO: We may want to push the results to memory here,
-    // or even store in the DB.
-
-    // display the results
-    fakeEmit(wsServer.DISPLAY_ANSWER, {
-      answer: this.currentClue.answer,
-      provided: this.currentPlayerAnswers,
-      question: this.currentClue.question,
-      id: this.currentClue.id,
-      value: this.currentClue.value,
-      currentScores: this.scoreboard,
-    });
-    this.timeouts.afterAnswer = setTimeout(() => {
-      this.changeClueState(ClueState.PromptSelectClue);
-    }, JTiming.afterAnswer);
-  };
-
   private onPromptSelectClue = async (): Promise<void> => {
     // clear answers
-    this.currentPlayerAnswers = {} as ProvidedAnswers;
+    this.currentPlayerAnswers = [] as ProvidedAnswers[];
     const nextClue = this.getNextClue();
     // check if we should advance to the next round.
     if (nextClue === null) {
@@ -296,14 +291,13 @@ class Game {
       !isInteger(valueIndex) ||
       valueIndex < 0 ||
       valueIndex > 4 ||
-      this.board.clueSet[categoryIndex].clues[valueIndex] === null
+      get(this.board.clueSet, [categoryIndex, "clues", valueIndex], null) ===
+        null
     ) {
       clearTimeout(this.timeouts.promptSelectClue);
-      fakeEmit(
-        wsServer.INVALID_CLUE_SELECTION,
-        `${this.controllingPlayer}, you have control of the board, select a category.`
-      );
+      fakeEmit(wsServer.INVALID_CLUE_SELECTION);
       await this.changeClueState(ClueState.PromptSelectClue);
+      return;
     }
     const { question, answer, category, isDailyDouble, id } = pick(
       this.board.clueSet[categoryIndex].clues[valueIndex],
@@ -326,6 +320,82 @@ class Game {
       // probably want to emit on setting the current clue.
       await this.changeClueState(ClueState.DisplayClue);
     }
+  };
+
+  private onDisplayClue = () => {
+    clearTimeout(this.timeouts.wagerTime); // for DDs and FJ
+    fakeEmit(wsServer.DISPLAY_CLUE, {
+      question: this.currentClue.question,
+      id: this.currentClue.id,
+      value: this.currentClue.value,
+      category: this.currentClue.category,
+    });
+    this.timeouts.answerTime = setTimeout(() => {
+      this.changeClueState(ClueState.DisplayAnswer);
+    }, JTiming.answerTime);
+  };
+
+  private onDailyDouble = () => {
+    fakeEmit(wsServer.GET_DD_WAGER, {
+      player: this.controllingPlayer,
+      maxValue: Math.max(
+        this.gameState === GameState.Jeopardy ? 1000 : 2000,
+        this.scoreboard[this.controllingPlayer]
+      ),
+    });
+    this.timeouts.wagerTime = setTimeout(() => {
+      this.changeClueState(ClueState.DisplayClue);
+    }, JTiming.wagerTime);
+  };
+
+  private onDisplayAnswer = async () => {
+    clearTimeout(this.timeouts.answerTime);
+    // judge recieved answers
+    await Promise.all(
+      this.currentPlayerAnswers.map(
+        async ({ playerName, provided }, index: number) => {
+          const { final } = await answerEvaluator(
+            this.currentClue.answer,
+            provided
+          );
+          const value =
+            this.gameState === GameState.FinalJeopardy ||
+            this.currentClue.isDailyDouble
+              ? this.wagers[playerName]
+              : this.currentClue.value;
+          this.currentPlayerAnswers[index].evaluated = final;
+          // adjust scores
+          if (final !== null) {
+            this.scoreboard[playerName] += value * (final ? 1 : -1);
+          }
+        }
+      )
+    );
+    // find first player to answer correctly.
+    const controlAnswer = this.currentPlayerAnswers.find(
+      ({ evaluated }) => evaluated === true
+    );
+    if (controlAnswer !== undefined) {
+      this.controllingPlayer = controlAnswer.playerName;
+    }
+    // TODO: We may want to push the results to memory here,
+    // or even store in the DB.
+
+    // display the results
+    fakeEmit(wsServer.DISPLAY_ANSWER, {
+      answer: this.currentClue.answer,
+      provided: this.currentPlayerAnswers,
+      question: this.currentClue.question,
+      id: this.currentClue.id,
+      value: this.currentClue.value,
+      currentScores: this.scoreboard,
+    });
+    // nullify the question;
+    const [cat, val] = this.currentClue.indices;
+    this.board.clueSet[cat].clues[val] = null;
+    this.timeouts.afterAnswer = setTimeout(() => {
+      this.changeClueState(ClueState.PromptSelectClue);
+    }, JTiming.afterAnswer);
   };
 
   // final jeopardy state handlers
@@ -356,20 +426,26 @@ class Game {
   private onDisplayFinalAnswer = async () => {
     clearTimeout(this.timeouts.answerTime);
     // judge recieved answers
+
     await Promise.all(
-      Object.keys(this.currentPlayerAnswers).map(async (playerName: string) => {
-        const { final } = await answerEvaluator(
-          this.currentClue.answer,
-          this.currentPlayerAnswers[playerName].provided
-        );
-        this.currentPlayerAnswers[playerName].evaluated = final;
-        // adjust scores
-        if (final !== null) {
-          this.scoreboard[playerName] +=
-            this.currentPlayerAnswers[playerName].wager * (final ? 1 : -1);
+      this.currentPlayerAnswers.map(
+        async ({ playerName, provided, wager }, index: number) => {
+          if (wager === undefined || wager < 0) {
+            return;
+          }
+          const { final } = await answerEvaluator(
+            this.currentClue.answer,
+            provided
+          );
+          this.currentPlayerAnswers[index].evaluated = final;
+          // adjust scores
+          if (final !== null && wager > 0) {
+            this.scoreboard[playerName] += wager * (final ? 1 : -1);
+          }
         }
-      })
+      )
     );
+
     // TODO: We may want to push the results to memory here,
     // or even store in the DB.
 
@@ -414,8 +490,12 @@ class Game {
       [ClueState.ClueSelected]: this.onClueSelected,
     },
     [ClueState.ClueSelected]: {
+      [ClueState.PromptSelectClue]: this.onPromptSelectClue,
       [ClueState.DisplayClue]: this.onDisplayClue,
       [ClueState.DailyDouble]: this.onDailyDouble,
+    },
+    [ClueState.DailyDouble]: {
+      [ClueState.DisplayClue]: this.onDisplayClue,
     },
     [ClueState.DisplayClue]: {
       [ClueState.DisplayAnswer]: this.onDisplayAnswer,

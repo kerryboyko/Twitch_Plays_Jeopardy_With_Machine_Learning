@@ -6,13 +6,14 @@ export const directStrategy: Strategy = (c, p) => c === p;
 
 // 33% substring. "Henry Tudor" === "Henry VIII" BUT "Henry Tudor" !== "Henry Ford"
 export const thirdSubstringStrategy: Strategy = (c, p) => {
-  const third = Math.ceil(p.length / 3);
-  if (third < 3) {
+  const third = Math.ceil(c.length / 3);
+  if (third < 3 || p.length < third) {
     return null; // null responses are falsy, but are distinct from 'false'
   }
   let cursor = 0;
   while (cursor + third <= p.length || cursor > 30) {
-    if (c.includes(p.substring(cursor, cursor + third))) {
+    const check = p.substring(cursor, cursor + third);
+    if (c.includes(check)) {
       return true;
     }
     cursor += 1;
@@ -22,15 +23,15 @@ export const thirdSubstringStrategy: Strategy = (c, p) => {
 
 export const majorityConsonantsInRightOrderStrategy: Strategy = (c, p) => {
   const strippedC = c
-    .split(' ')
+    .split(" ")
     .filter((w) => w.length > 3)
-    .join('')
-    .replace(/[aeiou]/gi, '');
+    .join("")
+    .replace(/[aeiou]/gi, "");
   const strippedP = p
-    .split(' ')
+    .split(" ")
     .filter((w) => w.length > 3)
-    .join('')
-    .replace(/[aeiou]/gi, '');
+    .join("")
+    .replace(/[aeiou]/gi, "");
   if (strippedC.length < 3 || strippedP.length < 3) {
     return null; // not enough data to use strategy;
   }
