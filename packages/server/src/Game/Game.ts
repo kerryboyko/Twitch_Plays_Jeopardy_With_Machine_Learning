@@ -18,12 +18,24 @@ import {
   FinalJeopardyState,
   ProvidedAnswers,
   States,
+  JeopardyClue,
 } from "../types";
 
 /* fake Emit will likely be replaced soon with websockets for sending to the front end.
    For now, it console.logs */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const fakeEmit = (...stuff: any[]) => console.log(...stuff);
+export const { fakeEmit, getLog } = (() => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const log: any[] = [];
+  return {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    fakeEmit: (...stuff: any[]) => {
+      log.push(stuff);
+      console.log(...stuff);
+    },
+    getLog: () => log,
+  };
+})();
 
 // this may be broken up into "game" and "clue" -- but we'll see how this works out first.
 class Game {
@@ -85,6 +97,9 @@ class Game {
     getNextClue(this.board.clueSet);
 
   public registerPlayer = (playerName: string): void => {
+    if (Object.keys(this.scoreboard).length === 0) {
+      this.controllingPlayer = playerName;
+    }
     if (!this.scoreboard[playerName]) {
       this.scoreboard[playerName] = 0;
     }
@@ -144,9 +159,11 @@ class Game {
 
   private onFinalJeopardy = () => {
     const fjCategory = this.clues[12].category;
-    const fjClue = this.clues[12].clues[4]; // most difficult question in the last category.
+    const fjClue = this.clues[12].clues[4] as JeopardyClue; // most difficult question in the last category.
     this.currentClue = {
-      ...pick(fjClue, ["id", "question", "answer"]),
+      id: fjClue.id as number,
+      question: fjClue.question as string,
+      answer: fjClue.answer as string,
       value: 0,
       isDailyDouble: false,
       indices: [-1, -1],
@@ -287,7 +304,7 @@ class Game {
       ["question", "answer", "category", "isDailyDouble", "id"]
     );
     this.currentClue = {
-      id,
+      id: id as number,
       category: category?.title as string,
       question: question as string,
       answer: answer as string,
@@ -417,7 +434,7 @@ class Game {
   private initStateMachine = <TEnum extends States, TMachine>(
     currentState: TEnum,
     stateMachine: TMachine,
-    emitOnChange: (arg1: TEnum) => void
+    stateSetter: (state: TEnum) => void
   ) => (nextState: TEnum, ...args: unknown[]) => {
     const next = get(stateMachine, [currentState, nextState], null);
     if (next === null) {
@@ -427,30 +444,36 @@ class Game {
     }
     /* We want to reassign the parameter here as a side effect */
     // eslint-disable-next-line no-param-reassign
-    currentState = nextState;
-    emitOnChange(nextState);
+    stateSetter(nextState);
     next(...args);
   };
 
   public changeGameState = this.initStateMachine<
     GameState,
     Game["gameStateMachine"]
-  >(this.gameState, this.gameStateMachine, (state) =>
-    fakeEmit(wsServer.GAME_STATE_CHANGE, state)
-  );
+  >(this.gameState, this.gameStateMachine, (state: GameState): void => {
+    this.gameState = state;
+    fakeEmit(wsServer.GAME_STATE_CHANGE, state);
+  });
 
   public changeClueState = this.initStateMachine<
     ClueState,
     Game["clueStateMachine"]
-  >(this.clueState, this.clueStateMachine, (state) =>
-    fakeEmit(wsServer.CLUE_STATE_CHANGE, state)
-  );
+  >(this.clueState, this.clueStateMachine, (state: ClueState): void => {
+    this.clueState = state;
+    fakeEmit(wsServer.CLUE_STATE_CHANGE, state);
+  });
 
   public changeFinalJeopardyState = this.initStateMachine<
     FinalJeopardyState,
     Game["finalJeopardyStateMachine"]
-  >(this.finalJeopardyState, this.finalJeopardyStateMachine, (state) =>
-    fakeEmit(wsServer.FINAL_JEOPARDY_STATE_CHANGE, state)
+  >(
+    this.finalJeopardyState,
+    this.finalJeopardyStateMachine,
+    (state: FinalJeopardyState): void => {
+      this.finalJeopardyState = state;
+      fakeEmit(wsServer.FINAL_JEOPARDY_STATE_CHANGE, state);
+    }
   );
 }
 
