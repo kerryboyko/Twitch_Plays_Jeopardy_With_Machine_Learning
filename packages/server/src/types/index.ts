@@ -51,7 +51,7 @@ export interface CorrectionsBody {
 export interface ClueCategory {
   key?: string;
   category: string;
-  clues: JeopardyClue[];
+  clues: (JeopardyClue | null)[];
 }
 
 export interface ProvidedAnswers {
