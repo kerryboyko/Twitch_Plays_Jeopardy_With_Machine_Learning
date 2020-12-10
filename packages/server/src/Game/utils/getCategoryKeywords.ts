@@ -1,5 +1,9 @@
+import flatMap from "lodash/flatMap";
+
 export const getCategoryKeywordList = (category: string): string[] => {
-  return category.split(" ").sort((a, b) => b.length - a.length);
+  return flatMap(category.split(" "), (word: string) => word.split("-"))
+    .map((word: string) => word.replace(/"/g, "").trim())
+    .sort((a: string, b: string) => b.length - a.length);
 };
 
 export const getCategoryKeywords = (

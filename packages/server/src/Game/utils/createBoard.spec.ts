@@ -15,7 +15,7 @@ test("createBoard", () => {
     europe: 3,
     international: 0,
     make: 1,
-    "one-word": 4,
+    shout: 4,
     twitters: 2,
   };
   expect(board).toEqual({
@@ -31,7 +31,7 @@ test("createBoard", () => {
     "international cuisine"
   );
   expect(board.clueSet[board.lookup.make].category).toBe("make room");
-  expect(board.clueSet[board.lookup["one-word"]].category).toBe(
+  expect(board.clueSet[board.lookup.shout].category).toBe(
     "one-word shout outs"
   );
   expect(board.clueSet[board.lookup.twitters].category).toBe(

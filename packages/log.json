@@ -1,0 +1,58 @@
+[
+  [
+    "wsServer.CLUE_STATE_CHANGE",
+    "Prompt Select Clue"
+  ],
+  [
+    "wsServer.END_OF_ROUND",
+    "And that is the end of our first Jeopardy round"
+  ],
+  [
+    "wsServer.GAME_STATE_CHANGE",
+    "Double Jeopardy"
+  ],
+  [
+    "wsServer.SEND_CATEGORIES",
+    [
+      [
+        "covers",
+        "under the covers"
+      ],
+      [
+        "sam",
+        "sam i am"
+      ],
+      [
+        "professional",
+        "professional sports"
+      ],
+      [
+        "strait",
+        "strait ahead"
+      ],
+      [
+        "under",
+        "\"over\" & \"under\""
+      ],
+      [
+        "properly",
+        "spat tha properly spelld wurd"
+      ]
+    ]
+  ],
+  [
+    "wsServer.CHANGE_CONTROLLER",
+    {
+      "controllingPlayer": "gamma",
+      "message": "At the end of the last round, gamma was in last place, so they will go first in Double Jeopardy."
+    }
+  ],
+  [
+    "wsServer.CLUE_STATE_CHANGE",
+    "Prompt Select Clue"
+  ],
+  [
+    "wsServer.PROMPT_SELECT_CLUE",
+    "gamma, you have control of the board, select a category."
+  ]
+]

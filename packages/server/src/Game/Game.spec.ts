@@ -3,6 +3,7 @@ import { ClueState, GameState } from "../types";
 import Game, { getLog } from "./Game";
 import mockClues from "./mocks/gClues.json";
 import mockJeopardyBoard from "./mocks/gJeopardyBoard.json";
+import mockDoubleJeopardyBoard from "./mocks/gDoubleJeopardyBoard.json";
 /* hoo boy, here we go... */
 
 const seedString = "test";
@@ -114,7 +115,7 @@ describe("Class Game", () => {
           [
             ["42", "42"],
             ["uruguay", "ur in uruguay"],
-            ["self-indulgent", "self-indulgent reality tv"],
+            ["indulgent", "self-indulgent reality tv"],
             ["monuments", "the monuments women"],
             ["sequelitis", "sequelitis"],
             ["biblical", "biblical who's who"],
@@ -361,6 +362,57 @@ describe("Class Game", () => {
                 "That must have been some exorcism when Jesus cast 7 devils out of her",
               value: 600,
             },
+          ],
+        ]);
+      });
+    });
+    describe("advance the round", () => {
+      it("advances the round", async () => {
+        expect(game.clueState).toBe(ClueState.DisplayAnswer);
+        expect(game.gameState).toBe(GameState.Jeopardy);
+        // nullify the clueset.
+        for (let i = 0, l = game.board.clueSet.length; i < l; i++) {
+          game.board.clueSet[i].clues = [null, null, null, null, null];
+        }
+        // should advance the round.
+        await game.changeClueState(ClueState.PromptSelectClue);
+
+        // lowest score should go first in Double Jeopardy.
+        expect(game.controllingPlayer).toBe("gamma");
+        expect(game.clueState).toBe(ClueState.PromptSelectClue);
+        expect(game.gameState).toBe(GameState.DoubleJeopardy);
+        expect(game.board).toEqual(mockDoubleJeopardyBoard);
+        const log = getLatestLog();
+        expect(log).toEqual([
+          ["wsServer.CLUE_STATE_CHANGE", "Prompt Select Clue"],
+          [
+            "wsServer.END_OF_ROUND",
+            "And that is the end of our first Jeopardy round",
+          ],
+          ["wsServer.GAME_STATE_CHANGE", "Double Jeopardy"],
+          [
+            "wsServer.SEND_CATEGORIES",
+            [
+              ["covers", "under the covers"],
+              ["sam", "sam i am"],
+              ["professional", "professional sports"],
+              ["strait", "strait ahead"],
+              ["under", '"over" & "under"'],
+              ["properly", "spat tha properly spelld wurd"],
+            ],
+          ],
+          [
+            "wsServer.CHANGE_CONTROLLER",
+            {
+              controllingPlayer: "gamma",
+              message:
+                "At the end of the last round, gamma was in last place, so they will go first in Double Jeopardy.",
+            },
+          ],
+          ["wsServer.CLUE_STATE_CHANGE", "Prompt Select Clue"],
+          [
+            "wsServer.PROMPT_SELECT_CLUE",
+            "gamma, you have control of the board, select a category.",
           ],
         ]);
       });

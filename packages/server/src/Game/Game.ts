@@ -262,8 +262,9 @@ class Game {
   // CLUE STATE HANDLERS
 
   private onPromptSelectClue = async (): Promise<void> => {
-    // clear answers
+    // clear answers & wagers
     this.currentPlayerAnswers = [] as ProvidedAnswers[];
+    this.wagers = {};
     const nextClue = this.getNextClue();
     // check if we should advance to the next round.
     if (nextClue === null) {
@@ -393,6 +394,8 @@ class Game {
     // nullify the question;
     const [cat, val] = this.currentClue.indices;
     this.board.clueSet[cat].clues[val] = null;
+    // nullify the prior answers and wagers;
+
     this.timeouts.afterAnswer = setTimeout(() => {
       this.changeClueState(ClueState.PromptSelectClue);
     }, JTiming.afterAnswer);
@@ -487,6 +490,7 @@ class Game {
       [ClueState.PromptSelectClue]: this.onPromptSelectClue,
     },
     [ClueState.PromptSelectClue]: {
+      [ClueState.PromptSelectClue]: this.onPromptSelectClue,
       [ClueState.ClueSelected]: this.onClueSelected,
     },
     [ClueState.ClueSelected]: {

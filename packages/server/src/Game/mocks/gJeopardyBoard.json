@@ -2,7 +2,7 @@
   "lookup": {
     "42": 0,
     "uruguay": 1,
-    "self-indulgent": 2,
+    "indulgent": 2,
     "monuments": 3,
     "sequelitis": 4,
     "biblical": 5
@@ -309,7 +309,7 @@
           }
         }
       ],
-      "key": "self-indulgent"
+      "key": "indulgent"
     },
     {
       "category": "the monuments women",
