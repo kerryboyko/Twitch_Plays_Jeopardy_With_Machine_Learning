@@ -1,14 +1,12 @@
 import { RandomSeed } from "random-seed";
 
 // times out of 10000 that the DD will be at that value.
-import { JEOPARDY_DD_RATES } from "./constants";
+import { ACCUM_JEOPARDY_DD_RATES } from "./constants";
 
 const getDailyDouble = (rand: RandomSeed): number => {
-  let runningTally = 0;
   const valAmt = rand(10000);
-  for (let i = 0, l = 5; i < l; i++) {
-    runningTally += JEOPARDY_DD_RATES[i];
-    if (valAmt < runningTally) {
+  for (let i = 0, l = ACCUM_JEOPARDY_DD_RATES.length; i < l; i++) {
+    if (valAmt < ACCUM_JEOPARDY_DD_RATES[i]) {
       return i;
     }
   }
@@ -22,7 +20,7 @@ const getDailyDoubles = (
   const dd1 = getDailyDouble(rand);
   const dd2 = getDailyDouble(rand);
   if (!isDoubleJeopardy) {
-    return [[dd1, rand(6)]];
+    return [[rand(6), dd1]];
   }
   const first = rand(6);
   let second = rand(6);
@@ -30,8 +28,8 @@ const getDailyDoubles = (
     second = rand(6);
   }
   return [
-    [dd1, first],
-    [dd2, second],
+    [first, dd1],
+    [second, dd2],
   ];
 };
 

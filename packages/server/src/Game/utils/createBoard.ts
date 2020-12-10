@@ -1,6 +1,6 @@
 import invert from "lodash/invert";
 import { RandomSeed } from "random-seed";
-import { ClueCategory } from "../../types";
+import { ClueCategory, JeopardyClue } from "../../types";
 import getCategoryKeywords from "./getCategoryKeywords";
 import getDailyDoubles from "./getDailyDoubles";
 
@@ -23,7 +23,7 @@ export const createBoard = (
   }));
   for (const dd of dailyDoubles) {
     const [cat, val] = dd;
-    outputClueSet[cat].clues[val].isDailyDouble = true;
+    (outputClueSet[cat].clues[val] as JeopardyClue).isDailyDouble = true;
   }
   const lookup = inputClueSet.reduce((accum, { category }, index) => {
     return { ...accum, [invertedKeys[category]]: index };

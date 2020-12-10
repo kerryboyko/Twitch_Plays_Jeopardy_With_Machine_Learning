@@ -31,7 +31,7 @@ export const { fakeEmit, getLog } = (() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     fakeEmit: (...stuff: any[]) => {
       log.push(stuff);
-      console.log(...stuff);
+      // console.log(...stuff);
     },
     getLog: () => log,
   };
@@ -86,8 +86,17 @@ class Game {
 
   constructor(public seed: string = genSeedString()) {
     this.rand = randomSeed.create(seed);
-    this.changeGameState(GameState.LoadingGame);
   }
+
+  public startGame = async (): Promise<void> => {
+    this.gameStartTime = Date.now() + JTiming.startGame;
+    fakeEmit(wsServer.GAME_START_TIME, this.gameStartTime);
+    fakeEmit(
+      wsServer.INFO,
+      `Type !register to register to play. Game will start in 3 minutes`
+    );
+    await this.changeGameState(GameState.LoadingGame);
+  };
 
   public getSeed = (): string => this.seed;
 
@@ -102,27 +111,22 @@ class Game {
     }
     if (!this.scoreboard[playerName]) {
       this.scoreboard[playerName] = 0;
+      fakeEmit(wsServer.PLAYER_REGISTERED, playerName);
     }
   };
 
   // GAME STATE HANDLERS
   private onLoadingGame = async (): Promise<void> => {
-    this.gameStartTime = Date.now() + JTiming.startGame;
-    fakeEmit(wsServer.GAME_START_TIME, this.gameStartTime);
-    fakeEmit(
-      wsServer.INFO,
-      `Type !register to register to play. Game will start in 3 minutes`
-    );
     const clues = await getClues.fullBoard(this.rand);
     this.clues = clues;
-    this.timeouts.startGame = setTimeout(() => {
+    this.timeouts.gameLoaded = setTimeout(() => {
       this.changeGameState(GameState.Jeopardy);
     }, 3 * JTiming.StartGame);
   };
 
-  private onJeopardy = (isDoubleJeopardy: boolean): void => {
+  private onJeopardy = async (isDoubleJeopardy: boolean): Promise<void> => {
     // we may run this early, so we clear the timeout if we haven't already.
-    clearTimeout(this.timeouts.startGame);
+    clearTimeout(this.timeouts.gameLoaded);
     // get our clues
     const clueSlice = this.clues.slice(
       ...(isDoubleJeopardy ? [0, 6] : [6, 12])
@@ -154,10 +158,10 @@ class Game {
       });
     }
 
-    this.changeClueState(ClueState.PromptSelectClue);
+    await this.changeClueState(ClueState.PromptSelectClue);
   };
 
-  private onFinalJeopardy = () => {
+  private onFinalJeopardy = async (): Promise<void> => {
     const fjCategory = this.clues[12].category;
     const fjClue = this.clues[12].clues[4] as JeopardyClue; // most difficult question in the last category.
     this.currentClue = {
@@ -169,10 +173,12 @@ class Game {
       indices: [-1, -1],
       category: fjCategory,
     };
-    this.changeFinalJeopardyState(FinalJeopardyState.DisplayFinalCategory);
+    await this.changeFinalJeopardyState(
+      FinalJeopardyState.DisplayFinalCategory
+    );
   };
 
-  private onFinalScores = () => {
+  private onFinalScores = async (): Promise<void> => {
     fakeEmit(wsServer.FINAL_SCORES, {
       currentScores: this.scoreboard,
       message:
@@ -180,18 +186,18 @@ class Game {
     });
   };
 
-  private advanceRound = (): void | never => {
+  private advanceRound = async (): Promise<void> | never => {
     if (this.gameState === GameState.Jeopardy) {
       fakeEmit(
         wsServer.END_OF_ROUND,
         `And that is the end of our first Jeopardy round`
       );
 
-      this.changeGameState(GameState.DoubleJeopardy);
+      await this.changeGameState(GameState.DoubleJeopardy);
     } else if (this.gameState === GameState.DoubleJeopardy) {
       fakeEmit(wsServer.END_OF_ROUND, `And that is the end of Double Jeopardy`);
 
-      this.changeGameState(GameState.FinalJeopardy);
+      await this.changeGameState(GameState.FinalJeopardy);
     } else {
       throw new Error(
         `How did we get here? this.gameState is ${this.gameState}`
@@ -260,7 +266,7 @@ class Game {
     }, JTiming.afterAnswer);
   };
 
-  private onPromptSelectClue = () => {
+  private onPromptSelectClue = async (): Promise<void> => {
     // clear answers
     this.currentPlayerAnswers = {} as ProvidedAnswers;
     const nextClue = this.getNextClue();
@@ -281,10 +287,10 @@ class Game {
     }, JTiming.selectTime);
   };
 
-  public onClueSelected = ([categoryIndex, valueIndex]: [
+  public onClueSelected = async ([categoryIndex, valueIndex]: [
     number,
     number
-  ]): void => {
+  ]): Promise<void> => {
     if (
       categoryIndex === undefined ||
       !isInteger(valueIndex) ||
@@ -297,7 +303,7 @@ class Game {
         wsServer.INVALID_CLUE_SELECTION,
         `${this.controllingPlayer}, you have control of the board, select a category.`
       );
-      return this.changeClueState(ClueState.PromptSelectClue);
+      await this.changeClueState(ClueState.PromptSelectClue);
     }
     const { question, answer, category, isDailyDouble, id } = pick(
       this.board.clueSet[categoryIndex].clues[valueIndex],
@@ -315,10 +321,10 @@ class Game {
       isDailyDouble: isDailyDouble || false,
     };
     if (this.currentClue.isDailyDouble) {
-      this.changeClueState(ClueState.DailyDouble);
+      await this.changeClueState(ClueState.DailyDouble);
     } else {
       // probably want to emit on setting the current clue.
-      this.changeClueState(ClueState.DisplayClue);
+      await this.changeClueState(ClueState.DisplayClue);
     }
   };
 
@@ -375,7 +381,7 @@ class Game {
       id: this.currentClue.id,
       currentScores: this.scoreboard,
     });
-    this.changeGameState(GameState.FinalScores);
+    await this.changeGameState(GameState.FinalScores);
   };
 
   // Game State Machine (must be public to use abstraction);
@@ -384,10 +390,10 @@ class Game {
       [GameState.LoadingGame]: this.onLoadingGame,
     },
     [GameState.LoadingGame]: {
-      [GameState.Jeopardy]: (): void => this.onJeopardy(false),
+      [GameState.Jeopardy]: (): Promise<void> => this.onJeopardy(false),
     },
     [GameState.Jeopardy]: {
-      [GameState.DoubleJeopardy]: (): void => this.onJeopardy(true),
+      [GameState.DoubleJeopardy]: (): Promise<void> => this.onJeopardy(true),
     },
     [GameState.DoubleJeopardy]: {
       [GameState.FinalJeopardy]: this.onFinalJeopardy,
@@ -432,44 +438,52 @@ class Game {
   };
 
   private initStateMachine = <TEnum extends States, TMachine>(
-    currentState: TEnum,
     stateMachine: TMachine,
+    stateGetter: () => TEnum,
     stateSetter: (state: TEnum) => void
-  ) => (nextState: TEnum, ...args: unknown[]) => {
-    const next = get(stateMachine, [currentState, nextState], null);
+  ) => async (nextState: TEnum, ...args: unknown[]): Promise<void> => {
+    const next = get(stateMachine, [stateGetter(), nextState], null);
     if (next === null) {
       throw new Error(
-        `Illegal state transition. ${currentState} does not support transition ${currentState} -> ${nextState}`
+        `Illegal state transition. ${stateGetter()} does not support transition ${stateGetter()} -> ${nextState}`
       );
     }
     /* We want to reassign the parameter here as a side effect */
     // eslint-disable-next-line no-param-reassign
     stateSetter(nextState);
-    next(...args);
+    await next(...args);
   };
 
   public changeGameState = this.initStateMachine<
     GameState,
     Game["gameStateMachine"]
-  >(this.gameState, this.gameStateMachine, (state: GameState): void => {
-    this.gameState = state;
-    fakeEmit(wsServer.GAME_STATE_CHANGE, state);
-  });
+  >(
+    this.gameStateMachine,
+    () => this.gameState,
+    (state: GameState): void => {
+      this.gameState = state;
+      fakeEmit(wsServer.GAME_STATE_CHANGE, state);
+    }
+  );
 
   public changeClueState = this.initStateMachine<
     ClueState,
     Game["clueStateMachine"]
-  >(this.clueState, this.clueStateMachine, (state: ClueState): void => {
-    this.clueState = state;
-    fakeEmit(wsServer.CLUE_STATE_CHANGE, state);
-  });
+  >(
+    this.clueStateMachine,
+    () => this.clueState,
+    (state: ClueState): void => {
+      this.clueState = state;
+      fakeEmit(wsServer.CLUE_STATE_CHANGE, state);
+    }
+  );
 
   public changeFinalJeopardyState = this.initStateMachine<
     FinalJeopardyState,
     Game["finalJeopardyStateMachine"]
   >(
-    this.finalJeopardyState,
     this.finalJeopardyStateMachine,
+    () => this.finalJeopardyState,
     (state: FinalJeopardyState): void => {
       this.finalJeopardyState = state;
       fakeEmit(wsServer.FINAL_JEOPARDY_STATE_CHANGE, state);

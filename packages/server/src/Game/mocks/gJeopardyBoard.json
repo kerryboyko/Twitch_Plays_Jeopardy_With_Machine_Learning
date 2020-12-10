@@ -1,0 +1,619 @@
+{
+  "lookup": {
+    "42": 0,
+    "uruguay": 1,
+    "self-indulgent": 2,
+    "monuments": 3,
+    "sequelitis": 4,
+    "biblical": 5
+  },
+  "clueSet": [
+    {
+      "category": "42",
+      "clues": [
+        {
+          "id": 120457,
+          "answer": "Jackie Robinson",
+          "question": "The Dodgers retired his no. 42 jersey number in 1972 & all of MLB did in 1997",
+          "value": 200,
+          "airdate": "2012-11-30T12:00:00.000Z",
+          "created_at": "2014-02-14T02:49:39.259Z",
+          "updated_at": "2014-02-14T02:49:39.259Z",
+          "category_id": 16496,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 16496,
+            "title": "42",
+            "created_at": "2014-02-14T02:49:39.104Z",
+            "updated_at": "2014-02-14T02:49:39.104Z",
+            "clues_count": 10
+          }
+        },
+        {
+          "id": 120463,
+          "answer": "XLII",
+          "question": "Claudius, emperor in 42 A.D., would have written 42 this way",
+          "value": 400,
+          "airdate": "2012-11-30T12:00:00.000Z",
+          "created_at": "2014-02-14T02:49:39.465Z",
+          "updated_at": "2014-02-14T02:49:39.465Z",
+          "category_id": 16496,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 16496,
+            "title": "42",
+            "created_at": "2014-02-14T02:49:39.104Z",
+            "updated_at": "2014-02-14T02:49:39.104Z",
+            "clues_count": 10
+          }
+        },
+        {
+          "id": 120469,
+          "answer": "University of Pittsburgh",
+          "question": "Just west of Heinz Chapel is the 42-story Cathedral of Learning, the central building of this university",
+          "value": 600,
+          "airdate": "2012-11-30T12:00:00.000Z",
+          "created_at": "2014-02-14T02:49:39.708Z",
+          "updated_at": "2014-02-14T02:49:39.708Z",
+          "category_id": 16496,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 16496,
+            "title": "42",
+            "created_at": "2014-02-14T02:49:39.104Z",
+            "updated_at": "2014-02-14T02:49:39.104Z",
+            "clues_count": 10
+          }
+        },
+        {
+          "id": 120475,
+          "answer": "molybdenum",
+          "question": "This silvery metal used to strengthen steel has the atomic number 42 & the symbol Mo",
+          "value": 800,
+          "airdate": "2012-11-30T12:00:00.000Z",
+          "created_at": "2014-02-14T02:49:39.972Z",
+          "updated_at": "2014-02-14T02:49:39.972Z",
+          "category_id": 16496,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 16496,
+            "title": "42",
+            "created_at": "2014-02-14T02:49:39.104Z",
+            "updated_at": "2014-02-14T02:49:39.104Z",
+            "clues_count": 10
+          }
+        },
+        {
+          "id": 120481,
+          "answer": "Elisha",
+          "question": "In the Bible, 42 children who teased this prophet & disciple of Elijah were attacked by bears",
+          "value": 1000,
+          "airdate": "2012-11-30T12:00:00.000Z",
+          "created_at": "2014-02-14T02:49:40.232Z",
+          "updated_at": "2014-02-14T02:49:40.232Z",
+          "category_id": 16496,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 16496,
+            "title": "42",
+            "created_at": "2014-02-14T02:49:39.104Z",
+            "updated_at": "2014-02-14T02:49:39.104Z",
+            "clues_count": 10
+          }
+        }
+      ],
+      "key": "42"
+    },
+    {
+      "category": "ur in uruguay",
+      "clues": [
+        {
+          "id": 33906,
+          "answer": "Montevideo",
+          "question": "Uruguay's only large city, this capital contains about 40% of the country's population",
+          "value": 100,
+          "airdate": "1998-09-30T12:00:00.000Z",
+          "created_at": "2014-02-11T23:05:56.353Z",
+          "updated_at": "2014-02-11T23:05:56.353Z",
+          "category_id": 3974,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 3974,
+            "title": "ur in uruguay",
+            "created_at": "2014-02-11T23:05:56.264Z",
+            "updated_at": "2014-02-11T23:05:56.264Z",
+            "clues_count": 5
+          }
+        },
+        {
+          "id": 33912,
+          "answer": "Soccer (Futbol)",
+          "question": "A top sport in the country, Uruguay has won the World Cup in this twice, in 1930 & 1950",
+          "value": 200,
+          "airdate": "1998-09-30T12:00:00.000Z",
+          "created_at": "2014-02-11T23:05:56.485Z",
+          "updated_at": "2014-02-11T23:05:56.485Z",
+          "category_id": 3974,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 3974,
+            "title": "ur in uruguay",
+            "created_at": "2014-02-11T23:05:56.264Z",
+            "updated_at": "2014-02-11T23:05:56.264Z",
+            "clues_count": 5
+          }
+        },
+        {
+          "id": 33918,
+          "answer": "Gauchos",
+          "question": "Long romanticized in literature, these cowboys tend ranches called estancias",
+          "value": 300,
+          "airdate": "1998-09-30T12:00:00.000Z",
+          "created_at": "2014-02-11T23:05:56.610Z",
+          "updated_at": "2014-02-11T23:05:56.610Z",
+          "category_id": 3974,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 3974,
+            "title": "ur in uruguay",
+            "created_at": "2014-02-11T23:05:56.264Z",
+            "updated_at": "2014-02-11T23:05:56.264Z",
+            "clues_count": 5
+          }
+        },
+        {
+          "id": 33924,
+          "answer": "Red",
+          "question": "The 2 traditional political parties are named for their colors:  Blancos for white & Colorados for this color",
+          "value": 400,
+          "airdate": "1998-09-30T12:00:00.000Z",
+          "created_at": "2014-02-11T23:05:56.744Z",
+          "updated_at": "2014-02-11T23:05:56.744Z",
+          "category_id": 3974,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 3974,
+            "title": "ur in uruguay",
+            "created_at": "2014-02-11T23:05:56.264Z",
+            "updated_at": "2014-02-11T23:05:56.264Z",
+            "clues_count": 5
+          }
+        },
+        {
+          "id": 33930,
+          "answer": "Rhea",
+          "question": "Uruguay's birdlife ranges from small parakeets to this 5-foot-tall flightless bird",
+          "value": 500,
+          "airdate": "1998-09-30T12:00:00.000Z",
+          "created_at": "2014-02-11T23:05:56.869Z",
+          "updated_at": "2014-02-11T23:05:56.869Z",
+          "category_id": 3974,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 3974,
+            "title": "ur in uruguay",
+            "created_at": "2014-02-11T23:05:56.264Z",
+            "updated_at": "2014-02-11T23:05:56.264Z",
+            "clues_count": 5
+          }
+        }
+      ],
+      "key": "uruguay"
+    },
+    {
+      "category": "self-indulgent reality tv",
+      "clues": [
+        {
+          "id": 100655,
+          "answer": "Brigitte Nielsen",
+          "question": "VH1's \"Strange Love\" featured 5' 5 1/2\" Flavor Flav's whirlwind romance with this 6'1\" Danish star",
+          "value": 200,
+          "airdate": "2009-10-19T12:00:00.000Z",
+          "created_at": "2014-02-14T02:07:00.318Z",
+          "updated_at": "2014-02-14T02:07:00.318Z",
+          "category_id": 13487,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 13487,
+            "title": "self-indulgent reality tv",
+            "created_at": "2014-02-14T02:07:00.004Z",
+            "updated_at": "2014-02-14T02:07:00.004Z",
+            "clues_count": 5
+          }
+        },
+        {
+          "id": 100661,
+          "answer": "Brody Jenner",
+          "question": "MTV's \"Bromance\" centered on the quest to find a BFF for this son of an Olympian",
+          "value": 400,
+          "airdate": "2009-10-19T12:00:00.000Z",
+          "created_at": "2014-02-14T02:07:00.783Z",
+          "updated_at": "2014-02-14T02:07:00.783Z",
+          "category_id": 13487,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 13487,
+            "title": "self-indulgent reality tv",
+            "created_at": "2014-02-14T02:07:00.004Z",
+            "updated_at": "2014-02-14T02:07:00.004Z",
+            "clues_count": 5
+          }
+        },
+        {
+          "id": 100667,
+          "answer": "Denise Richards",
+          "question": "I guess you could say this actress' show \"It's Complicated\" has a certain \"sheen\" about it",
+          "value": 600,
+          "airdate": "2009-10-19T12:00:00.000Z",
+          "created_at": "2014-02-14T02:07:01.195Z",
+          "updated_at": "2014-02-14T02:07:01.195Z",
+          "category_id": 13487,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 13487,
+            "title": "self-indulgent reality tv",
+            "created_at": "2014-02-14T02:07:00.004Z",
+            "updated_at": "2014-02-14T02:07:00.004Z",
+            "clues_count": 5
+          }
+        },
+        {
+          "id": 100673,
+          "answer": "Bret Michaels",
+          "question": "On \"Rock of Love\", this rocker's hair extensions don't scare the ladies away; quite the opposite",
+          "value": 800,
+          "airdate": "2009-10-19T12:00:00.000Z",
+          "created_at": "2014-02-14T02:07:01.483Z",
+          "updated_at": "2014-02-14T02:07:01.483Z",
+          "category_id": 13487,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 13487,
+            "title": "self-indulgent reality tv",
+            "created_at": "2014-02-14T02:07:00.004Z",
+            "updated_at": "2014-02-14T02:07:00.004Z",
+            "clues_count": 5
+          }
+        },
+        {
+          "id": 100679,
+          "answer": "Gary Busey",
+          "question": "On \"I'm With\" this actor, the Oscar nominee once threatened to pull someone's endocrine system from their body",
+          "value": 1000,
+          "airdate": "2009-10-19T12:00:00.000Z",
+          "created_at": "2014-02-14T02:07:01.809Z",
+          "updated_at": "2014-02-14T02:07:01.809Z",
+          "category_id": 13487,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 13487,
+            "title": "self-indulgent reality tv",
+            "created_at": "2014-02-14T02:07:00.004Z",
+            "updated_at": "2014-02-14T02:07:00.004Z",
+            "clues_count": 5
+          }
+        }
+      ],
+      "key": "self-indulgent"
+    },
+    {
+      "category": "the monuments women",
+      "clues": [
+        {
+          "id": 122727,
+          "answer": "Lucille Ball",
+          "question": "We love this comedienne who earned her placeat the hall of fame plazaat the television academy",
+          "value": 200,
+          "airdate": "2014-07-14T12:00:00.000Z",
+          "created_at": "2015-01-18T18:09:30.432Z",
+          "updated_at": "2015-01-18T18:09:30.432Z",
+          "category_id": 16831,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 16831,
+            "title": "the monuments women",
+            "created_at": "2015-01-18T18:09:30.162Z",
+            "updated_at": "2015-01-18T18:09:30.162Z",
+            "clues_count": 10
+          }
+        },
+        {
+          "id": 122733,
+          "answer": "\"America The Beautiful\"",
+          "question": "O, a beautiful Falmouth, Mass. statue of Katharine Lee Bates shows her imagining the lines of this song",
+          "value": 400,
+          "airdate": "2014-07-14T12:00:00.000Z",
+          "created_at": "2015-01-18T18:09:30.662Z",
+          "updated_at": "2015-01-18T18:09:30.662Z",
+          "category_id": 16831,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 16831,
+            "title": "the monuments women",
+            "created_at": "2015-01-18T18:09:30.162Z",
+            "updated_at": "2015-01-18T18:09:30.162Z",
+            "clues_count": 10
+          }
+        },
+        {
+          "id": 146108,
+          "answer": "Anne Frank",
+          "question": "For decades, visitors to this girls' house in Amsterdam have gazed at the statue seen here",
+          "value": 600,
+          "airdate": "2014-07-14T12:00:00.000Z",
+          "created_at": "2015-01-22T02:33:01.167Z",
+          "updated_at": "2015-01-22T02:33:01.167Z",
+          "category_id": 16831,
+          "game_id": 4565,
+          "invalid_count": null,
+          "category": {
+            "id": 16831,
+            "title": "the monuments women",
+            "created_at": "2015-01-18T18:09:30.162Z",
+            "updated_at": "2015-01-18T18:09:30.162Z",
+            "clues_count": 10
+          }
+        },
+        {
+          "id": 122745,
+          "answer": "Molly Pitcher",
+          "question": "Mary Hays, famed under this name for 18th century water-bearing, is immortalized by her grave in Carlisle, Pennsylvania",
+          "value": 800,
+          "airdate": "2014-07-14T12:00:00.000Z",
+          "created_at": "2015-01-18T18:09:31.127Z",
+          "updated_at": "2015-01-18T18:09:31.127Z",
+          "category_id": 16831,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 16831,
+            "title": "the monuments women",
+            "created_at": "2015-01-18T18:09:30.162Z",
+            "updated_at": "2015-01-18T18:09:30.162Z",
+            "clues_count": 10
+          }
+        },
+        {
+          "id": 122751,
+          "answer": "Harriet Beecher Stowe",
+          "question": "In Hartford, Lincoln meets this novelist and local who set much history in motion",
+          "value": 1000,
+          "airdate": "2014-07-14T12:00:00.000Z",
+          "created_at": "2015-01-18T18:09:31.389Z",
+          "updated_at": "2015-01-18T18:09:31.389Z",
+          "category_id": 16831,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 16831,
+            "title": "the monuments women",
+            "created_at": "2015-01-18T18:09:30.162Z",
+            "updated_at": "2015-01-18T18:09:30.162Z",
+            "clues_count": 10
+          }
+        }
+      ],
+      "key": "monuments"
+    },
+    {
+      "category": "sequelitis",
+      "clues": [
+        {
+          "id": 81335,
+          "answer": "<i>Speed</i>",
+          "question": "Sandra returned; Keanu passed on the watery \"Cruise Control\" sequel to this 1994 thrill-fest",
+          "value": 200,
+          "airdate": "2006-12-11T12:00:00.000Z",
+          "created_at": "2014-02-11T23:39:59.057Z",
+          "updated_at": "2014-02-11T23:39:59.057Z",
+          "category_id": 10688,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 10688,
+            "title": "sequelitis",
+            "created_at": "2014-02-11T23:39:58.955Z",
+            "updated_at": "2014-02-11T23:39:58.955Z",
+            "clues_count": 5
+          }
+        },
+        {
+          "id": 81341,
+          "answer": "<i>Jaws</i>",
+          "question": "The killer in the \"Revenge\" sequel to this movie eats 1 Brody off Amity Island, then looks for more of them in the Bahamas",
+          "value": 400,
+          "airdate": "2006-12-11T12:00:00.000Z",
+          "created_at": "2014-02-11T23:39:59.718Z",
+          "updated_at": "2014-02-11T23:39:59.718Z",
+          "category_id": 10688,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 10688,
+            "title": "sequelitis",
+            "created_at": "2014-02-11T23:39:58.955Z",
+            "updated_at": "2014-02-11T23:39:58.955Z",
+            "clues_count": 5
+          }
+        },
+        {
+          "id": 81347,
+          "answer": "<i>Caddyshack</i>",
+          "question": "Jackie Mason played miniature golf in the 1988 sequel to this madcap comedy",
+          "value": 600,
+          "airdate": "2006-12-11T12:00:00.000Z",
+          "created_at": "2014-02-11T23:39:59.882Z",
+          "updated_at": "2014-02-11T23:39:59.882Z",
+          "category_id": 10688,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 10688,
+            "title": "sequelitis",
+            "created_at": "2014-02-11T23:39:58.955Z",
+            "updated_at": "2014-02-11T23:39:58.955Z",
+            "clues_count": 5
+          }
+        },
+        {
+          "id": 81353,
+          "answer": "<i>The Blair Witch Project</i>",
+          "question": "It's Burkittsville redux as 4 Boston students stumble on the \"Book of Shadows\" in a sequel to this 1999 flick",
+          "value": 800,
+          "airdate": "2006-12-11T12:00:00.000Z",
+          "created_at": "2014-02-11T23:40:00.080Z",
+          "updated_at": "2014-02-11T23:40:00.080Z",
+          "category_id": 10688,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 10688,
+            "title": "sequelitis",
+            "created_at": "2014-02-11T23:39:58.955Z",
+            "updated_at": "2014-02-11T23:39:58.955Z",
+            "clues_count": 5
+          }
+        },
+        {
+          "id": 81359,
+          "answer": "<i>Grease</i>",
+          "question": "Adrian Zmed takes us back to Rydell High & sees familiar faces like Didi Conn in the 1982 sequel to this film",
+          "value": 1000,
+          "airdate": "2006-12-11T12:00:00.000Z",
+          "created_at": "2014-02-11T23:40:00.261Z",
+          "updated_at": "2014-02-11T23:40:00.261Z",
+          "category_id": 10688,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 10688,
+            "title": "sequelitis",
+            "created_at": "2014-02-11T23:39:58.955Z",
+            "updated_at": "2014-02-11T23:39:58.955Z",
+            "clues_count": 5
+          }
+        }
+      ],
+      "key": "sequelitis"
+    },
+    {
+      "category": "biblical who's who",
+      "clues": [
+        {
+          "id": 127972,
+          "answer": "John the Baptist",
+          "question": "After Herod promises his stepdaughter anything, she requests this man's head on a platter",
+          "value": 200,
+          "airdate": "2013-11-11T12:00:00.000Z",
+          "created_at": "2015-01-18T18:14:46.990Z",
+          "updated_at": "2015-01-18T18:14:46.990Z",
+          "category_id": 17608,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 17608,
+            "title": "biblical who's who",
+            "created_at": "2015-01-18T18:14:46.903Z",
+            "updated_at": "2015-01-18T18:14:46.903Z",
+            "clues_count": 10
+          }
+        },
+        {
+          "id": 127978,
+          "answer": "David",
+          "question": "In First Kings he's the first king mentioned",
+          "value": 400,
+          "airdate": "2013-11-11T12:00:00.000Z",
+          "created_at": "2015-01-18T18:14:47.258Z",
+          "updated_at": "2015-01-18T18:14:47.258Z",
+          "category_id": 17608,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 17608,
+            "title": "biblical who's who",
+            "created_at": "2015-01-18T18:14:46.903Z",
+            "updated_at": "2015-01-18T18:14:46.903Z",
+            "clues_count": 10
+          }
+        },
+        {
+          "id": 127984,
+          "answer": "Mary Magdelene",
+          "question": "That must have been some exorcism when Jesus cast 7 devils out of her",
+          "value": 600,
+          "airdate": "2013-11-11T12:00:00.000Z",
+          "created_at": "2015-01-18T18:14:47.503Z",
+          "updated_at": "2015-01-18T18:14:47.503Z",
+          "category_id": 17608,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 17608,
+            "title": "biblical who's who",
+            "created_at": "2015-01-18T18:14:46.903Z",
+            "updated_at": "2015-01-18T18:14:46.903Z",
+            "clues_count": 10
+          },
+          "isDailyDouble": true
+        },
+        {
+          "id": 127990,
+          "answer": "Simon Peter",
+          "question": "Jesus called this disciple by his Aramaic name, Simon bar-Jona",
+          "value": 800,
+          "airdate": "2013-11-11T12:00:00.000Z",
+          "created_at": "2015-01-18T18:14:47.754Z",
+          "updated_at": "2015-01-18T18:14:47.754Z",
+          "category_id": 17608,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 17608,
+            "title": "biblical who's who",
+            "created_at": "2015-01-18T18:14:46.903Z",
+            "updated_at": "2015-01-18T18:14:46.903Z",
+            "clues_count": 10
+          }
+        },
+        {
+          "id": 127996,
+          "answer": "Rachel",
+          "question": "Joseph was Jacob's 11th son & the firstborn son of this woman",
+          "value": 1000,
+          "airdate": "2013-11-11T12:00:00.000Z",
+          "created_at": "2015-01-18T18:14:48.004Z",
+          "updated_at": "2015-01-18T18:14:48.004Z",
+          "category_id": 17608,
+          "game_id": null,
+          "invalid_count": null,
+          "category": {
+            "id": 17608,
+            "title": "biblical who's who",
+            "created_at": "2015-01-18T18:14:46.903Z",
+            "updated_at": "2015-01-18T18:14:46.903Z",
+            "clues_count": 10
+          }
+        }
+      ],
+      "key": "biblical"
+    }
+  ]
+}

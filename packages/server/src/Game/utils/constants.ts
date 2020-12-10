@@ -1,4 +1,5 @@
 export const JEOPARDY_DD_RATES = [4, 756, 2492, 3636, 3112];
+export const ACCUM_JEOPARDY_DD_RATES = [4, 760, 3252, 6888, 10000];
 
 export const J_VALS = [200, 400, 600, 800, 1000];
 export const DJ_VALS = [400, 800, 1200, 1600, 2000];

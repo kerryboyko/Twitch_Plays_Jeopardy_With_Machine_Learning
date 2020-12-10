@@ -6,11 +6,11 @@ test("get daily doubles", () => {
     [3, 3],
   ]);
   expect(getDailyDoubles(randomSeed.create("test two"), true)).toEqual([
-    [4, 5],
+    [5, 4],
     [1, 1],
   ]);
   expect(getDailyDoubles(randomSeed.create("test three"), true)).toEqual([
-    [2, 3],
-    [3, 4],
+    [3, 2],
+    [4, 3],
   ]);
 });
