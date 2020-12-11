@@ -21,6 +21,10 @@ import {
   JeopardyClue,
 } from "../types";
 
+/* TODO: This is a refactor target.  What we PROBABLY should be doing is having four seperate classes:
+   Game / Board / Clue / Final Jeopardy.  
+
+   */
 /* fake Emit will likely be replaced soon with websockets for sending to the front end.
    For now, it console.logs */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -51,7 +55,7 @@ class Game {
 
   private timeouts: Record<string, ReturnType<typeof setTimeout>> = {};
 
-  // we grab this once, then it's read-only.
+  // we grab this once from the DB, then it's read-only.
   private clues: ClueCategory[] = [];
 
   // this is the live board which is mutable
@@ -86,6 +90,7 @@ class Game {
 
   public wagers: Record<string, number> = {};
 
+  /* CONSTRUCTOR! */
   constructor(public seed: string = genSeedString()) {
     this.rand = randomSeed.create(seed);
   }
@@ -108,7 +113,7 @@ class Game {
     getNextClue(this.board.clueSet);
 
   // WS Event Handlers
-  public registerPlayer = (playerName: string): void => {
+  public handleRegisterPlayer = (playerName: string): void => {
     if (Object.keys(this.scoreboard).length === 0) {
       this.controllingPlayer = playerName;
     }

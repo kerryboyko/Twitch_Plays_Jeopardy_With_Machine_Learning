@@ -66,9 +66,9 @@ describe("Class Game", () => {
   });
   describe("register player", () => {
     it("registers players", () => {
-      game.registerPlayer("alpha");
-      game.registerPlayer("beta");
-      game.registerPlayer("gamma");
+      game.handleRegisterPlayer("alpha");
+      game.handleRegisterPlayer("beta");
+      game.handleRegisterPlayer("gamma");
       expect(game.scoreboard).toEqual({
         alpha: 0,
         beta: 0,
