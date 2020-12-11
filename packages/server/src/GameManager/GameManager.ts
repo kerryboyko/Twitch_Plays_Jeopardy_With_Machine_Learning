@@ -11,13 +11,14 @@ import pickOneAtRandom from "./utils/pickOneAtRandom";
 import { wsServer } from "../sockets/commands";
 import answerEvaluator from "../logic/answerEvaluator";
 
+import createStateMachine from "../logic/createStateMachine";
+
 import {
   ClueCategory,
   GameState,
   ClueState,
   FinalJeopardyState,
   ProvidedAnswers,
-  States,
   JeopardyClue,
 } from "../types";
 
@@ -42,7 +43,7 @@ export const { fakeEmit, getLog } = (() => {
 })();
 
 // this may be broken up into "game" and "clue" -- but we'll see how this works out first.
-class Game {
+class GameManager {
   private rand: RandomSeed;
 
   private gameState: GameState = GameState.None;
@@ -531,26 +532,9 @@ class Game {
     },
   };
 
-  private initStateMachine = <TEnum extends States, TMachine>(
-    stateMachine: TMachine,
-    stateGetter: () => TEnum,
-    stateSetter: (state: TEnum) => void
-  ) => async (nextState: TEnum, ...args: unknown[]): Promise<void> => {
-    const next = get(stateMachine, [stateGetter(), nextState], null);
-    if (next === null) {
-      throw new Error(
-        `Illegal state transition. ${stateGetter()} does not support transition ${stateGetter()} -> ${nextState}`
-      );
-    }
-    /* We want to reassign the parameter here as a side effect */
-    // eslint-disable-next-line no-param-reassign
-    stateSetter(nextState);
-    await next(...args);
-  };
-
-  public changeGameState = this.initStateMachine<
+  public changeGameState = createStateMachine<
     GameState,
-    Game["gameStateMachine"]
+    GameManager["gameStateMachine"]
   >(
     this.gameStateMachine,
     () => this.gameState,
@@ -560,9 +544,9 @@ class Game {
     }
   );
 
-  public changeClueState = this.initStateMachine<
+  public changeClueState = createStateMachine<
     ClueState,
-    Game["clueStateMachine"]
+    GameManager["clueStateMachine"]
   >(
     this.clueStateMachine,
     () => this.clueState,
@@ -572,9 +556,9 @@ class Game {
     }
   );
 
-  public changeFinalJeopardyState = this.initStateMachine<
+  public changeFinalJeopardyState = createStateMachine<
     FinalJeopardyState,
-    Game["finalJeopardyStateMachine"]
+    GameManager["finalJeopardyStateMachine"]
   >(
     this.finalJeopardyStateMachine,
     () => this.finalJeopardyState,
@@ -585,4 +569,4 @@ class Game {
   );
 }
 
-export default Game;
+export default GameManager;

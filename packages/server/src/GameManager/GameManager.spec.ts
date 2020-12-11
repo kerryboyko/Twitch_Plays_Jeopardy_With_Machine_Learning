@@ -1,6 +1,6 @@
 import fs from "fs";
 import { ClueState, FinalJeopardyState, GameState } from "../types";
-import Game, { getLog } from "./Game";
+import GameManager, { getLog } from "./GameManager";
 import mockClues from "./mocks/gClues.json";
 import mockJeopardyBoard from "./mocks/gJeopardyBoard.json";
 import mockDoubleJeopardyBoard from "./mocks/gDoubleJeopardyBoard.json";
@@ -14,7 +14,7 @@ const seedString = "test";
    */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
-const game = new Game(seedString) as any;
+const game = new GameManager(seedString) as any;
 
 const clearAllGameTimeouts = () =>
   Object.values(game.timeouts).forEach((timeout) =>
