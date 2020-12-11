@@ -50,7 +50,7 @@ export const majorityConsonantsInRightOrderStrategy: Strategy = (c, p) => {
 const strategies: Record<string, Strategy> = {
   directStrategy,
   majorityConsonantsInRightOrderStrategy,
-  thirdSubstringStrategy,
+  // thirdSubstringStrategy, // (too many false positives)
 };
 
 export default strategies;

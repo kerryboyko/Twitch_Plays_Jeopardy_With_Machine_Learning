@@ -1,5 +1,5 @@
 import fs from "fs";
-import { ClueState, GameState } from "../types";
+import { ClueState, FinalJeopardyState, GameState } from "../types";
 import Game, { getLog } from "./Game";
 import mockClues from "./mocks/gClues.json";
 import mockJeopardyBoard from "./mocks/gJeopardyBoard.json";
@@ -416,6 +416,167 @@ describe("Class Game", () => {
           ],
         ]);
       });
+      it("advances to final jeopardy", async () => {
+        expect(game.gameState).toBe(GameState.DoubleJeopardy);
+        // nullify the double jeopary clueset.
+        for (let i = 0, l = game.board.clueSet.length; i < l; i++) {
+          game.board.clueSet[i].clues = [null, null, null, null, null];
+        }
+        // should advance the round.  This is... not normally a viable path,
+        // but it should be fine for test purposes.
+        await game.changeClueState(ClueState.PromptSelectClue);
+        expect(game.clueState).toBe(ClueState.PromptSelectClue);
+        expect(game.gameState).toBe(GameState.FinalJeopardy);
+        expect(game.finalJeopardyState).toBe(
+          FinalJeopardyState.DisplayFinalCategory
+        );
+        expect(game.currentClue).toEqual({
+          answer: "freebooter",
+          category: `hey, "boo"`,
+          id: 64053,
+          indices: [-1, -1],
+          isDailyDouble: false,
+          question: `Another word for pirate, it's derived from the same Dutch word as "filibuster"`,
+          value: 0,
+        });
+        // lowest score should go first in Double Jeopardy.
+        const log = getLatestLog();
+        expect(log).toEqual([
+          ["wsServer.CLUE_STATE_CHANGE", "Prompt Select Clue"],
+          ["wsServer.END_OF_ROUND", "And that is the end of Double Jeopardy"],
+          ["wsServer.GAME_STATE_CHANGE", "Final Jeopardy"],
+          ["wsServer.FINAL_JEOPARDY_STATE_CHANGE", "Display FJ Category"],
+          [
+            "wsServer.FJ_DISPLAY_CATEGORY",
+            {
+              category: `hey, "boo"`,
+              message:
+                "And now, the Final Jeopardy category.  Place your final wagers",
+            },
+          ],
+        ]);
+      });
+    });
+  });
+  describe("finalJeopardy", () => {
+    it("handles wagers", () => {
+      expect(game.finalJeopardyState).toBe(
+        FinalJeopardyState.DisplayFinalCategory
+      );
+      game.handleWager("alpha", 1000);
+      game.handleWager("beta", 1000);
+      game.handleWager("gamma", 1000);
+      expect(game.wagers).toEqual({
+        alpha: 1000,
+        beta: 200,
+      });
+      const log = getLatestLog();
+      expect(log).toEqual([
+        ["wsServer.WAGER_RECEIVED", "alpha"],
+        ["wsServer.WAGER_RECEIVED", "beta"],
+      ]);
+    });
+    it("displays the clue", async () => {
+      await game.changeFinalJeopardyState(FinalJeopardyState.DisplayClue);
+      expect(game.finalJeopardyState).toBe(FinalJeopardyState.DisplayClue);
+      const log = getLatestLog();
+      expect(log).toEqual([
+        ["wsServer.FINAL_JEOPARDY_STATE_CHANGE", "Display FJ Clue"],
+        [
+          "wsServer.FJ_DISPLAY_CLUE",
+          {
+            category: `hey, "boo"`,
+            id: 64053,
+            question: `Another word for pirate, it's derived from the same Dutch word as "filibuster"`,
+          },
+        ],
+        ["wsServer.PLAY_THINK_MUSIC"],
+      ]);
+    });
+    it("handles answers", () => {
+      game.handleAnswer("alpha", "bootineer");
+      game.handleAnswer("beta", "freebooter");
+      game.handleAnswer("gamma", "freebooter"); // should be ignored
+      expect(game.currentPlayerAnswers).toEqual([
+        {
+          evaluated: null,
+          playerName: "alpha",
+          provided: "bootineer",
+        },
+        {
+          evaluated: null,
+          playerName: "beta",
+          provided: "freebooter",
+        },
+        {
+          evaluated: null,
+          playerName: "gamma",
+          provided: "freebooter",
+        },
+      ]);
+      const log = getLatestLog();
+      expect(log).toEqual([]);
+    });
+    it("handles the final scores", async () => {
+      expect(game.wagers).toEqual({
+        alpha: 1000,
+        beta: 200,
+      });
+      await game.changeFinalJeopardyState(FinalJeopardyState.DisplayAnswer);
+      expect(game.finalJeopardyState).toBe(FinalJeopardyState.DisplayAnswer);
+      expect(game.gameState).toBe(GameState.FinalScores);
+      expect(game.scoreboard).toEqual({
+        alpha: 1800,
+        beta: 400,
+        gamma: -200,
+      });
+      const log = getLatestLog();
+      expect(log).toEqual([
+        ["wsServer.FINAL_JEOPARDY_STATE_CHANGE", "Display FJ Answer"],
+        [
+          "wsServer.DISPLAY_ANSWER",
+          {
+            answer: "freebooter",
+            currentScores: {
+              alpha: 1800,
+              beta: 400,
+              gamma: -200,
+            },
+            id: 64053,
+            provided: [
+              {
+                evaluated: false,
+                playerName: "alpha",
+                provided: "bootineer",
+              },
+              {
+                evaluated: true,
+                playerName: "beta",
+                provided: "freebooter",
+              },
+              {
+                evaluated: null,
+                playerName: "gamma",
+                provided: "freebooter",
+              },
+            ],
+            question: `Another word for pirate, it's derived from the same Dutch word as "filibuster"`,
+          },
+        ],
+        ["wsServer.GAME_STATE_CHANGE", "Final Scores"],
+        [
+          "wsServer.FINAL_SCORES",
+          {
+            finalScores: [
+              ["alpha", 1800],
+              ["beta", 400],
+              ["gamma", -200],
+            ],
+            message:
+              "Thanks for playing! A new game will start soon, type !register to join, or !judge to register as a judge",
+          },
+        ],
+      ]);
     });
   });
 });

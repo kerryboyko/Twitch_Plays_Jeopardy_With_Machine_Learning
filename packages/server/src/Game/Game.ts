@@ -215,31 +215,6 @@ class Game {
     await this.changeClueState(ClueState.PromptSelectClue);
   };
 
-  private onFinalJeopardy = async (): Promise<void> => {
-    const fjCategory = this.clues[12].category;
-    const fjClue = this.clues[12].clues[4] as JeopardyClue; // most difficult question in the last category.
-    this.currentClue = {
-      id: fjClue.id as number,
-      question: fjClue.question as string,
-      answer: fjClue.answer as string,
-      value: 0,
-      isDailyDouble: false,
-      indices: [-1, -1],
-      category: fjCategory,
-    };
-    await this.changeFinalJeopardyState(
-      FinalJeopardyState.DisplayFinalCategory
-    );
-  };
-
-  private onFinalScores = async (): Promise<void> => {
-    fakeEmit(wsServer.FINAL_SCORES, {
-      currentScores: this.scoreboard,
-      message:
-        "Thanks for playing! A new game will start soon, type !register to join, or !judge to register as a judge",
-    });
-  };
-
   private advanceRound = async (): Promise<void> | never => {
     if (this.gameState === GameState.Jeopardy) {
       fakeEmit(
@@ -394,7 +369,8 @@ class Game {
     // nullify the question;
     const [cat, val] = this.currentClue.indices;
     this.board.clueSet[cat].clues[val] = null;
-    // nullify the prior answers and wagers;
+
+    // clear answers and wagers;
 
     this.timeouts.afterAnswer = setTimeout(() => {
       this.changeClueState(ClueState.PromptSelectClue);
@@ -402,6 +378,23 @@ class Game {
   };
 
   // final jeopardy state handlers
+
+  private onFinalJeopardy = async (): Promise<void> => {
+    const fjCategory = this.clues[12].category;
+    const fjClue = this.clues[12].clues[4] as JeopardyClue; // most difficult question in the last category.
+    this.currentClue = {
+      id: fjClue.id as number,
+      question: fjClue.question as string,
+      answer: fjClue.answer as string,
+      value: 0,
+      isDailyDouble: false,
+      indices: [-1, -1],
+      category: fjCategory,
+    };
+    await this.changeFinalJeopardyState(
+      FinalJeopardyState.DisplayFinalCategory
+    );
+  };
 
   private onDisplayFinalCategory = () => {
     fakeEmit(wsServer.FJ_DISPLAY_CATEGORY, {
@@ -416,9 +409,9 @@ class Game {
   private onDisplayFinalClue = () => {
     clearTimeout(this.timeouts.wagerTime); // for DDs and FJ
     fakeEmit(wsServer.FJ_DISPLAY_CLUE, {
+      category: this.currentClue.category,
       question: this.currentClue.question,
       id: this.currentClue.id,
-      value: this.currentClue.value,
     });
     fakeEmit(wsServer.PLAY_THINK_MUSIC);
     this.timeouts.answerTime = setTimeout(() => {
@@ -432,7 +425,8 @@ class Game {
 
     await Promise.all(
       this.currentPlayerAnswers.map(
-        async ({ playerName, provided, wager }, index: number) => {
+        async ({ playerName, provided }, index: number) => {
+          const wager = this.wagers[playerName];
           if (wager === undefined || wager < 0) {
             return;
           }
@@ -441,6 +435,7 @@ class Game {
             provided
           );
           this.currentPlayerAnswers[index].evaluated = final;
+
           // adjust scores
           if (final !== null && wager > 0) {
             this.scoreboard[playerName] += wager * (final ? 1 : -1);
@@ -461,6 +456,16 @@ class Game {
       currentScores: this.scoreboard,
     });
     await this.changeGameState(GameState.FinalScores);
+  };
+
+  private onFinalScores = async (): Promise<void> => {
+    fakeEmit(wsServer.FINAL_SCORES, {
+      finalScores: Object.entries(this.scoreboard).sort(
+        (p1, p2) => p2[1] - p1[1]
+      ),
+      message:
+        "Thanks for playing! A new game will start soon, type !register to join, or !judge to register as a judge",
+    });
   };
 
   // Game State Machine (must be public to use abstraction);

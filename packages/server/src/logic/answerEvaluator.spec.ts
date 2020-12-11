@@ -7,7 +7,6 @@ describe("answerEvaluator", () => {
       strategyResults: [
         ["directStrategy", true],
         ["majorityConsonantsInRightOrderStrategy", true],
-        ["thirdSubstringStrategy", null],
       ],
     });
     expect(await answerEvaluator("oprah", "opera")).toEqual({
@@ -15,7 +14,6 @@ describe("answerEvaluator", () => {
       strategyResults: [
         ["directStrategy", false],
         ["majorityConsonantsInRightOrderStrategy", null],
-        ["thirdSubstringStrategy", null],
       ],
     });
     expect(await answerEvaluator("independence day", "4th of july")).toEqual({
@@ -23,7 +21,6 @@ describe("answerEvaluator", () => {
       strategyResults: [
         ["directStrategy", false],
         ["majorityConsonantsInRightOrderStrategy", false],
-        ["thirdSubstringStrategy", false],
       ],
     });
     expect(await answerEvaluator("henry viii", "henry viii")).toEqual({
@@ -31,7 +28,6 @@ describe("answerEvaluator", () => {
       strategyResults: [
         ["directStrategy", true],
         ["majorityConsonantsInRightOrderStrategy", true],
-        ["thirdSubstringStrategy", true],
       ],
     });
     expect(await answerEvaluator("henry viii", "henry tudor")).toEqual({
@@ -39,7 +35,6 @@ describe("answerEvaluator", () => {
       strategyResults: [
         ["directStrategy", false],
         ["majorityConsonantsInRightOrderStrategy", true],
-        ["thirdSubstringStrategy", true],
       ],
     });
     expect(await answerEvaluator("henry viii", "henry the 8th")).toEqual({
@@ -47,7 +42,6 @@ describe("answerEvaluator", () => {
       strategyResults: [
         ["directStrategy", false],
         ["majorityConsonantsInRightOrderStrategy", true],
-        ["thirdSubstringStrategy", true],
       ],
     });
     expect(await answerEvaluator("henry viii", "henry vi")).toEqual({
@@ -55,7 +49,6 @@ describe("answerEvaluator", () => {
       strategyResults: [
         ["directStrategy", false],
         ["majorityConsonantsInRightOrderStrategy", true],
-        ["thirdSubstringStrategy", true],
       ],
     });
     expect(await answerEvaluator("henry viii", "henry ford")).toEqual({
@@ -63,7 +56,6 @@ describe("answerEvaluator", () => {
       strategyResults: [
         ["directStrategy", false],
         ["majorityConsonantsInRightOrderStrategy", true],
-        ["thirdSubstringStrategy", true],
       ],
     });
     expect(await answerEvaluator("henry viii", "steve buschemi")).toEqual({
@@ -71,7 +63,6 @@ describe("answerEvaluator", () => {
       strategyResults: [
         ["directStrategy", false],
         ["majorityConsonantsInRightOrderStrategy", false],
-        ["thirdSubstringStrategy", false],
       ],
     });
   });
@@ -84,7 +75,6 @@ describe("answerEvaluatorSync", () => {
       strategyResults: [
         ["directStrategy", true],
         ["majorityConsonantsInRightOrderStrategy", true],
-        ["thirdSubstringStrategy", null],
       ],
     });
     expect(answerEvaluatorSync("oprah", "opera")).toEqual({
@@ -92,7 +82,6 @@ describe("answerEvaluatorSync", () => {
       strategyResults: [
         ["directStrategy", false],
         ["majorityConsonantsInRightOrderStrategy", null],
-        ["thirdSubstringStrategy", null],
       ],
     });
     expect(answerEvaluatorSync("independence day", "4th of july")).toEqual({
@@ -100,7 +89,6 @@ describe("answerEvaluatorSync", () => {
       strategyResults: [
         ["directStrategy", false],
         ["majorityConsonantsInRightOrderStrategy", false],
-        ["thirdSubstringStrategy", false],
       ],
     });
     expect(answerEvaluatorSync("henry viii", "henry viii")).toEqual({
@@ -108,7 +96,6 @@ describe("answerEvaluatorSync", () => {
       strategyResults: [
         ["directStrategy", true],
         ["majorityConsonantsInRightOrderStrategy", true],
-        ["thirdSubstringStrategy", true],
       ],
     });
     expect(answerEvaluatorSync("henry viii", "henry tudor")).toEqual({
@@ -116,7 +103,6 @@ describe("answerEvaluatorSync", () => {
       strategyResults: [
         ["directStrategy", false],
         ["majorityConsonantsInRightOrderStrategy", true],
-        ["thirdSubstringStrategy", true],
       ],
     });
     expect(answerEvaluatorSync("henry viii", "henry the 8th")).toEqual({
@@ -124,7 +110,6 @@ describe("answerEvaluatorSync", () => {
       strategyResults: [
         ["directStrategy", false],
         ["majorityConsonantsInRightOrderStrategy", true],
-        ["thirdSubstringStrategy", true],
       ],
     });
     expect(answerEvaluatorSync("henry viii", "henry vi")).toEqual({
@@ -132,7 +117,6 @@ describe("answerEvaluatorSync", () => {
       strategyResults: [
         ["directStrategy", false],
         ["majorityConsonantsInRightOrderStrategy", true],
-        ["thirdSubstringStrategy", true],
       ],
     });
     expect(answerEvaluatorSync("henry viii", "henry ford")).toEqual({
@@ -140,7 +124,6 @@ describe("answerEvaluatorSync", () => {
       strategyResults: [
         ["directStrategy", false],
         ["majorityConsonantsInRightOrderStrategy", true],
-        ["thirdSubstringStrategy", true],
       ],
     });
     expect(answerEvaluatorSync("henry viii", "steve buschemi")).toEqual({
@@ -148,7 +131,6 @@ describe("answerEvaluatorSync", () => {
       strategyResults: [
         ["directStrategy", false],
         ["majorityConsonantsInRightOrderStrategy", false],
-        ["thirdSubstringStrategy", false],
       ],
     });
   });
