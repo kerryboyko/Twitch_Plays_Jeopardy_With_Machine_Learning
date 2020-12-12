@@ -19,7 +19,7 @@
     "dev:client": "yarn workspace @jeopardai/client run dev",
     "dev:server": "yarn workspace @jeopardai/server run dev",
     "dev": "concurrently --kill-others-on-fail \"yarn dev:server\"  \"yarn dev:client\"",
-    "format": "prettier \"packages/**/*.{js,ts,jsx,tsx,vue}\"",
+    "format": "prettier \"packages/**/*.{js,ts,jsx,tsx,vue}\" --write",
     "test:client": "yarn workspace @jeopardai/client run test",
     "test:server": "yarn workspace @jeopardai/server run test",
     "test": "concurrently --kill-others-on-fail \"yarn test:server\"  \"yarn test:client\""

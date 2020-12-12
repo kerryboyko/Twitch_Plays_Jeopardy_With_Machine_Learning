@@ -12,8 +12,6 @@ export const createStateMachine = <TEnum extends States, TMachine>(
       `Illegal state transition. ${stateGetter()} does not support transition ${stateGetter()} -> ${nextState}`
     );
   }
-  /* We want to reassign the parameter here as a side effect */
-  // eslint-disable-next-line no-param-reassign
   stateSetter(nextState);
   await next(...args);
 };

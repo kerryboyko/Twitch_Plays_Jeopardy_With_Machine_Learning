@@ -24,12 +24,12 @@ export const thirdSubstringStrategy: Strategy = (c, p) => {
 export const majorityConsonantsInRightOrderStrategy: Strategy = (c, p) => {
   const strippedC = c
     .split(" ")
-    .filter((w) => w.length > 3)
+    .filter(w => w.length > 3)
     .join("")
     .replace(/[aeiou]/gi, "");
   const strippedP = p
     .split(" ")
-    .filter((w) => w.length > 3)
+    .filter(w => w.length > 3)
     .join("")
     .replace(/[aeiou]/gi, "");
   if (strippedC.length < 3 || strippedP.length < 3) {
@@ -49,7 +49,7 @@ export const majorityConsonantsInRightOrderStrategy: Strategy = (c, p) => {
 // for right now we'll just hardcode these three strategies.  We'll add tensorflow later.
 const strategies: Record<string, Strategy> = {
   directStrategy,
-  majorityConsonantsInRightOrderStrategy,
+  majorityConsonantsInRightOrderStrategy
   // thirdSubstringStrategy, // (too many false positives)
 };
 

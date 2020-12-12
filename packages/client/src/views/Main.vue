@@ -21,14 +21,14 @@ export default defineComponent({
   setup() {
     const state = reactive<{ responses: string[]; inputField: string }>({
       responses: [],
-      inputField: "",
+      inputField: ""
     });
     onBeforeMount(() => {
       useSocket();
     });
     return {
-      state,
+      state
     };
-  },
+  }
 });
 </script>

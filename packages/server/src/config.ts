@@ -14,7 +14,7 @@ const config: Record<string, string> = pick(process.env, [
   "BOT_USERNAME",
   "CHANNEL_NAME",
   "OAUTH_TOKEN",
-  "SERVER_PORT",
+  "SERVER_PORT"
 ]) as Record<string, string>;
 
 export default config;

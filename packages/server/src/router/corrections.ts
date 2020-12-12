@@ -1,12 +1,12 @@
+import { Express, Request, Response } from "express";
 import saveCorrections from "../db/services/saveCorrections";
-import type { Express, Request, Response } from "express";
-import type { CorrectionsBody } from "../types";
+import { CorrectionsBody } from "../types";
 
-export const corrections = (app: Express) => {
+export const handleCorrections = (app: Express): Express => {
   app.post("/corrections", async (req: Request, res: Response) => {
     const { id, corrections }: CorrectionsBody = req.body;
     try {
-      const evaluation = await saveCorrections(id, corrections);
+      await saveCorrections(id, corrections);
       res.sendStatus(200);
     } catch (e) {
       res.status(500).send(e);
@@ -15,4 +15,4 @@ export const corrections = (app: Express) => {
   return app;
 };
 
-export default corrections;
+export default handleCorrections;

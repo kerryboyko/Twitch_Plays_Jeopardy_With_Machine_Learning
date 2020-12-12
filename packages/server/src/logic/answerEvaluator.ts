@@ -12,12 +12,12 @@ export const answerEvaluatorSync = (
   const formattedCanonical = canonical
     .toLowerCase()
     .split(" ")
-    .filter((x) => x !== "")
+    .filter(x => x !== "")
     .join(" ");
   const formattedProvided = provided
     .toLowerCase()
     .split(" ")
-    .filter((x) => x !== "")
+    .filter(x => x !== "")
     .join(" ");
 
   const strategyResults = Object.entries(strategies).map(([stratName, strat]): [

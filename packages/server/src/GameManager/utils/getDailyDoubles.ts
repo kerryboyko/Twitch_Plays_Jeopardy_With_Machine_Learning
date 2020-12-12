@@ -29,7 +29,7 @@ const getDailyDoubles = (
   }
   return [
     [first, dd1],
-    [second, dd2],
+    [second, dd2]
   ];
 };
 

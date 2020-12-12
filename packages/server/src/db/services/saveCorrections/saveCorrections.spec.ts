@@ -18,8 +18,8 @@ const oprahq = {
     title: "star wars",
     created_at: "2014-02-11T22:59:14.511Z",
     updated_at: "2014-02-11T22:59:14.511Z",
-    clues_count: 25,
-  },
+    clues_count: 25
+  }
 };
 
 const testCorrections: CorrectionReport[] = [
@@ -28,7 +28,7 @@ const testCorrections: CorrectionReport[] = [
   { reporter: "gamma", provided: "oprah winfrey", type: "NOT_WRONG" },
   { reporter: "delta", provided: "oprah winfrey", type: "NOT_WRONG" },
   { reporter: "epsilon", provided: "oprah winfrey", type: "NOT_WRONG" },
-  { reporter: "theta", provided: "opera", type: "NOT_RIGHT" },
+  { reporter: "theta", provided: "opera", type: "NOT_RIGHT" }
 ];
 
 test("saveCorrections", async () => {
@@ -50,13 +50,16 @@ test("saveCorrections", async () => {
     "gamma",
     "delta",
     "epsilon",
-    "theta",
+    "theta"
   ]);
   await saveCorrections(
     oprahq.id,
     testCorrections.map((c: CorrectionReport) => ({
       ...c,
-      reporter: c.reporter.split("").reverse().join(""),
+      reporter: c.reporter
+        .split("")
+        .reverse()
+        .join("")
     }))
   );
 
@@ -83,6 +86,6 @@ test("saveCorrections", async () => {
     "ammag",
     "atled",
     "nolispe",
-    "ateht",
+    "ateht"
   ]);
 });

@@ -1,9 +1,9 @@
-import mongodb from 'mongodb';
+import mongodb from "mongodb";
 
 export const connect = (
   url: string,
   dbName: string
-): Promise<{ db: mongodb.Db; close: mongodb.MongoClient['close'] }> =>
+): Promise<{ db: mongodb.Db; close: mongodb.MongoClient["close"] }> =>
   new Promise((resolve, reject) => {
     const client = new mongodb.MongoClient(url, { useUnifiedTopology: true });
     client.connect((err: mongodb.MongoError) => {
@@ -14,7 +14,7 @@ export const connect = (
       const close = () => client.close();
       resolve({
         db,
-        close,
+        close
       });
     });
   });

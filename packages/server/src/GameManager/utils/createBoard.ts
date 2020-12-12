@@ -17,9 +17,9 @@ export const createBoard = (
     inputClueSet.map(({ category }) => category)
   );
   const invertedKeys = invert(keys);
-  const outputClueSet: ClueCategory[] = inputClueSet.map((categoryObj) => ({
+  const outputClueSet: ClueCategory[] = inputClueSet.map(categoryObj => ({
     ...categoryObj,
-    key: invertedKeys[categoryObj.category],
+    key: invertedKeys[categoryObj.category]
   }));
   for (const dd of dailyDoubles) {
     const [cat, val] = dd;
