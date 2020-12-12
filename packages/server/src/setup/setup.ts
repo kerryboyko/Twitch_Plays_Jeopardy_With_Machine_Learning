@@ -1,9 +1,9 @@
-import { Server } from "http";
+import { Server as SocketServer } from "socket.io";
 import GameManager from "../GameManager";
 import { wsClient, wsServer } from "../sockets/commands";
-import { ClueState, GameState } from "../types";
+import { GameState } from "../types";
 
-const setup = (io: Server, testSeed?: string): (() => void) =>
+const setup = (io: SocketServer, testSeed?: string): (() => void) =>
   (() => {
     // closures for singleton.
     let game: GameManager;
