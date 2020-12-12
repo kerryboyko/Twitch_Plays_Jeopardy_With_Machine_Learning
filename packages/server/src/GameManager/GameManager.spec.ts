@@ -1,6 +1,6 @@
 import fs from "fs";
 import { ClueState, FinalJeopardyState, GameState } from "../types";
-import GameManager, { getLog } from "./GameManager";
+import GameManager from "./GameManager";
 import mockClues from "./mocks/gClues.json";
 import mockJeopardyBoard from "./mocks/gJeopardyBoard.json";
 import mockDoubleJeopardyBoard from "./mocks/gDoubleJeopardyBoard.json";
@@ -8,13 +8,32 @@ import mockDoubleJeopardyBoard from "./mocks/gDoubleJeopardyBoard.json";
 
 const seedString = "test";
 
+const { fakeEmit, getLatestLog } = (() => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const log: any[] = [];
+  let lines = 0;
+  return {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    fakeEmit: (...stuff: any[]) => {
+      log.push(stuff);
+      // console.log(...stuff);
+    },
+    getLog: () => log,
+    getLatestLog: () => {
+      const output = log.slice(lines);
+      lines = log.length;
+      return output;
+    },
+  };
+})();
+
 /* By casting the game instance as any, we can bypass 
    Typescript's checks on whether a member is "public" or "private"
    and therefore access the methods and properties directly. 
    */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
-const game = new GameManager(seedString) as any;
+const game = new GameManager({ toFrontEnd: fakeEmit }, seedString) as any;
 
 const clearAllGameTimeouts = () =>
   Object.values(game.timeouts).forEach((timeout) =>
@@ -33,16 +52,6 @@ const writeOut = (filename: string, data: string): Promise<void> =>
       }
     });
   });
-
-const getLatestLog = (() => {
-  let lines = 0;
-  return () => {
-    const currentLog = getLog();
-    const output = currentLog.slice(lines);
-    lines = currentLog.length;
-    return output;
-  };
-})();
 
 describe("Class Game", () => {
   beforeEach(() => {
@@ -85,7 +94,7 @@ describe("Class Game", () => {
   });
   describe("public async startGame()", () => {
     it("starts the game / runs onLoadingGame", async () => {
-      await game.startGame();
+      await game.handleStartGame();
       expect(game.clues).toEqual(mockClues);
       expect(game.timeouts).toHaveProperty("gameLoaded"); // this'll clear, but we want it to be defined for now.
       const log = getLatestLog();
@@ -107,6 +116,10 @@ describe("Class Game", () => {
       expect(["alpha", "beta", "gamma"].includes(game.controllingPlayer)).toBe(
         true
       );
+
+      // force it to be alpha for purposes of test.
+      game.controllingPlayer = "alpha";
+
       const log = getLatestLog();
       expect(log.slice(0, 2)).toEqual([
         ["wsServer.GAME_STATE_CHANGE", "Jeopardy"],
@@ -138,7 +151,11 @@ describe("Class Game", () => {
   });
   describe("public async onClueSelected", () => {
     it("reprompts on an invalid clue", async () => {
-      await game.changeClueState(ClueState.ClueSelected, [7, 8]);
+      await game.handleSelectClue({
+        playerName: "alpha",
+        categoryKey: "floobis",
+        value: 8000,
+      });
       const log = getLatestLog();
       expect(log.map((el) => el[0])).toEqual([
         "wsServer.CLUE_STATE_CHANGE",
@@ -149,7 +166,11 @@ describe("Class Game", () => {
       expect(game.clueState).toBe(ClueState.PromptSelectClue);
     });
     it("grabs a valid clue", async () => {
-      await game.changeClueState(ClueState.ClueSelected, [0, 0]);
+      await game.handleSelectClue({
+        playerName: "alpha",
+        categoryKey: "42",
+        value: 200,
+      });
       expect(game.currentClue).toEqual({
         answer: "Jackie Robinson",
         category: "42",
@@ -275,7 +296,11 @@ describe("Class Game", () => {
         // let's manually edit the score
         game.scoreboard.alpha = 1600;
         // this is a Daily Double!
-        await game.changeClueState(ClueState.ClueSelected, [5, 2]);
+        await game.handleSelectClue({
+          playerName: "alpha",
+          categoryKey: "biblical",
+          value: 600,
+        });
         expect(game.currentClue.isDailyDouble).toBe(true);
         expect(game.clueState).toBe(ClueState.DailyDouble);
         const log = getLatestLog();

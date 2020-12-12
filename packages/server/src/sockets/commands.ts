@@ -23,6 +23,18 @@ export const wsServer = makeEnum(
   "CLUES",
   "GAME_STATE_CHANGE",
   "CLUE_STATE_CHANGE",
-  "FINAL_JEOPARDY_STATE_CHANGE"
+  "FINAL_JEOPARDY_STATE_CHANGE",
+  "GAME_IN_PROGRESS",
+  "NO_GAME_RUNNING"
 );
-export const wsClient = makeEnum("wsClient", "CONNECTED", "CONFIRM_CLUES");
+
+export const wsClient = makeEnum(
+  "wsClient",
+  "CONNECTED",
+  "CONFIRM_CLUES",
+  "START_GAME",
+  "REGISTER_PLAYER",
+  "PROVIDE_ANSWER",
+  "PROVIDE_WAGER",
+  "SELECT_CLUE"
+);

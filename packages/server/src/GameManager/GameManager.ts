@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import randomSeed, { RandomSeed } from "random-seed";
 import isInteger from "lodash/isInteger";
 import pick from "lodash/pick";
@@ -23,30 +24,10 @@ import {
 } from "../types";
 
 /* TODO: This is a refactor target.  What we PROBABLY should be doing is having four seperate classes:
-   Game / Board / Clue / Final Jeopardy.  
+   Game / Board / Clue / Final Jeopardy.  */
 
-   */
-/* fake Emit will likely be replaced soon with websockets for sending to the front end.
-   For now, it console.logs */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const { fakeEmit, getLog } = (() => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const log: any[] = [];
-  return {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    fakeEmit: (...stuff: any[]) => {
-      log.push(stuff);
-      // console.log(...stuff);
-    },
-    getLog: () => log,
-  };
-})();
-
-// this may be broken up into "game" and "clue" -- but we'll see how this works out first.
 class GameManager {
   private rand: RandomSeed;
-
-  private gameState: GameState = GameState.None;
 
   private clueState: ClueState = ClueState.None;
 
@@ -64,6 +45,8 @@ class GameManager {
     clueSet: ClueCategory[];
     lookup: Record<string, number>;
   } = { clueSet: [], lookup: {} };
+
+  public gameState: GameState = GameState.None;
 
   public currentClue: {
     id: number;
@@ -92,19 +75,12 @@ class GameManager {
   public wagers: Record<string, number> = {};
 
   /* CONSTRUCTOR! */
-  constructor(public seed: string = genSeedString()) {
+  constructor(
+    public emit: { toFrontEnd: (arg0: string, ...args: any[]) => void },
+    public seed: string = genSeedString()
+  ) {
     this.rand = randomSeed.create(seed);
   }
-
-  public startGame = async (): Promise<void> => {
-    this.gameStartTime = Date.now() + JTiming.startGame;
-    fakeEmit(wsServer.GAME_START_TIME, this.gameStartTime);
-    fakeEmit(
-      wsServer.INFO,
-      `Type !register to register to play. Game will start in 3 minutes`
-    );
-    await this.changeGameState(GameState.LoadingGame);
-  };
 
   public getSeed = (): string => this.seed;
 
@@ -113,75 +89,13 @@ class GameManager {
   private getNextClue = (): [number, number] | null =>
     getNextClue(this.board.clueSet);
 
-  // WS Event Handlers
-  public handleRegisterPlayer = (playerName: string): void => {
-    if (Object.keys(this.scoreboard).length === 0) {
-      this.controllingPlayer = playerName;
-    }
-    if (!this.scoreboard[playerName]) {
-      this.scoreboard[playerName] = 0;
-      fakeEmit(wsServer.PLAYER_REGISTERED, playerName);
-    }
-  };
-
-  public handleAnswer = async (
-    playerName: string,
-    provided: string
-  ): Promise<void> => {
-    if (
-      !this.currentClue.isDailyDouble ||
-      this.controllingPlayer === playerName
-    )
-      this.currentPlayerAnswers.push({
-        playerName,
-        provided,
-        evaluated: null,
-      });
-
-    if (
-      this.currentClue.isDailyDouble &&
-      this.controllingPlayer === playerName
-    ) {
-      return this.changeClueState(ClueState.DisplayAnswer);
-    }
-  };
-
-  public handleWager = async (
-    playerName: string,
-    wager: number
-  ): Promise<void> => {
-    if (
-      [GameState.Jeopardy, GameState.DoubleJeopardy].includes(this.gameState) &&
-      this.clueState === ClueState.DailyDouble
-    ) {
-      if (playerName !== this.controllingPlayer) {
-        return;
-      }
-      const maxWager = Math.max(
-        this.gameState === GameState.Jeopardy ? 1000 : 2000,
-        this.scoreboard[playerName]
-      );
-      this.wagers[playerName] = Math.min(wager, maxWager);
-      fakeEmit(wsServer.WAGER_RECEIVED, playerName, wager);
-      clearTimeout(this.timeouts.wagerTime);
-      return this.changeClueState(ClueState.DisplayClue);
-    }
-    if (this.gameState === GameState.FinalJeopardy) {
-      if (this.scoreboard[playerName] <= 0) {
-        return;
-      }
-      this.wagers[playerName] = Math.min(wager, this.scoreboard[playerName]);
-      fakeEmit(wsServer.WAGER_RECEIVED, playerName);
-    }
-  };
-
   // GAME STATE HANDLERS
   private onLoadingGame = async (): Promise<void> => {
     const clues = await getClues.fullBoard(this.rand);
     this.clues = clues;
     this.timeouts.gameLoaded = setTimeout(() => {
       this.changeGameState(GameState.Jeopardy);
-    }, 3 * JTiming.StartGame);
+    }, 3 * JTiming.startGame);
   };
 
   private onJeopardy = async (isDoubleJeopardy: boolean): Promise<void> => {
@@ -193,7 +107,7 @@ class GameManager {
     );
     // create board
     this.board = createBoard(clueSlice, this.rand, isDoubleJeopardy);
-    fakeEmit(
+    this.emit.toFrontEnd(
       wsServer.SEND_CATEGORIES,
       this.board.clueSet.map((clueCategory: ClueCategory) => [
         clueCategory.key,
@@ -202,7 +116,7 @@ class GameManager {
     );
     if (!isDoubleJeopardy) {
       this.controllingPlayer = pickOneAtRandom(Object.keys(this.scoreboard));
-      fakeEmit(wsServer.CHANGE_CONTROLLER, {
+      this.emit.toFrontEnd(wsServer.CHANGE_CONTROLLER, {
         controllingPlayer: this.controllingPlayer,
         message: `The luck of the draw has given ${this.controllingPlayer} the first selection today`,
       });
@@ -212,7 +126,7 @@ class GameManager {
           this.controllingPlayer = player;
         }
       }
-      fakeEmit(wsServer.CHANGE_CONTROLLER, {
+      this.emit.toFrontEnd(wsServer.CHANGE_CONTROLLER, {
         controllingPlayer: this.controllingPlayer,
         message: `At the end of the last round, ${this.controllingPlayer} was in last place, so they will go first in Double Jeopardy.`,
       });
@@ -223,14 +137,17 @@ class GameManager {
 
   private advanceRound = async (): Promise<void> | never => {
     if (this.gameState === GameState.Jeopardy) {
-      fakeEmit(
+      this.emit.toFrontEnd(
         wsServer.END_OF_ROUND,
         `And that is the end of our first Jeopardy round`
       );
 
       await this.changeGameState(GameState.DoubleJeopardy);
     } else if (this.gameState === GameState.DoubleJeopardy) {
-      fakeEmit(wsServer.END_OF_ROUND, `And that is the end of Double Jeopardy`);
+      this.emit.toFrontEnd(
+        wsServer.END_OF_ROUND,
+        `And that is the end of Double Jeopardy`
+      );
 
       await this.changeGameState(GameState.FinalJeopardy);
     } else {
@@ -251,12 +168,12 @@ class GameManager {
     if (nextClue === null) {
       return this.advanceRound(); // abort, advance
     }
-    fakeEmit(
+    this.emit.toFrontEnd(
       wsServer.PROMPT_SELECT_CLUE,
       `${this.controllingPlayer}, you have control of the board, select a category.`
     );
     this.timeouts.promptSelectClue = setTimeout(() => {
-      fakeEmit(
+      this.emit.toFrontEnd(
         wsServer.CLUE_SELECTION_TIMEOUT,
         `Selecting next clue automatically`
       );
@@ -264,23 +181,24 @@ class GameManager {
     }, JTiming.selectTime);
   };
 
-  public onClueSelected = async ([categoryIndex, valueIndex]: [
-    number,
-    number
-  ]): Promise<void> => {
+  public onClueSelected = async (catVal: [number, number]): Promise<void> => {
+    // bad clue.
+    const [categoryIndex, valueIndex] = catVal;
     if (
       categoryIndex === undefined ||
-      !isInteger(valueIndex) ||
+      !Number.isInteger(valueIndex) ||
       valueIndex < 0 ||
       valueIndex > 4 ||
       get(this.board.clueSet, [categoryIndex, "clues", valueIndex], null) ===
         null
     ) {
       clearTimeout(this.timeouts.promptSelectClue);
-      fakeEmit(wsServer.INVALID_CLUE_SELECTION);
-      await this.changeClueState(ClueState.PromptSelectClue);
-      return;
+      this.emit.toFrontEnd(wsServer.INVALID_CLUE_SELECTION);
+
+      return this.changeClueState(ClueState.PromptSelectClue);
     }
+
+    // good clue.
     const { question, answer, category, isDailyDouble, id } = pick(
       this.board.clueSet[categoryIndex].clues[valueIndex],
       ["question", "answer", "category", "isDailyDouble", "id"]
@@ -306,7 +224,7 @@ class GameManager {
 
   private onDisplayClue = () => {
     clearTimeout(this.timeouts.wagerTime); // for DDs and FJ
-    fakeEmit(wsServer.DISPLAY_CLUE, {
+    this.emit.toFrontEnd(wsServer.DISPLAY_CLUE, {
       question: this.currentClue.question,
       id: this.currentClue.id,
       value: this.currentClue.value,
@@ -318,7 +236,7 @@ class GameManager {
   };
 
   private onDailyDouble = () => {
-    fakeEmit(wsServer.GET_DD_WAGER, {
+    this.emit.toFrontEnd(wsServer.GET_DD_WAGER, {
       player: this.controllingPlayer,
       maxValue: Math.max(
         this.gameState === GameState.Jeopardy ? 1000 : 2000,
@@ -364,7 +282,7 @@ class GameManager {
     // or even store in the DB.
 
     // display the results
-    fakeEmit(wsServer.DISPLAY_ANSWER, {
+    this.emit.toFrontEnd(wsServer.DISPLAY_ANSWER, {
       answer: this.currentClue.answer,
       provided: this.currentPlayerAnswers,
       question: this.currentClue.question,
@@ -403,7 +321,7 @@ class GameManager {
   };
 
   private onDisplayFinalCategory = () => {
-    fakeEmit(wsServer.FJ_DISPLAY_CATEGORY, {
+    this.emit.toFrontEnd(wsServer.FJ_DISPLAY_CATEGORY, {
       message: `And now, the Final Jeopardy category.  Place your final wagers`,
       category: this.currentClue.category,
     });
@@ -414,12 +332,12 @@ class GameManager {
 
   private onDisplayFinalClue = () => {
     clearTimeout(this.timeouts.wagerTime); // for DDs and FJ
-    fakeEmit(wsServer.FJ_DISPLAY_CLUE, {
+    this.emit.toFrontEnd(wsServer.FJ_DISPLAY_CLUE, {
       category: this.currentClue.category,
       question: this.currentClue.question,
       id: this.currentClue.id,
     });
-    fakeEmit(wsServer.PLAY_THINK_MUSIC);
+    this.emit.toFrontEnd(wsServer.PLAY_THINK_MUSIC);
     this.timeouts.answerTime = setTimeout(() => {
       this.changeClueState(ClueState.DisplayAnswer);
     }, JTiming.answerTime);
@@ -454,7 +372,7 @@ class GameManager {
     // or even store in the DB.
 
     // display the results
-    fakeEmit(wsServer.DISPLAY_ANSWER, {
+    this.emit.toFrontEnd(wsServer.DISPLAY_ANSWER, {
       answer: this.currentClue.answer,
       provided: this.currentPlayerAnswers,
       question: this.currentClue.question,
@@ -462,10 +380,13 @@ class GameManager {
       currentScores: this.scoreboard,
     });
     await this.changeGameState(GameState.FinalScores);
+    this.timeouts.reset = setTimeout(() => {
+      this.changeGameState(GameState.None);
+    }, JTiming.minimumShowFinalScoreTime);
   };
 
   private onFinalScores = async (): Promise<void> => {
-    fakeEmit(wsServer.FINAL_SCORES, {
+    this.emit.toFrontEnd(wsServer.FINAL_SCORES, {
       finalScores: Object.entries(this.scoreboard).sort(
         (p1, p2) => p2[1] - p1[1]
       ),
@@ -540,7 +461,7 @@ class GameManager {
     () => this.gameState,
     (state: GameState): void => {
       this.gameState = state;
-      fakeEmit(wsServer.GAME_STATE_CHANGE, state);
+      this.emit.toFrontEnd(wsServer.GAME_STATE_CHANGE, state);
     }
   );
 
@@ -552,7 +473,7 @@ class GameManager {
     () => this.clueState,
     (state: ClueState): void => {
       this.clueState = state;
-      fakeEmit(wsServer.CLUE_STATE_CHANGE, state);
+      this.emit.toFrontEnd(wsServer.CLUE_STATE_CHANGE, state);
     }
   );
 
@@ -564,9 +485,106 @@ class GameManager {
     () => this.finalJeopardyState,
     (state: FinalJeopardyState): void => {
       this.finalJeopardyState = state;
-      fakeEmit(wsServer.FINAL_JEOPARDY_STATE_CHANGE, state);
+      this.emit.toFrontEnd(wsServer.FINAL_JEOPARDY_STATE_CHANGE, state);
     }
   );
+
+  // WS Event Handlers
+
+  /* on wsClient.START_GAME */
+  public handleStartGame = async (): Promise<void> => {
+    this.gameStartTime = Date.now() + JTiming.startGame;
+    this.emit.toFrontEnd(wsServer.GAME_START_TIME, this.gameStartTime);
+    this.emit.toFrontEnd(
+      wsServer.INFO,
+      `Type !register to register to play. Game will start in 3 minutes`
+    );
+    await this.changeGameState(GameState.LoadingGame);
+  };
+
+  /* on wsClient.REGISTER_PLAYER */
+  public handleRegisterPlayer = (playerName: string): void => {
+    if (Object.keys(this.scoreboard).length === 0) {
+      this.controllingPlayer = playerName;
+    }
+    if (!this.scoreboard[playerName]) {
+      this.scoreboard[playerName] = 0;
+      this.emit.toFrontEnd(wsServer.PLAYER_REGISTERED, playerName);
+    }
+  };
+
+  /* on wsClient.PROVIDE_ANSWER */
+  public handleAnswer = async (
+    playerName: string,
+    provided: string
+  ): Promise<void> => {
+    if (
+      !this.currentClue.isDailyDouble ||
+      this.controllingPlayer === playerName
+    )
+      this.currentPlayerAnswers.push({
+        playerName,
+        provided,
+        evaluated: null,
+      });
+
+    if (
+      this.currentClue.isDailyDouble &&
+      this.controllingPlayer === playerName
+    ) {
+      return this.changeClueState(ClueState.DisplayAnswer);
+    }
+  };
+
+  /* on wsClient.PROVIDE_WAGER */
+  public handleWager = async (
+    playerName: string,
+    wager: number
+  ): Promise<void> => {
+    if (
+      [GameState.Jeopardy, GameState.DoubleJeopardy].includes(this.gameState) &&
+      this.clueState === ClueState.DailyDouble
+    ) {
+      if (playerName !== this.controllingPlayer) {
+        return;
+      }
+      const maxWager = Math.max(
+        this.gameState === GameState.Jeopardy ? 1000 : 2000,
+        this.scoreboard[playerName]
+      );
+      this.wagers[playerName] = Math.min(wager, maxWager);
+      this.emit.toFrontEnd(wsServer.WAGER_RECEIVED, playerName, wager);
+      clearTimeout(this.timeouts.wagerTime);
+      return this.changeClueState(ClueState.DisplayClue);
+    }
+    if (this.gameState === GameState.FinalJeopardy) {
+      if (this.scoreboard[playerName] <= 0) {
+        return;
+      }
+      this.wagers[playerName] = Math.min(wager, this.scoreboard[playerName]);
+      this.emit.toFrontEnd(wsServer.WAGER_RECEIVED, playerName);
+    }
+  };
+
+  /* on wsClient.SELECT_CLUE */
+  public handleSelectClue = ({
+    playerName,
+    categoryKey,
+    value,
+  }: {
+    playerName: string;
+    categoryKey: string;
+    value: number;
+  }): Promise<void> | void => {
+    if (playerName === this.controllingPlayer) {
+      clearTimeout(this.timeouts.promptSelectClue);
+      const nextClue = [
+        get(this.board.lookup, [categoryKey], -1),
+        value / (this.gameState === GameState.Jeopardy ? 200 : 400) - 1,
+      ];
+      return this.changeClueState(ClueState.ClueSelected, nextClue);
+    }
+  };
 }
 
 export default GameManager;

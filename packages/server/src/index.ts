@@ -1,9 +1,10 @@
-import { createServer } from "http";
+import { createServer, Server } from "http";
 import cors from "cors";
 import express from "express";
 import config from "./config";
 import router from "./router";
 import sockets from "./sockets";
+import setup from "./setup";
 
 // export the websocket commands -- these will also be used by the client.
 
@@ -13,7 +14,8 @@ const main = () => {
   const app = express();
   const http = createServer(app);
   router(app);
-  sockets(http);
+  const io: Server = sockets(http);
+  setup(io);
   app.use(cors());
   http.listen(PORT, () => {
     console.info(`JeopardAI REST app listening at http://localhost:${PORT}`);
