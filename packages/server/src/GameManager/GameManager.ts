@@ -20,12 +20,13 @@ import {
   ClueState,
   FinalJeopardyState,
   ProvidedAnswers,
-  JeopardyClue
+  JeopardyClue,
 } from "../types";
 
 /* TODO: This is a refactor target.  What we PROBABLY should be doing is having four seperate classes:
    Game / Board / Clue / Final Jeopardy.  */
 
+type Emitter = { toFrontEnd: (arg0: string, ...args: any[]) => void };
 class GameManager {
   private rand: RandomSeed;
 
@@ -63,7 +64,7 @@ class GameManager {
     answer: "",
     value: 0, // usually determined by indices, but not in the case of daily double or final jeopardy
     indices: [-1, -1],
-    isDailyDouble: false
+    isDailyDouble: false,
   };
 
   public currentPlayerAnswers: ProvidedAnswers[] = [];
@@ -75,10 +76,7 @@ class GameManager {
   public wagers: Record<string, number> = {};
 
   /* CONSTRUCTOR! */
-  constructor(
-    public emit: { toFrontEnd: (arg0: string, ...args: any[]) => void },
-    public seed: string = genSeedString()
-  ) {
+  constructor(public emit: Emitter, public seed: string = genSeedString()) {
     this.rand = randomSeed.create(seed);
   }
 
@@ -111,14 +109,14 @@ class GameManager {
       wsServer.SEND_CATEGORIES,
       this.board.clueSet.map((clueCategory: ClueCategory) => [
         clueCategory.key,
-        clueCategory.category
+        clueCategory.category,
       ])
     );
     if (!isDoubleJeopardy) {
       this.controllingPlayer = pickOneAtRandom(Object.keys(this.scoreboard));
       this.emit.toFrontEnd(wsServer.CHANGE_CONTROLLER, {
         controllingPlayer: this.controllingPlayer,
-        message: `The luck of the draw has given ${this.controllingPlayer} the first selection today`
+        message: `The luck of the draw has given ${this.controllingPlayer} the first selection today`,
       });
     } else {
       for (const player in this.scoreboard) {
@@ -128,7 +126,7 @@ class GameManager {
       }
       this.emit.toFrontEnd(wsServer.CHANGE_CONTROLLER, {
         controllingPlayer: this.controllingPlayer,
-        message: `At the end of the last round, ${this.controllingPlayer} was in last place, so they will go first in Double Jeopardy.`
+        message: `At the end of the last round, ${this.controllingPlayer} was in last place, so they will go first in Double Jeopardy.`,
       });
     }
 
@@ -212,7 +210,7 @@ class GameManager {
         (valueIndex + 1) *
         (this.gameState === GameState.DoubleJeopardy ? 400 : 200),
       indices: [categoryIndex, valueIndex],
-      isDailyDouble: isDailyDouble || false
+      isDailyDouble: isDailyDouble || false,
     };
     if (this.currentClue.isDailyDouble) {
       await this.changeClueState(ClueState.DailyDouble);
@@ -228,7 +226,7 @@ class GameManager {
       question: this.currentClue.question,
       id: this.currentClue.id,
       value: this.currentClue.value,
-      category: this.currentClue.category
+      category: this.currentClue.category,
     });
     this.timeouts.answerTime = setTimeout(() => {
       this.changeClueState(ClueState.DisplayAnswer);
@@ -241,7 +239,7 @@ class GameManager {
       maxValue: Math.max(
         this.gameState === GameState.Jeopardy ? 1000 : 2000,
         this.scoreboard[this.controllingPlayer]
-      )
+      ),
     });
     this.timeouts.wagerTime = setTimeout(() => {
       this.changeClueState(ClueState.DisplayClue);
@@ -288,7 +286,7 @@ class GameManager {
       question: this.currentClue.question,
       id: this.currentClue.id,
       value: this.currentClue.value,
-      currentScores: this.scoreboard
+      currentScores: this.scoreboard,
     });
     // nullify the question;
     const [cat, val] = this.currentClue.indices;
@@ -313,7 +311,7 @@ class GameManager {
       value: 0,
       isDailyDouble: false,
       indices: [-1, -1],
-      category: fjCategory
+      category: fjCategory,
     };
     await this.changeFinalJeopardyState(
       FinalJeopardyState.DisplayFinalCategory
@@ -323,7 +321,7 @@ class GameManager {
   private onDisplayFinalCategory = () => {
     this.emit.toFrontEnd(wsServer.FJ_DISPLAY_CATEGORY, {
       message: `And now, the Final Jeopardy category.  Place your final wagers`,
-      category: this.currentClue.category
+      category: this.currentClue.category,
     });
     this.timeouts.finalJeopardyWager = setTimeout(() => {
       this.changeFinalJeopardyState(FinalJeopardyState.DisplayClue);
@@ -335,7 +333,7 @@ class GameManager {
     this.emit.toFrontEnd(wsServer.FJ_DISPLAY_CLUE, {
       category: this.currentClue.category,
       question: this.currentClue.question,
-      id: this.currentClue.id
+      id: this.currentClue.id,
     });
     this.emit.toFrontEnd(wsServer.PLAY_THINK_MUSIC);
     this.timeouts.answerTime = setTimeout(() => {
@@ -377,7 +375,7 @@ class GameManager {
       provided: this.currentPlayerAnswers,
       question: this.currentClue.question,
       id: this.currentClue.id,
-      currentScores: this.scoreboard
+      currentScores: this.scoreboard,
     });
     await this.changeGameState(GameState.FinalScores);
     this.timeouts.reset = setTimeout(() => {
@@ -391,66 +389,66 @@ class GameManager {
         (p1, p2) => p2[1] - p1[1]
       ),
       message:
-        "Thanks for playing! A new game will start soon, type !register to join, or !judge to register as a judge"
+        "Thanks for playing! A new game will start soon, type !register to join, or !judge to register as a judge",
     });
   };
 
   // Game State Machine (must be public to use abstraction);
   public gameStateMachine = {
     [GameState.None]: {
-      [GameState.LoadingGame]: this.onLoadingGame
+      [GameState.LoadingGame]: this.onLoadingGame,
     },
     [GameState.LoadingGame]: {
-      [GameState.Jeopardy]: (): Promise<void> => this.onJeopardy(false)
+      [GameState.Jeopardy]: (): Promise<void> => this.onJeopardy(false),
     },
     [GameState.Jeopardy]: {
-      [GameState.DoubleJeopardy]: (): Promise<void> => this.onJeopardy(true)
+      [GameState.DoubleJeopardy]: (): Promise<void> => this.onJeopardy(true),
     },
     [GameState.DoubleJeopardy]: {
-      [GameState.FinalJeopardy]: this.onFinalJeopardy
+      [GameState.FinalJeopardy]: this.onFinalJeopardy,
     },
     [GameState.FinalJeopardy]: {
-      [GameState.FinalScores]: this.onFinalScores
+      [GameState.FinalScores]: this.onFinalScores,
     },
     [GameState.FinalScores]: {
-      [GameState.LoadingGame]: this.onLoadingGame
-    }
+      [GameState.LoadingGame]: this.onLoadingGame,
+    },
   };
 
   public clueStateMachine = {
     [ClueState.None]: {
-      [ClueState.PromptSelectClue]: this.onPromptSelectClue
+      [ClueState.PromptSelectClue]: this.onPromptSelectClue,
     },
     [ClueState.PromptSelectClue]: {
       [ClueState.PromptSelectClue]: this.onPromptSelectClue,
-      [ClueState.ClueSelected]: this.onClueSelected
+      [ClueState.ClueSelected]: this.onClueSelected,
     },
     [ClueState.ClueSelected]: {
       [ClueState.PromptSelectClue]: this.onPromptSelectClue,
       [ClueState.DisplayClue]: this.onDisplayClue,
-      [ClueState.DailyDouble]: this.onDailyDouble
+      [ClueState.DailyDouble]: this.onDailyDouble,
     },
     [ClueState.DailyDouble]: {
-      [ClueState.DisplayClue]: this.onDisplayClue
+      [ClueState.DisplayClue]: this.onDisplayClue,
     },
     [ClueState.DisplayClue]: {
-      [ClueState.DisplayAnswer]: this.onDisplayAnswer
+      [ClueState.DisplayAnswer]: this.onDisplayAnswer,
     },
     [ClueState.DisplayAnswer]: {
-      [ClueState.PromptSelectClue]: this.onPromptSelectClue
-    }
+      [ClueState.PromptSelectClue]: this.onPromptSelectClue,
+    },
   };
 
   public finalJeopardyStateMachine = {
     [FinalJeopardyState.None]: {
-      [FinalJeopardyState.DisplayFinalCategory]: this.onDisplayFinalCategory
+      [FinalJeopardyState.DisplayFinalCategory]: this.onDisplayFinalCategory,
     },
     [FinalJeopardyState.DisplayFinalCategory]: {
-      [FinalJeopardyState.DisplayClue]: this.onDisplayFinalClue
+      [FinalJeopardyState.DisplayClue]: this.onDisplayFinalClue,
     },
     [FinalJeopardyState.DisplayClue]: {
-      [FinalJeopardyState.DisplayAnswer]: this.onDisplayFinalAnswer
-    }
+      [FinalJeopardyState.DisplayAnswer]: this.onDisplayFinalAnswer,
+    },
   };
 
   public changeGameState = createStateMachine<
@@ -525,7 +523,7 @@ class GameManager {
       this.currentPlayerAnswers.push({
         playerName,
         provided,
-        evaluated: null
+        evaluated: null,
       });
 
     if (
@@ -570,7 +568,7 @@ class GameManager {
   public handleSelectClue = ({
     playerName,
     categoryKey,
-    value
+    value,
   }: {
     playerName: string;
     categoryKey: string;
@@ -580,7 +578,7 @@ class GameManager {
       clearTimeout(this.timeouts.promptSelectClue);
       const nextClue = [
         get(this.board.lookup, [categoryKey], -1),
-        value / (this.gameState === GameState.Jeopardy ? 200 : 400) - 1
+        value / (this.gameState === GameState.Jeopardy ? 200 : 400) - 1,
       ];
       return this.changeClueState(ClueState.ClueSelected, nextClue);
     }

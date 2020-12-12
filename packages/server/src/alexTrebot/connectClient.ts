@@ -1,36 +1,41 @@
 import { ChatUserstate, Client } from "tmi.js";
 import config from "../config";
+import handlers from "./handlers";
 
-export const connectClient = () => {
+export const connectClient = (): Client => {
   const client = Client({
     options: { debug: true },
     connection: {
       secure: true,
-      reconnect: true
+      reconnect: true,
     },
     channels: [config.CHANNEL_NAME],
     identity: {
       username: config.BOT_USERNAME,
-      password: config.OAUTH_TOKEN
-    }
+      password: config.OAUTH_TOKEN,
+    },
   });
+  const { handleChat, handleWhisper } = handlers(client);
   client.on("connected", (addr, port) => {
     console.info(`* Connected to ${addr}:${port}`);
   });
   client.on(
     "message",
-    (target, context: ChatUserstate, message: string, isSelf: boolean) => {
+    (
+      target: string,
+      context: ChatUserstate,
+      message: string,
+      isSelf: boolean
+    ) => {
       if (isSelf) {
+        console.log(context, message);
         return;
       }
-      console.info(`${context["display-name"]}: ${message}`);
-
-      if (
-        ["!whois", "!whatis", "!whenis", "!whereis"].some((key: string) =>
-          message.startsWith(key)
-        )
-      ) {
-        client.say(target, `What is: ${message}`);
+      if (context["message-type"] === "chat") {
+        handleChat(target, context, message);
+      }
+      if (context["message-type"] === "whisper") {
+        handleWhisper(target, context, message);
       }
     }
   );

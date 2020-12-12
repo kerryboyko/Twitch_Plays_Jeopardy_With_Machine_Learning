@@ -1,3 +1,5 @@
+import { ChatUserstate } from "tmi.js";
+
 /* eslint-disable camelcase */
 export interface JeopardyCategory {
   id: number;
@@ -67,7 +69,7 @@ export enum GameState {
   Jeopardy = "Jeopardy",
   DoubleJeopardy = "Double Jeopardy",
   FinalJeopardy = "Final Jeopardy",
-  FinalScores = "Final Scores"
+  FinalScores = "Final Scores",
 }
 
 export enum ClueState {
@@ -76,20 +78,20 @@ export enum ClueState {
   ClueSelected = "Clue Selected",
   DailyDouble = "Daily Double",
   DisplayClue = "Display Clue",
-  DisplayAnswer = "Display Answer"
+  DisplayAnswer = "Display Answer",
 }
 
 export enum FinalJeopardyState {
   None = "None",
   DisplayFinalCategory = "Display FJ Category",
   DisplayClue = "Display FJ Clue",
-  DisplayAnswer = "Display FJ Answer"
+  DisplayAnswer = "Display FJ Answer",
 }
 
 export enum DailyDoubleState {
   None = "None",
   DisplayClue = "Display DD Clue",
-  DisplayAnswer = "Display DD Answer"
+  DisplayAnswer = "Display DD Answer",
 }
 
 export type States =
@@ -97,3 +99,9 @@ export type States =
   | ClueState
   | FinalJeopardyState
   | DailyDoubleState;
+
+export type ChatHandler = (
+  target: string,
+  context: ChatUserstate,
+  message: string
+) => void;
