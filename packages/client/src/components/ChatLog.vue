@@ -1,13 +1,21 @@
 <template>
-  <div ref="chatRef" class="chat__wrapper">
-    <div class="chat__main">
-      <div
-        class="chat__entry"
-        v-for="chatMsg in chatLog"
-        :key="chatMsg.timestamp.toString()"
-      >
-        <div class="chat__entry__user">{{ chatMsg.user }}:&nbsp;</div>
-        <div class="chat__entry__message">{{ chatMsg.message }}</div>
+  <div>
+    <div ref="chatRef" class="chat__wrapper">
+      <div class="chat__main">
+        <div
+          class="chat__entry"
+          v-for="chatMsg in chatLog"
+          :key="chatMsg.timestamp.toString()"
+        >
+          <span
+            :class="{
+              chat__entry__user: true,
+              'chat__entry__user__is-alex': chatMsg.user === 'alextrebot',
+            }"
+            >{{ chatMsg.user }}:&nbsp;</span
+          >
+          <span class="chat__entry__message">{{ chatMsg.message }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -56,21 +64,23 @@ export default defineComponent({
 
 <style lang="scss">
 .chat {
+  font-family: Inter;
   &__wrapper {
     background-color: rgba(0, 0, 0, 0.8);
     color: white;
     font-family: Inter, sans-serif;
     font-size: 0.75rem;
-    width: 300px;
+    width: 320px;
+    height: 720px;
     padding: 0.25rem;
-    height: 200px;
     overflow-x: hidden;
   }
   &__entry {
-    display: flex;
-    flex-direction: flex-start;
     &__user {
       color: yellow;
+      &__is-alex {
+        color: pink;
+      }
     }
   }
 }

@@ -1,0 +1,58 @@
+<template>
+  <div class="clue">
+    <div class="clue__category">
+      {{ props.category }} - ${{ props.value }}
+    </div>
+    <div class="clue__question">
+      {{ props.question }}
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
+  name: "ClueDisplay",
+  props: ['category', 'value', 'question'],
+  setup(props) {
+    console.log(props);
+    return {
+      props,
+    };
+  },
+});
+</script>
+
+<style lang="scss" scoped>
+
+.clue {
+  font-family: "Korinna", sans-serif;
+  text-transform: uppercase;
+  height: 360px;
+  width: 640px;
+  padding: 10px 50px 50px 50px;;
+  background-image: url("/img/clue-background.jpg");
+  color: #ffffff;
+  font-size: 25px;
+  text-shadow: 3px 4px 2px #000000;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: center;
+  align-items: center;
+  &__category {
+    height: 40px;
+    font-size: 20px;
+    font-family: T
+  }
+  &__question {
+    display: flex;
+    height: 290px;
+    letter-spacing: 1px;
+    text-align: center;
+    align-items: center;
+  }
+}
+
+</style>
