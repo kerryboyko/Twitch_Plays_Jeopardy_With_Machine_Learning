@@ -77,6 +77,7 @@ class GameManager {
 
   /* CONSTRUCTOR! */
   constructor(public emit: Emitter, public seed: string = genSeedString()) {
+    emit.toFrontEnd(wsServer.SEED_NAME, `Game Loading, seed: ${seed}`);
     this.rand = randomSeed.create(seed);
   }
 

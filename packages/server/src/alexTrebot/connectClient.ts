@@ -1,8 +1,21 @@
+import yaml from "yaml";
+import fs from "fs";
 import { ChatUserstate, Client } from "tmi.js";
 import config from "../config";
-import handlers from "./handlers";
+import makeHandler from "./handler";
 
-export const connectClient = (): Client => {
+export const getText = (): Promise<Record<string, Array<string>>> =>
+  new Promise((resolve, reject) => {
+    fs.readFile("./text.yaml", "utf8", (err, data) => {
+      if (err) {
+        console.log(err);
+        reject(err);
+      }
+      resolve(yaml.parse(data));
+    });
+  });
+
+export const connectClient = async (): Promise<Client> => {
   const client = Client({
     options: { debug: true },
     connection: {
@@ -15,7 +28,8 @@ export const connectClient = (): Client => {
       password: config.OAUTH_TOKEN,
     },
   });
-  const { handleChat, handleWhisper } = handlers(client);
+  const text = await getText();
+  const handler = await makeHandler(client, text);
   client.on("connected", (addr, port) => {
     console.info(`* Connected to ${addr}:${port}`);
   });
@@ -26,20 +40,10 @@ export const connectClient = (): Client => {
       context: ChatUserstate,
       message: string,
       isSelf: boolean
-    ) => {
-      if (isSelf) {
-        console.log(context, message);
-        return;
-      }
-      if (context["message-type"] === "chat") {
-        handleChat(target, context, message);
-      }
-      if (context["message-type"] === "whisper") {
-        handleWhisper(target, context, message);
-      }
-    }
+    ) => handler(target, context, message, isSelf)
   );
   client.connect();
+  console.info("alextrebot is connected");
   return client;
 };
 

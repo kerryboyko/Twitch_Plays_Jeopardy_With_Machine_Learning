@@ -15,5 +15,6 @@ export const JTiming: Record<string, number> = {
   responseTime: 30 * SECOND,
   answerTime: 30 * SECOND,
   afterAnswer: 10 * SECOND,
-  minimumShowFinalScoreTime: 30 * SECOND
+  minimumShowFinalScoreTime: 30 * SECOND,
+  helpTimeout: 1.5 * MINUTE,
 };

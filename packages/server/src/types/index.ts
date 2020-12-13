@@ -103,5 +103,6 @@ export type States =
 export type ChatHandler = (
   target: string,
   context: ChatUserstate,
-  message: string
+  message: string,
+  isSelf: boolean
 ) => void;
