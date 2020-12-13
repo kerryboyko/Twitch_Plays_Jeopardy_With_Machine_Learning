@@ -6,64 +6,64 @@ describe("answerEvaluator", () => {
       final: true,
       strategyResults: [
         ["directStrategy", true],
-        ["majorityConsonantsInRightOrderStrategy", true]
-      ]
+        ["majorityConsonantsInRightOrderStrategy", true],
+      ],
     });
     expect(await answerEvaluator("oprah", "opera")).toEqual({
       final: false,
       strategyResults: [
         ["directStrategy", false],
-        ["majorityConsonantsInRightOrderStrategy", null]
-      ]
+        ["majorityConsonantsInRightOrderStrategy", null],
+      ],
     });
     expect(await answerEvaluator("independence day", "4th of july")).toEqual({
       final: false,
       strategyResults: [
         ["directStrategy", false],
-        ["majorityConsonantsInRightOrderStrategy", false]
-      ]
+        ["majorityConsonantsInRightOrderStrategy", false],
+      ],
     });
     expect(await answerEvaluator("henry viii", "henry viii")).toEqual({
       final: true,
       strategyResults: [
         ["directStrategy", true],
-        ["majorityConsonantsInRightOrderStrategy", true]
-      ]
+        ["majorityConsonantsInRightOrderStrategy", true],
+      ],
     });
     expect(await answerEvaluator("henry viii", "henry tudor")).toEqual({
       final: true,
       strategyResults: [
         ["directStrategy", false],
-        ["majorityConsonantsInRightOrderStrategy", true]
-      ]
+        ["majorityConsonantsInRightOrderStrategy", true],
+      ],
     });
     expect(await answerEvaluator("henry viii", "henry the 8th")).toEqual({
       final: true,
       strategyResults: [
         ["directStrategy", false],
-        ["majorityConsonantsInRightOrderStrategy", true]
-      ]
+        ["majorityConsonantsInRightOrderStrategy", true],
+      ],
     });
     expect(await answerEvaluator("henry viii", "henry vi")).toEqual({
       final: true,
       strategyResults: [
         ["directStrategy", false],
-        ["majorityConsonantsInRightOrderStrategy", true]
-      ]
+        ["majorityConsonantsInRightOrderStrategy", true],
+      ],
     });
     expect(await answerEvaluator("henry viii", "henry ford")).toEqual({
       final: true,
       strategyResults: [
         ["directStrategy", false],
-        ["majorityConsonantsInRightOrderStrategy", true]
-      ]
+        ["majorityConsonantsInRightOrderStrategy", true],
+      ],
     });
     expect(await answerEvaluator("henry viii", "steve buschemi")).toEqual({
       final: false,
       strategyResults: [
         ["directStrategy", false],
-        ["majorityConsonantsInRightOrderStrategy", false]
-      ]
+        ["majorityConsonantsInRightOrderStrategy", false],
+      ],
     });
   });
 });
@@ -74,64 +74,64 @@ describe("answerEvaluatorSync", () => {
       final: true,
       strategyResults: [
         ["directStrategy", true],
-        ["majorityConsonantsInRightOrderStrategy", true]
-      ]
+        ["majorityConsonantsInRightOrderStrategy", true],
+      ],
     });
     expect(answerEvaluatorSync("oprah", "opera")).toEqual({
       final: false,
       strategyResults: [
         ["directStrategy", false],
-        ["majorityConsonantsInRightOrderStrategy", null]
-      ]
+        ["majorityConsonantsInRightOrderStrategy", null],
+      ],
     });
     expect(answerEvaluatorSync("independence day", "4th of july")).toEqual({
       final: false,
       strategyResults: [
         ["directStrategy", false],
-        ["majorityConsonantsInRightOrderStrategy", false]
-      ]
+        ["majorityConsonantsInRightOrderStrategy", false],
+      ],
     });
     expect(answerEvaluatorSync("henry viii", "henry viii")).toEqual({
       final: true,
       strategyResults: [
         ["directStrategy", true],
-        ["majorityConsonantsInRightOrderStrategy", true]
-      ]
+        ["majorityConsonantsInRightOrderStrategy", true],
+      ],
     });
     expect(answerEvaluatorSync("henry viii", "henry tudor")).toEqual({
       final: true,
       strategyResults: [
         ["directStrategy", false],
-        ["majorityConsonantsInRightOrderStrategy", true]
-      ]
+        ["majorityConsonantsInRightOrderStrategy", true],
+      ],
     });
     expect(answerEvaluatorSync("henry viii", "henry the 8th")).toEqual({
       final: true,
       strategyResults: [
         ["directStrategy", false],
-        ["majorityConsonantsInRightOrderStrategy", true]
-      ]
+        ["majorityConsonantsInRightOrderStrategy", true],
+      ],
     });
     expect(answerEvaluatorSync("henry viii", "henry vi")).toEqual({
       final: true,
       strategyResults: [
         ["directStrategy", false],
-        ["majorityConsonantsInRightOrderStrategy", true]
-      ]
+        ["majorityConsonantsInRightOrderStrategy", true],
+      ],
     });
     expect(answerEvaluatorSync("henry viii", "henry ford")).toEqual({
       final: true,
       strategyResults: [
         ["directStrategy", false],
-        ["majorityConsonantsInRightOrderStrategy", true]
-      ]
+        ["majorityConsonantsInRightOrderStrategy", true],
+      ],
     });
     expect(answerEvaluatorSync("henry viii", "steve buschemi")).toEqual({
       final: false,
       strategyResults: [
         ["directStrategy", false],
-        ["majorityConsonantsInRightOrderStrategy", false]
-      ]
+        ["majorityConsonantsInRightOrderStrategy", false],
+      ],
     });
   });
 });

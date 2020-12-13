@@ -1,54 +1,34 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Server } from "socket.io";
 import { Client } from "tmi.js";
 import GameManager from "../../GameManager";
-import { wsServer } from "../../sockets/commands";
 import { ChatHandler, GameState } from "../../types";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 
 export const gameHandlers = (
+  io: Server,
   client: Client,
   _text: Record<string, string[]>
 ): Record<string, ChatHandler> => {
   let game: GameManager;
+
   const isLiveGame = (): boolean =>
     game !== undefined && game.gameState !== GameState.FinalScores;
 
   const staggerSay = (() => {
-    const queue: any[] = [];
+    const queue: [string, string][] = [];
     setInterval(() => {
       if (queue.length > 0) {
-        const [target, message] = queue.shift();
-        try {
-          client.say(target, message);
-        } catch (err) {
-          console.error(err);
-        }
+        const next = queue.shift() as [string, string];
+        client.say(...next);
       }
     }, 2000);
-    return (target: string, message: string) => {
-      queue.push([target, message]);
+    return (...args: [string, string]) => {
+      queue.push(args);
     };
   })();
 
-  const emitParser = (target: string) => {
-    const wsCommands: Record<string, (...args: any[]) => void> = {
-      [wsServer.SEED_NAME]: (msg: string) => staggerSay(target, msg),
-      [wsServer.GAME_START_TIME]: (startTime: number) =>
-        staggerSay(
-          target,
-          `New game '${game.seed}' launched: ${new Date(startTime).toString()}`
-        ),
-      [wsServer.INFO]: (info: string) => staggerSay(target, info),
-    };
-    return (type: string, ...args: any[]) => {
-      if (!wsCommands[type]) {
-        console.log(`Issue: ${type}, ${args}`);
-      } else {
-        wsCommands[type](...args);
-      }
-    };
-  };
   // handlers
   const startGame: ChatHandler = (target, _context, message, _isSelf) => {
     if (isLiveGame()) {
@@ -60,8 +40,13 @@ export const gameHandlers = (
       const seed: string | undefined = message
         .split(" ")
         .filter((x) => x.length)[1];
-      game = new GameManager({ toFrontEnd: emitParser(target) }, seed);
-      game.handleStartGame();
+      game = new GameManager(
+        {
+          toFrontEnd: (type: string, ...rest: any[]) => io.emit(type, ...rest),
+          toChat: staggerSay,
+        },
+        seed
+      );
     }
   };
   return {

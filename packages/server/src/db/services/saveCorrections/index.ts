@@ -19,14 +19,14 @@ export const saveCorrections = async (
   const clue = await db.collection("jeopardy_clues").findOne({ id });
   const canonical = clue.answer.toLowerCase();
 
-  const reports = corrections.map(report => ({ ...report, date: d }));
+  const reports = corrections.map((report) => ({ ...report, date: d }));
   const result = await db.collection("corrections").findOneAndUpdate(
     { id },
     {
       $set: { canonical },
       $push: {
-        reports: { $each: reports }
-      }
+        reports: { $each: reports },
+      },
     },
     { upsert: true }
   );

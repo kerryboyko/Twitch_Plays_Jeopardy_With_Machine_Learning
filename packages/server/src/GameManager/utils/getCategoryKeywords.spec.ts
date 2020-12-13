@@ -1,7 +1,7 @@
 import { getCategoryKeywords } from "./getCategoryKeywords";
 import testBoard2 from "../../db/services/getClues/mocks/testBoard2.json";
 
-const tbCategories = testBoard2.map(c => c.category);
+const tbCategories = testBoard2.map((c) => c.category);
 test("getCategoryKeywords", () => {
   expect(getCategoryKeywords(tbCategories)).toEqual({
     amphibians: "amphibians",
@@ -16,7 +16,7 @@ test("getCategoryKeywords", () => {
     shout: "one-word shout outs",
     religion: "true religion",
     twitters: "the author twitters",
-    weapons: "weapons"
+    weapons: "weapons",
   });
   expect(getCategoryKeywords(tbCategories.concat("europe train"))).toEqual({
     amphibians: "amphibians",
@@ -32,7 +32,7 @@ test("getCategoryKeywords", () => {
     religion: "true religion",
     twitters: "the author twitters",
     weapons: "weapons",
-    train: "europe train"
+    train: "europe train",
   });
   expect(
     getCategoryKeywords(tbCategories.concat("europe train").reverse())
@@ -50,6 +50,6 @@ test("getCategoryKeywords", () => {
     religion: "true religion",
     twitters: "the author twitters",
     weapons: "weapons",
-    train: "europe train"
+    train: "europe train",
   });
 });

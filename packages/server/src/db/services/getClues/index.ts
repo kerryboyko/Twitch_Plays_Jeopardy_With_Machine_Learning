@@ -13,7 +13,7 @@ const uidClue = (clue: JeopardyClue) => `${clue.question}||${clue.answer}`;
 
 export const stripDuplicateClues = (clues: JeopardyClue[]): JeopardyClue[] => {
   const uniques = new Set<string>([]);
-  return clues.filter(clue => {
+  return clues.filter((clue) => {
     const clueUid = uidClue(clue);
     if (uniques.has(clueUid)) {
       return false;
@@ -79,7 +79,7 @@ const verifyCategory = (clues: JeopardyClue[]): boolean => {
   }
   if (
     clues.some(
-      clue =>
+      (clue) =>
         clue.answer === "" ||
         clue.question === "" ||
         clue.invalid_count !== null
@@ -132,12 +132,12 @@ export const getRandomCategories = async (
     selectedCategories.add(catId);
     categories.set(
       category[0].category.title,
-      category.map(c => omit(c, ["_id"]) as JeopardyClue)
+      category.map((c) => omit(c, ["_id"]) as JeopardyClue)
     );
   }
   return Array.from(categories, ([title, clues]) => ({
     category: title,
-    clues: clueSorter(clues)
+    clues: clueSorter(clues),
   }));
 };
 
@@ -148,6 +148,6 @@ const fullBoard = (
 const getClues = {
   byCategory: getCluesByCategory,
   fullBoard,
-  byId: getClueById
+  byId: getClueById,
 };
 export default getClues;

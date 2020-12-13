@@ -3,6 +3,8 @@ import fs from "fs";
 import { ChatUserstate, Client } from "tmi.js";
 import config from "../config";
 import makeHandler from "./handler";
+import { Server } from "socket.io";
+import { wsServer } from "../sockets/commands";
 
 export const getText = (): Promise<Record<string, Array<string>>> =>
   new Promise((resolve, reject) => {
@@ -15,7 +17,7 @@ export const getText = (): Promise<Record<string, Array<string>>> =>
     });
   });
 
-export const connectClient = async (): Promise<Client> => {
+export const connectClient = async (io: Server): Promise<Client> => {
   const client = Client({
     options: { debug: true },
     connection: {
@@ -29,7 +31,7 @@ export const connectClient = async (): Promise<Client> => {
     },
   });
   const text = await getText();
-  const handler = await makeHandler(client, text);
+  const handler = await makeHandler(io, client, text);
   client.on("connected", (addr, port) => {
     console.info(`* Connected to ${addr}:${port}`);
   });
@@ -40,7 +42,13 @@ export const connectClient = async (): Promise<Client> => {
       context: ChatUserstate,
       message: string,
       isSelf: boolean
-    ) => handler(target, context, message, isSelf)
+    ) => {
+      io.emit(
+        wsServer.CHAT_LOG,
+        JSON.stringify({ message, user: context["display-name"] })
+      );
+      handler(target, context, message, isSelf);
+    }
   );
   client.connect();
   console.info("alextrebot is connected");

@@ -14,7 +14,7 @@ export const connect = (
       const close = () => client.close();
       resolve({
         db,
-        close
+        close,
       });
     });
   });

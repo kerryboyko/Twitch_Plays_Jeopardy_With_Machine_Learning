@@ -1,7 +1,7 @@
 import {
   directStrategy,
   thirdSubstringStrategy,
-  majorityConsonantsInRightOrderStrategy
+  majorityConsonantsInRightOrderStrategy,
 } from "./strategies";
 
 describe("strategies", () => {

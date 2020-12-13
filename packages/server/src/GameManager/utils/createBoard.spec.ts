@@ -16,14 +16,14 @@ test("createBoard", () => {
     international: 0,
     make: 1,
     shout: 4,
-    twitters: 2
+    twitters: 2,
   };
   expect(board).toEqual({
     clueSet: tb2.map((cat, index) => ({
       ...cat,
-      key: invert(expectedLookup)[index.toString()]
+      key: invert(expectedLookup)[index.toString()],
     })),
-    lookup: expectedLookup
+    lookup: expectedLookup,
   });
   expect(board.clueSet[board.lookup.dawn].category).toBe("dawn");
   expect(board.clueSet[board.lookup.europe].category).toBe("europe");

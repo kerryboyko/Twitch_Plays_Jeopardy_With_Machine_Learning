@@ -5,7 +5,6 @@ import { Server as SocketServer } from "socket.io";
 import config from "./config";
 // import router from "./router";
 import sockets from "./sockets";
-import setup from "./setup";
 import alexTrebot from "./alexTrebot";
 // export the websocket commands -- these will also be used by the client.
 
@@ -16,8 +15,7 @@ const main = () => {
   const http = createServer(app);
   // router(app);
   const io: SocketServer = sockets(http);
-  setup(io);
-  alexTrebot();
+  alexTrebot(io);
   app.use(cors());
   http.listen(PORT, () => {
     console.info(`JeopardAI REST app listening at http://localhost:${PORT}`);

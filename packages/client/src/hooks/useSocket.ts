@@ -1,21 +1,28 @@
 import { io, Socket } from "socket.io-client";
+import { reactive, toRefs } from "vue";
 // import {useActions} from 'vuex-composition-helpers';
 import { wsServer, wsClient } from "@jeopardai/server/src/sockets/commands";
 
-const useSocket = (): Socket => {
+interface ChatMsg {
+  user: string;
+  timestamp: Date;
+  message: string;
+}
+
+const useSocket = (() => {
   const socket: Socket = io("http://localhost:8000");
-  console.log({ wsServer, wsClient });
-  // socket.on("message", (msg: string) => {
-  //   console.log("msg:", msg);
-  //   state.responses.push(msg);
-  // });
-  // socket.on("connected", () => {
-  //   console.log("connected");
-  // });
-  // const sendMessage = () => {
-  //   socket.emit("message", state.inputField);
-  // };
-  return socket;
-};
+
+  return () => {
+    const state = reactive<{ chatLog: ChatMsg[] }>({
+      chatLog: [],
+    });
+    socket.on(wsServer.CHAT_LOG, (data: string) => {
+      const { user, message } = JSON.parse(data);
+      state.chatLog.push({ user, message, timestamp: new Date() });
+    });
+
+    return { ...toRefs(state) };
+  };
+})();
 
 export default useSocket;

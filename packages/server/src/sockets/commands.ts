@@ -3,6 +3,7 @@ import makeEnum from "../utils/makeEnum";
 export const wsServer = makeEnum(
   "wsServer",
   "INFO",
+  "CHAT_LOG",
   "SEED_NAME",
   "PLAYER_REGISTERED",
   "GAME_START_TIME",

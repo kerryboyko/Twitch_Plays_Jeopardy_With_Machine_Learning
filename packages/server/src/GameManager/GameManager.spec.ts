@@ -23,7 +23,7 @@ const { fakeEmit, getLatestLog } = (() => {
       const output = log.slice(lines);
       lines = log.length;
       return output;
-    }
+    },
   };
 })();
 
@@ -36,7 +36,7 @@ const { fakeEmit, getLatestLog } = (() => {
 const game = new GameManager({ toFrontEnd: fakeEmit }, seedString) as any;
 
 const clearAllGameTimeouts = () =>
-  Object.values(game.timeouts).forEach(timeout =>
+  Object.values(game.timeouts).forEach((timeout) =>
     clearTimeout(timeout as NodeJS.Timeout)
   );
 
@@ -81,14 +81,14 @@ describe("Class Game", () => {
       expect(game.scoreboard).toEqual({
         alpha: 0,
         beta: 0,
-        gamma: 0
+        gamma: 0,
       });
       expect(game.controllingPlayer).toBe("alpha");
       const log = getLatestLog();
       expect(log).toEqual([
         ["wsServer.PLAYER_REGISTERED", "alpha"],
         ["wsServer.PLAYER_REGISTERED", "beta"],
-        ["wsServer.PLAYER_REGISTERED", "gamma"]
+        ["wsServer.PLAYER_REGISTERED", "gamma"],
       ]);
     });
   });
@@ -102,9 +102,9 @@ describe("Class Game", () => {
         ["wsServer.GAME_START_TIME", log[0][1]],
         [
           "wsServer.INFO",
-          "Type !register to register to play. Game will start in 3 minutes"
+          "Type !register to register to play. Game will start in 3 minutes",
         ],
-        ["wsServer.GAME_STATE_CHANGE", "LoadingGame"]
+        ["wsServer.GAME_STATE_CHANGE", "LoadingGame"],
       ]);
       expect(game.gameState).toBe(GameState.LoadingGame);
     });
@@ -131,19 +131,19 @@ describe("Class Game", () => {
             ["indulgent", "self-indulgent reality tv"],
             ["monuments", "the monuments women"],
             ["sequelitis", "sequelitis"],
-            ["biblical", "biblical who's who"]
-          ]
-        ]
+            ["biblical", "biblical who's who"],
+          ],
+        ],
       ]);
       expect(log[2][0]).toBe("wsServer.CHANGE_CONTROLLER");
       expect(log[2][1].message.startsWith("The luck of")).toBe(true);
       expect(Object.keys(log[2][1]).sort()).toEqual([
         "controllingPlayer",
-        "message"
+        "message",
       ]);
       expect(log[3]).toEqual([
         "wsServer.CLUE_STATE_CHANGE",
-        "Prompt Select Clue"
+        "Prompt Select Clue",
       ]);
       expect(log[4][0]).toBe("wsServer.PROMPT_SELECT_CLUE");
       expect(game.clueState).toBe(ClueState.PromptSelectClue);
@@ -154,14 +154,14 @@ describe("Class Game", () => {
       await game.handleSelectClue({
         playerName: "alpha",
         categoryKey: "floobis",
-        value: 8000
+        value: 8000,
       });
       const log = getLatestLog();
-      expect(log.map(el => el[0])).toEqual([
+      expect(log.map((el) => el[0])).toEqual([
         "wsServer.CLUE_STATE_CHANGE",
         "wsServer.INVALID_CLUE_SELECTION",
         "wsServer.CLUE_STATE_CHANGE",
-        "wsServer.PROMPT_SELECT_CLUE"
+        "wsServer.PROMPT_SELECT_CLUE",
       ]);
       expect(game.clueState).toBe(ClueState.PromptSelectClue);
     });
@@ -169,7 +169,7 @@ describe("Class Game", () => {
       await game.handleSelectClue({
         playerName: "alpha",
         categoryKey: "42",
-        value: 200
+        value: 200,
       });
       expect(game.currentClue).toEqual({
         answer: "Jackie Robinson",
@@ -179,7 +179,7 @@ describe("Class Game", () => {
         isDailyDouble: false,
         question:
           "The Dodgers retired his no. 42 jersey number in 1972 & all of MLB did in 1997",
-        value: 200
+        value: 200,
       });
       const log = getLatestLog();
       expect(log).toEqual([
@@ -192,9 +192,9 @@ describe("Class Game", () => {
             id: 120457,
             question:
               "The Dodgers retired his no. 42 jersey number in 1972 & all of MLB did in 1997",
-            value: 200
-          }
-        ]
+            value: 200,
+          },
+        ],
       ]);
       expect(game.clueState).toBe(ClueState.DisplayClue);
     });
@@ -208,18 +208,18 @@ describe("Class Game", () => {
           {
             playerName: "alpha",
             evaluated: null,
-            provided: "jackie robinson"
+            provided: "jackie robinson",
           },
           {
             playerName: "beta",
             evaluated: null,
-            provided: "jackie robinette"
+            provided: "jackie robinette",
           },
           {
             playerName: "gamma",
             evaluated: null,
-            provided: "babe ruth"
-          }
+            provided: "babe ruth",
+          },
         ]);
       });
     });
@@ -232,23 +232,23 @@ describe("Class Game", () => {
           {
             playerName: "alpha",
             evaluated: true,
-            provided: "jackie robinson"
+            provided: "jackie robinson",
           },
           {
             playerName: "beta",
             evaluated: true,
-            provided: "jackie robinette"
+            provided: "jackie robinette",
           },
           {
             playerName: "gamma",
             evaluated: false,
-            provided: "babe ruth"
-          }
+            provided: "babe ruth",
+          },
         ]);
         expect(game.scoreboard).toEqual({
           alpha: 200,
           beta: 200,
-          gamma: -200
+          gamma: -200,
         });
         const log = getLatestLog();
         expect(log).toEqual([
@@ -260,31 +260,31 @@ describe("Class Game", () => {
               currentScores: {
                 alpha: 200,
                 beta: 200,
-                gamma: -200
+                gamma: -200,
               },
               id: 120457,
               provided: [
                 {
                   playerName: "alpha",
                   evaluated: true,
-                  provided: "jackie robinson"
+                  provided: "jackie robinson",
                 },
                 {
                   playerName: "beta",
                   evaluated: true,
-                  provided: "jackie robinette"
+                  provided: "jackie robinette",
                 },
                 {
                   playerName: "gamma",
                   evaluated: false,
-                  provided: "babe ruth"
-                }
+                  provided: "babe ruth",
+                },
               ],
               question:
                 "The Dodgers retired his no. 42 jersey number in 1972 & all of MLB did in 1997",
-              value: 200
-            }
-          ]
+              value: 200,
+            },
+          ],
         ]);
         expect(game.controllingPlayer).toBe("alpha");
       });
@@ -299,7 +299,7 @@ describe("Class Game", () => {
         await game.handleSelectClue({
           playerName: "alpha",
           categoryKey: "biblical",
-          value: 600
+          value: 600,
         });
         expect(game.currentClue.isDailyDouble).toBe(true);
         expect(game.clueState).toBe(ClueState.DailyDouble);
@@ -308,7 +308,7 @@ describe("Class Game", () => {
           ["wsServer.CLUE_STATE_CHANGE", "Prompt Select Clue"],
           [
             "wsServer.PROMPT_SELECT_CLUE",
-            "alpha, you have control of the board, select a category."
+            "alpha, you have control of the board, select a category.",
           ],
           ["wsServer.CLUE_STATE_CHANGE", "Clue Selected"],
           ["wsServer.CLUE_STATE_CHANGE", "Daily Double"],
@@ -316,9 +316,9 @@ describe("Class Game", () => {
             "wsServer.GET_DD_WAGER",
             {
               maxValue: 1600,
-              player: "alpha"
-            }
-          ]
+              player: "alpha",
+            },
+          ],
         ]);
       });
     });
@@ -342,9 +342,9 @@ describe("Class Game", () => {
               id: 127984,
               question:
                 "That must have been some exorcism when Jesus cast 7 devils out of her",
-              value: 600
-            }
-          ]
+              value: 600,
+            },
+          ],
         ]);
       });
       it("ignores answers not from the controlling player", async () => {
@@ -354,13 +354,13 @@ describe("Class Game", () => {
         await game.handleAnswer("alpha", "mary magdeline");
         expect(game.clueState).toBe(ClueState.DisplayAnswer);
         expect(game.currentPlayerAnswers).toEqual([
-          { evaluated: true, playerName: "alpha", provided: "mary magdeline" }
+          { evaluated: true, playerName: "alpha", provided: "mary magdeline" },
         ]);
         expect(game.board.clueSet[5].clues[2]).toBe(null);
         expect(game.scoreboard).toEqual({
           alpha: 2800,
           beta: 200,
-          gamma: -200
+          gamma: -200,
         });
         expect(game.controllingPlayer).toBe("alpha");
         const log = getLatestLog();
@@ -373,21 +373,21 @@ describe("Class Game", () => {
               currentScores: {
                 alpha: 2800,
                 beta: 200,
-                gamma: -200
+                gamma: -200,
               },
               id: 127984,
               provided: [
                 {
                   evaluated: true,
                   playerName: "alpha",
-                  provided: "mary magdeline"
-                }
+                  provided: "mary magdeline",
+                },
               ],
               question:
                 "That must have been some exorcism when Jesus cast 7 devils out of her",
-              value: 600
-            }
-          ]
+              value: 600,
+            },
+          ],
         ]);
       });
     });
@@ -412,7 +412,7 @@ describe("Class Game", () => {
           ["wsServer.CLUE_STATE_CHANGE", "Prompt Select Clue"],
           [
             "wsServer.END_OF_ROUND",
-            "And that is the end of our first Jeopardy round"
+            "And that is the end of our first Jeopardy round",
           ],
           ["wsServer.GAME_STATE_CHANGE", "Double Jeopardy"],
           [
@@ -423,22 +423,22 @@ describe("Class Game", () => {
               ["professional", "professional sports"],
               ["strait", "strait ahead"],
               ["under", '"over" & "under"'],
-              ["properly", "spat tha properly spelld wurd"]
-            ]
+              ["properly", "spat tha properly spelld wurd"],
+            ],
           ],
           [
             "wsServer.CHANGE_CONTROLLER",
             {
               controllingPlayer: "gamma",
               message:
-                "At the end of the last round, gamma was in last place, so they will go first in Double Jeopardy."
-            }
+                "At the end of the last round, gamma was in last place, so they will go first in Double Jeopardy.",
+            },
           ],
           ["wsServer.CLUE_STATE_CHANGE", "Prompt Select Clue"],
           [
             "wsServer.PROMPT_SELECT_CLUE",
-            "gamma, you have control of the board, select a category."
-          ]
+            "gamma, you have control of the board, select a category.",
+          ],
         ]);
       });
       it("advances to final jeopardy", async () => {
@@ -462,7 +462,7 @@ describe("Class Game", () => {
           indices: [-1, -1],
           isDailyDouble: false,
           question: `Another word for pirate, it's derived from the same Dutch word as "filibuster"`,
-          value: 0
+          value: 0,
         });
         // lowest score should go first in Double Jeopardy.
         const log = getLatestLog();
@@ -476,9 +476,9 @@ describe("Class Game", () => {
             {
               category: `hey, "boo"`,
               message:
-                "And now, the Final Jeopardy category.  Place your final wagers"
-            }
-          ]
+                "And now, the Final Jeopardy category.  Place your final wagers",
+            },
+          ],
         ]);
       });
     });
@@ -493,12 +493,12 @@ describe("Class Game", () => {
       game.handleWager("gamma", 1000);
       expect(game.wagers).toEqual({
         alpha: 1000,
-        beta: 200
+        beta: 200,
       });
       const log = getLatestLog();
       expect(log).toEqual([
         ["wsServer.WAGER_RECEIVED", "alpha"],
-        ["wsServer.WAGER_RECEIVED", "beta"]
+        ["wsServer.WAGER_RECEIVED", "beta"],
       ]);
     });
     it("displays the clue", async () => {
@@ -512,10 +512,10 @@ describe("Class Game", () => {
           {
             category: `hey, "boo"`,
             id: 64053,
-            question: `Another word for pirate, it's derived from the same Dutch word as "filibuster"`
-          }
+            question: `Another word for pirate, it's derived from the same Dutch word as "filibuster"`,
+          },
         ],
-        ["wsServer.PLAY_THINK_MUSIC"]
+        ["wsServer.PLAY_THINK_MUSIC"],
       ]);
     });
     it("handles answers", () => {
@@ -526,18 +526,18 @@ describe("Class Game", () => {
         {
           evaluated: null,
           playerName: "alpha",
-          provided: "bootineer"
+          provided: "bootineer",
         },
         {
           evaluated: null,
           playerName: "beta",
-          provided: "freebooter"
+          provided: "freebooter",
         },
         {
           evaluated: null,
           playerName: "gamma",
-          provided: "freebooter"
-        }
+          provided: "freebooter",
+        },
       ]);
       const log = getLatestLog();
       expect(log).toEqual([]);
@@ -545,7 +545,7 @@ describe("Class Game", () => {
     it("handles the final scores", async () => {
       expect(game.wagers).toEqual({
         alpha: 1000,
-        beta: 200
+        beta: 200,
       });
       await game.changeFinalJeopardyState(FinalJeopardyState.DisplayAnswer);
       expect(game.finalJeopardyState).toBe(FinalJeopardyState.DisplayAnswer);
@@ -553,7 +553,7 @@ describe("Class Game", () => {
       expect(game.scoreboard).toEqual({
         alpha: 1800,
         beta: 400,
-        gamma: -200
+        gamma: -200,
       });
       const log = getLatestLog();
       expect(log).toEqual([
@@ -565,28 +565,28 @@ describe("Class Game", () => {
             currentScores: {
               alpha: 1800,
               beta: 400,
-              gamma: -200
+              gamma: -200,
             },
             id: 64053,
             provided: [
               {
                 evaluated: false,
                 playerName: "alpha",
-                provided: "bootineer"
+                provided: "bootineer",
               },
               {
                 evaluated: true,
                 playerName: "beta",
-                provided: "freebooter"
+                provided: "freebooter",
               },
               {
                 evaluated: null,
                 playerName: "gamma",
-                provided: "freebooter"
-              }
+                provided: "freebooter",
+              },
             ],
-            question: `Another word for pirate, it's derived from the same Dutch word as "filibuster"`
-          }
+            question: `Another word for pirate, it's derived from the same Dutch word as "filibuster"`,
+          },
         ],
         ["wsServer.GAME_STATE_CHANGE", "Final Scores"],
         [
@@ -595,12 +595,12 @@ describe("Class Game", () => {
             finalScores: [
               ["alpha", 1800],
               ["beta", 400],
-              ["gamma", -200]
+              ["gamma", -200],
             ],
             message:
-              "Thanks for playing! A new game will start soon, type !register to join, or !judge to register as a judge"
-          }
-        ]
+              "Thanks for playing! A new game will start soon, type !register to join, or !judge to register as a judge",
+          },
+        ],
       ]);
     });
   });

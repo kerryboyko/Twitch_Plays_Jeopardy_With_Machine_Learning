@@ -1,4 +1,6 @@
+import { Server } from "socket.io";
 import { Client, ChatUserstate } from "tmi.js";
+import { server } from "typescript";
 import { ChatHandler } from "../types";
 import gameHandlers from "./handlers/gameHandlers";
 
@@ -38,10 +40,11 @@ const staggeredSay = (
 };
 
 const makeCommands = (
+  io: Server,
   client: Client,
   text: Record<string, Array<string>>
 ): Record<string, ChatHandler> => {
-  const gameCommands = gameHandlers(client, text);
+  const gameCommands = gameHandlers(io, client, text);
   return {
     "!help": staggeredSay("!help", client, text.help, 1.5 * 60 * 1000),
     "!ai": staggeredSay("!ai", client, text.ai, 5 * 60 * 1000),
@@ -51,10 +54,11 @@ const makeCommands = (
 };
 
 export const makeHandler = (
+  io: Server,
   client: Client,
   text: Record<string, Array<string>>
 ): ChatHandler => {
-  const commands = makeCommands(client, text);
+  const commands = makeCommands(io, client, text);
   return (
     target: string,
     context: ChatUserstate,

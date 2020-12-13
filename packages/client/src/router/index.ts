@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import Main from "../views/Main.vue";
+import Home from "../views/Home.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    name: "Main",
-    component: Main
-  }
+    name: "Home",
+    component: Home,
+  },
   // {
   //   path: "/judge",
   //   name: "Judge",
@@ -20,7 +20,7 @@ const routes: Array<RouteRecordRaw> = [
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
 });
 
 export default router;
