@@ -10,6 +10,10 @@ const config: Record<string, string> = pick(process.env, [
   "TWITCH_LOGIN_CLIENT_SECRET",
   "AUTH_0_DOMAIN",
   "AUTH_0_CLIENT_ID",
+  "JEOPARDY_INTERACTION_CLIENT_ID",
+  "JEOPARDY_INTERACTION_SECRET",
+  "SERVER_URL",
+  "SERVER_PORT",
 ]) as Record<string, string>;
 
 export default config;

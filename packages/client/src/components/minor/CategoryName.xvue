@@ -16,7 +16,6 @@ export default defineComponent({
   name: "CategoryName",
   props: ["head", "keyword", "tail"],
   setup(props) {
-    console.log(props);
     return { props };
   },
 });

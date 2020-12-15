@@ -1,8 +1,6 @@
 <template>
   <div class="clue">
-    <div class="clue__category">
-      {{ props.category }} - ${{ props.value }}
-    </div>
+    <div class="clue__category">{{ props.category }} - ${{ props.value }}</div>
     <div class="clue__question">
       {{ props.question }}
     </div>
@@ -10,13 +8,13 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "ClueDisplay",
-  props: ['category', 'value', 'question'],
+  props: ["category", "value", "question"],
   setup(props) {
-    console.log(props);
     return {
       props,
     };
@@ -25,13 +23,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-
 .clue {
   font-family: "Korinna", sans-serif;
   text-transform: uppercase;
   height: 360px;
   width: 640px;
-  padding: 10px 50px 50px 50px;;
+  padding: 10px 50px 50px 50px;
   background-image: url("/img/clue-background.jpg");
   color: #ffffff;
   font-size: 25px;
@@ -44,7 +41,8 @@ export default defineComponent({
   &__category {
     height: 40px;
     font-size: 20px;
-    font-family: T
+    font-family: Inter;
+    color: #e7ddcb;
   }
   &__question {
     display: flex;
@@ -54,5 +52,4 @@ export default defineComponent({
     align-items: center;
   }
 }
-
 </style>

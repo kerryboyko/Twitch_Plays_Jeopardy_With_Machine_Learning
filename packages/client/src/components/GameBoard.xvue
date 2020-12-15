@@ -22,7 +22,10 @@
       :key="value"
     >
       <div
-        class="value"
+        :class="{
+          value: true,
+          dead: isDead(categoryIndex, valueIndex),
+        }"
         v-for="(category, categoryIndex) in state.categories"
         :key="`${value}-${category.keyword}`"
         @click="handleClick(categoryIndex, valueIndex)"
@@ -44,13 +47,12 @@ interface Category {
 
 interface GameBoardState {
   categories: { head: string; tail: string; keyword: string }[];
-  deadClues: Record<number, number[]>;
+  deadClues: Record<number, Record<number, boolean>>;
 }
 const formatCategoryName = (category: string, keyword: string) => {
   const index = category.indexOf(keyword);
   const head = category.substring(0, index);
   const tail = category.substring(index + keyword.length);
-  console.log({ category, keyword, index, head, tail });
   return {
     head,
     tail,
@@ -76,18 +78,15 @@ export default defineComponent({
     });
     const handleClick = (cat: number, val: number) => {
       if (!state.deadClues[cat]) {
-        state.deadClues[cat] = [];
+        state.deadClues[cat] = {};
       }
-      state.deadClues[cat].push(val);
+      state.deadClues[cat][val] = true;
     };
-    const isDead = (categoryIndex: number, valueIndex: number): boolean => {
-      if (!state.deadClues[categoryIndex]) {
-        return false;
-      }
-      return state.deadClues[categoryIndex].includes(valueIndex);
-    };
+    const isDead = (categoryIndex: number, valueIndex: number): boolean =>
+      state.deadClues?.[categoryIndex]?.[valueIndex];
+
     const isCategoryDead = (categoryIndex: number): boolean =>
-      get(state, ["deadClues", categoryIndex], []).length === 5;
+      Object.keys(get(state.deadClues, [categoryIndex], {})).length === 5;
 
     return {
       state,
@@ -142,5 +141,14 @@ export default defineComponent({
   align-items: center;
   text-align: center;
   border: 1px solid black;
+  cursor: pointer;
+  &:hover {
+    backdrop-filter: invert(10%);
+    color: #ebd0b0;
+    &.dead {
+      backdrop-filter: none;
+      cursor: not-allowed;
+    }
+  }
 }
 </style>

@@ -16,6 +16,7 @@
     }
   },
   "scripts": {
+    "build:client": "yarn workspace @jeopardai/client run build",
     "dev:client": "yarn workspace @jeopardai/client run dev",
     "dev:server": "yarn workspace @jeopardai/server run dev",
     "dev": "concurrently --kill-others-on-fail \"yarn dev:server\"  \"yarn dev:client\"",
@@ -31,11 +32,13 @@
     "cz-conventional-changelog": "3.3.0",
     "eslint": "^7.15.0",
     "global": "^4.4.0",
+    "jsonwebtoken": "^8.5.1",
     "prettier": "^2.2.1",
     "typescript": "^4.1.2",
     "yaml": "^1.10.0"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^8.5.0",
     "lerna": "^3.22.1"
   }
 }

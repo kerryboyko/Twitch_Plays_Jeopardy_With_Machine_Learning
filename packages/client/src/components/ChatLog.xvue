@@ -40,12 +40,6 @@ export default defineComponent({
               (chatRef.value as any).scrollTop -
               (chatRef.value as any).clientHeight <
             15;
-          console.log(
-            isCurrentLock,
-            (chatRef.value as any).scrollHeight,
-            (chatRef.value as any).scrollTop,
-            (chatRef.value as any).clientHeight
-          );
           if (isCurrentLock) {
             setTimeout(() => {
               (chatRef.value as any).scrollTop = (chatRef.value as any).clientHeight;
