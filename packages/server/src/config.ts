@@ -4,7 +4,7 @@ import pick from "lodash/pick";
 import path from "path";
 
 dotenv.config({ path: path.resolve(__dirname, "../../../", ".env") });
-
+console.log("path to env:", path.resolve(__dirname, "../../../", ".env"));
 assert(process.env.CANARY === "true");
 
 const config: Record<string, string> = pick(process.env, [
