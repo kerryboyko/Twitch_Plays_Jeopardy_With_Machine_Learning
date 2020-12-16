@@ -14,10 +14,10 @@ const jwtParser = (
   res: Response,
   next: NextFunction
 ): void => {
-  if (!req.headers.authoriztion) {
+  if (!req.headers.authorization) {
     res
       .status(401)
-      .json({ error: true, message: "Missing authorization headder" });
+      .json({ error: true, message: "Missing authorization header" });
     return;
   }
   const [type, auth] = get(req, "headers.authorization", "").split(" ");
