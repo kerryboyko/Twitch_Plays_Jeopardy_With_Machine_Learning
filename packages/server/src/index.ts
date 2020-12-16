@@ -24,5 +24,8 @@ const main = async () => {
     console.info(`JeopardAI REST app listening at https://localhost:${PORT}`);
   });
 };
-
-main();
+if (config.CANARY) {
+  main();
+} else {
+  console.log("Env not loaded");
+}
