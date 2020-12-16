@@ -2,7 +2,6 @@
 import { onMounted, reactive, toRefs } from "vue";
 import axios from "axios";
 import { Ref } from "vue";
-import config from "../secret/config.json";
 declare global {
   interface Window {
     Twitch: any;
@@ -40,7 +39,7 @@ const useTwitch = (): TwitchHook => {
     state.isLoading = true;
     try {
       const response = await axios.post(
-        `${config.SERVER_URL}:${config.SERVER_PORT}`,
+        `https://jeopardai.frontendgineer.com/jwt`,
         {},
         {
           headers: { authorization: `Bearer ${twitchExt.viewer.sessionToken}` },

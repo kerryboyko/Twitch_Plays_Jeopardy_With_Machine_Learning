@@ -20,7 +20,9 @@ const jwtParser = (
       .json({ error: true, message: "Missing authorization header" });
     return;
   }
-  const [type, auth] = get(req, "headers.authorization", "").split(" ");
+  const authHeader = get(req, "headers.authorization", "");
+  console.log("AUTHHEADER:", authHeader);
+  const [type, auth] = authHeader.split(" ");
   if (type !== "Bearer") {
     res
       .status(401)
