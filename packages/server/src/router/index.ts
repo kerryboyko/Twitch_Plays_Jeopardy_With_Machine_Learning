@@ -12,7 +12,6 @@ const router = (app: Application, apiToken: string): void => {
   app.get("/", (_req, res) => {
     res.send("App is running");
   });
-  app.use("/frontend");
   app.post("/jwt", (req, res) => {
     res.json({ info: get(req, "extension", "no-data") });
   });
