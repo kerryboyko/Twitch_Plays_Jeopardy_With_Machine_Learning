@@ -8,6 +8,9 @@ const router = (app: Application, apiToken: string): void => {
   app.get("/hello", (_req, res) => {
     res.send("Hello World");
   });
+  app.get("/", (_req, res) => {
+    res.send("App is running");
+  });
 };
 
 export default router;
