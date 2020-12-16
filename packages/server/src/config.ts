@@ -24,6 +24,7 @@ const config: Record<string, string> = pick(process.env, [
   "SERVER_PORT",
   "JEOPARDY_INTERACTION_CLIENT_ID",
   "JEOPARDY_INTERACTION_SECRET",
+  "JEOPARDY_INTERACTION_EXTENSION_SECRET",
 ]) as Record<string, string>;
 
 export default config;
