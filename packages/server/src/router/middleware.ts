@@ -48,7 +48,7 @@ const jwtParser = (
 
 export const middleware = (app: Application): void => {
   app.use(routeLogger);
-  app.post("/jwt", jwtParser);
+  app.use("/:route?", jwtParser);
 };
 
 export default middleware;
