@@ -15,12 +15,14 @@ interface TwitchState {
   isLoading: boolean;
   error: string;
   profile: any;
+  other: any;
 }
 interface TwitchHook {
   isLoggedIn: Ref<boolean>;
   isLoading: Ref<boolean>;
   error: Ref<string>;
   profile: Ref<any>;
+  other: Ref<any>;
   loadProfile: () => Promise<void>;
   requestId: () => void;
 }
@@ -33,13 +35,14 @@ const useTwitch = (): TwitchHook => {
     isLoading: false,
     error: "",
     profile: {},
+    other: {},
   });
 
   const loadProfile = async () => {
     state.isLoading = true;
     try {
       const response = await axios.post(
-        `https://jeopardai.frontendgineer.com/jwt`,
+        `https://jeopardai.frontendgineer.com/userid`,
         {},
         {
           headers: { authorization: `Bearer ${twitchExt.viewer.sessionToken}` },
@@ -56,12 +59,14 @@ const useTwitch = (): TwitchHook => {
   };
 
   const requestId = () => {
-    twitchExt.actions.requestIdShare();
+    console.log("What is this?");
+    const whateverThisReturns = twitchExt.actions.requestIdShare();
+    state.other.whateverThisReturns = whateverThisReturns;
   };
 
   onMounted(() => {
     twitchExt.onAuthorized((auth: any) => {
-      console.log(auth);
+      console.log("AUTH", auth);
       if (twitchExt.viewer.isLinked) {
         state.isLoggedIn = true;
         loadProfile();

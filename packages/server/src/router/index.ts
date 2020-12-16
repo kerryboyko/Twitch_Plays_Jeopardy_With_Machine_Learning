@@ -1,7 +1,7 @@
 import { Application } from "express";
+import get from "lodash/get";
 import middleware from "./middleware";
 import postUserId from "./post/userid";
-import get from "lodash/get";
 
 const router = (app: Application, apiToken: string): void => {
   middleware(app);

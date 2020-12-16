@@ -2,7 +2,7 @@
   <div>
     <div class="login">login</div>
     <pre>{{
-      JSON.stringify({ isLoggedIn, isLoading, error, profile }, null, 2)
+      JSON.stringify({ isLoggedIn, isLoading, error, profile, other }, null, 2)
     }}</pre>
     <button @click="requestId">requestid</button>
   </div>
@@ -15,7 +15,14 @@ import useTwitchExt from "../hooks/useTwitchExt";
 export default defineComponent({
   name: "Login",
   setup() {
-    const { isLoggedIn, isLoading, error, profile, requestId } = useTwitchExt();
+    const {
+      isLoggedIn,
+      isLoading,
+      error,
+      profile,
+      requestId,
+      other,
+    } = useTwitchExt();
 
     return {
       isLoggedIn,
@@ -23,6 +30,7 @@ export default defineComponent({
       error,
       profile,
       requestId,
+      other,
     };
   },
 });
