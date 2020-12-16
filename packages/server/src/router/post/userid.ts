@@ -16,6 +16,9 @@ const postUserId = (app: Application, apiToken: string): void => {
     console.log("APITOKEN", apiToken);
     try {
       const response = await axios.get("https://api.twitch.tv/helix/users", {
+        params: {
+          id: userId,
+        },
         headers: {
           "client-id": config.JEOPARDY_INTERACTION_CLIENT_ID,
           authorization: `Bearer ${apiToken}`,
