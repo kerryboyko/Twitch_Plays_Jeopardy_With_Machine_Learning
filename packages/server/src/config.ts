@@ -1,11 +1,18 @@
-import { assert } from "console";
 import dotenv from "dotenv";
 import pick from "lodash/pick";
 import path from "path";
 
 dotenv.config({ path: path.resolve(__dirname, "../../../", ".env") });
-console.log("path to env:", path.resolve(__dirname, "../../../", ".env"));
-assert(process.env.CANARY === "true");
+
+if (process.env.CANARY !== "true") {
+  console.warn(
+    `.env file not found. It should be at ${path.resolve(
+      __dirname,
+      "../../../",
+      ".env"
+    )}`
+  );
+}
 
 const config: Record<string, string> = pick(process.env, [
   "DB_URL",
@@ -18,4 +25,5 @@ const config: Record<string, string> = pick(process.env, [
   "JEOPARDY_INTERACTION_CLIENT_ID",
   "JEOPARDY_INTERACTION_SECRET",
 ]) as Record<string, string>;
+
 export default config;

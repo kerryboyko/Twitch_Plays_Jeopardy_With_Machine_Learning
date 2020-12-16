@@ -9,7 +9,6 @@ import sockets from "./sockets";
 import alexTrebot from "./alexTrebot";
 // export the websocket commands -- these will also be used by the client.
 
-console.log({ config });
 const PORT = parseInt(config.SERVER_PORT, 10);
 const main = async () => {
   console.info("Launching @jeopardai/server");
@@ -24,8 +23,5 @@ const main = async () => {
     console.info(`JeopardAI REST app listening at https://localhost:${PORT}`);
   });
 };
-if (config.CANARY) {
-  main();
-} else {
-  console.log("Env not loaded");
-}
+
+main();
