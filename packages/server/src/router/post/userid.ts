@@ -13,6 +13,7 @@ const postUserId = (app: Application, apiToken: string): void => {
       return;
     }
     console.log(`Looking up ${userId}`);
+    console.log("APITOKEN", apiToken);
     try {
       const response = await axios.get("https://api.twitch.tv/helix/users", {
         headers: {
@@ -35,9 +36,13 @@ const postUserId = (app: Application, apiToken: string): void => {
           err.response.body
         );
       } else {
-        console.error(err);
+        console.error(err.response.data);
       }
-      res.status(500).json({ error: true, message: "Twitch API failed" });
+      res.status(500).json({
+        error: true,
+        message: "Twitch API failed",
+        data: err.response.data,
+      });
     }
   });
 };
