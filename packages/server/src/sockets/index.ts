@@ -1,8 +1,8 @@
-import { Server as HttpsServer } from "https";
+import { Server as httpServer } from "http";
 import { Server } from "socket.io";
 
-const sockets = (https: HttpsServer): Server => {
-  const io = new Server(https, {
+const sockets = (http: httpServer): Server => {
+  const io = new Server(http, {
     cors: { origin: "http://localhost:8080", methods: ["GET", "POST"] },
   });
   io.on("connection", (socket) => {

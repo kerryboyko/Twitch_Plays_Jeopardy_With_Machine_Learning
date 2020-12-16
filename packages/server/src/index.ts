@@ -1,4 +1,4 @@
-import { createServer } from "https";
+import { createServer } from "http";
 import cors from "cors";
 import express from "express";
 import { Server as SocketServer } from "socket.io";
@@ -13,14 +13,14 @@ const PORT = parseInt(config.SERVER_PORT, 10);
 const main = async () => {
   console.info("Launching @jeopardai/server");
   const app = express();
-  const https = createServer(app);
+  const http = createServer(app);
   app.use(cors());
   const apiToken: string = await getAccessToken();
   router(app, apiToken);
-  const io: SocketServer = sockets(https);
+  const io: SocketServer = sockets(http);
   alexTrebot(io);
-  https.listen(PORT, () => {
-    console.info(`JeopardAI REST app listening at https://localhost:${PORT}`);
+  http.listen(PORT, () => {
+    console.info(`JeopardAI REST app listening at http://localhost:${PORT}`);
   });
 };
 
