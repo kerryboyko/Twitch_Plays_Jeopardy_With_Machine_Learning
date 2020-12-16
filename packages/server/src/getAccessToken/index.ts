@@ -1,7 +1,7 @@
 import axios from "axios";
 import config from "../config";
 
-export const getAccessToken = async (): Promise<string> => {
+export const getAccessToken = async (): Promise<string> | never => {
   try {
     const response = await axios.post(
       "https://id.twitch.tv/oauth2/token",
@@ -15,9 +15,13 @@ export const getAccessToken = async (): Promise<string> => {
       }
     );
     const accessToken = response?.data?.access_token;
+    if (accessToken.length) {
+      console.log(`Confirmed Access Token`);
+    }
     return accessToken;
   } catch (err) {
     console.error(err);
+    throw new Error(err);
   }
 };
 

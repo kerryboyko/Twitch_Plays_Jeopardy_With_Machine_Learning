@@ -42,7 +42,7 @@ export const groupByAirdate = (
 const getClueById = async (id: number): Promise<JeopardyClue | null> => {
   const { db, close } = await connect(config.DB_URL, config.DB_NAME);
   const clue: JeopardyClue | null = await db
-    .collection("jeopardy_clues")
+    .collection("clues")
     .findOne({ id });
   close();
   return clue;
@@ -58,7 +58,7 @@ export const getCluesByCategory = async (
       : { title: categoryTitleOrId };
 
   const category: JeopardyCategory | null = await db
-    .collection("jeopardy_categories")
+    .collection("categories")
     .findOne(query);
 
   if (category === null) {
@@ -66,7 +66,7 @@ export const getCluesByCategory = async (
     return null;
   }
   const clues: JeopardyClue[] | null = await db
-    .collection("jeopardy_clues")
+    .collection("clues")
     .find({ "category.id": category.id })
     .toArray();
   close();

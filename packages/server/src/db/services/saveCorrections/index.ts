@@ -16,7 +16,7 @@ export const saveCorrections = async (
 ) => {
   const { db, close } = await connect(config.DB_URL, config.DB_NAME);
   const d = new Date();
-  const clue = await db.collection("jeopardy_clues").findOne({ id });
+  const clue = await db.collection("clues").findOne({ id });
   const canonical = clue.answer.toLowerCase();
 
   const reports = corrections.map((report) => ({ ...report, date: d }));

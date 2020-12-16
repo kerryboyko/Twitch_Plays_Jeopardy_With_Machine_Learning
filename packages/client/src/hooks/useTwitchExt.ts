@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { onMounted, reactive, toRefs } from "vue";
 import axios from "axios";
-import noop from "lodash/noop";
-import config from "../config";
 import { Ref } from "vue";
-
+import config from "../secret/config.json";
 declare global {
   interface Window {
     Twitch: any;
@@ -48,6 +46,7 @@ const useTwitch = (): TwitchHook => {
           headers: { authorization: `Bearer ${twitchExt.viewer.sessionToken}` },
         }
       );
+      console.log("response", response);
       state.profile = response.data;
     } catch (err) {
       state.error = err.message;
