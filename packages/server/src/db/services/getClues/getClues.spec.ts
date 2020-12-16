@@ -8,15 +8,7 @@ import testBoard from "./mocks/testBoard.json";
 import testBoard2 from "./mocks/testBoard2.json";
 import duplicateClues from "./mocks/duplicateClues.json";
 
-// const writeOut = (filename: string, data: string): Promise<void> =>
-//   new Promise((resolve, reject) => {
-//     fs.writeFile(filename, data, "utf8", (err) => {
-//       if (err) {
-//         reject(err);
-//       }
-//       resolve();
-//     });
-//   });
+jest.setTimeout(10000);
 
 test("stripDuplicateClues", () => {
   expect(duplicateClues).toHaveLength(10);

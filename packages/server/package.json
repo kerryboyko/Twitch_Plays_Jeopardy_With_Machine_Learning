@@ -8,6 +8,7 @@
   "scripts": {
     "build": "rimraf ./dist && tsc",
     "dev": "yarn build && concurrently \"tsc -w\" \"nodemon ./dist/index.js\"",
+    "prod": "yarn build && concurrently \"tsc -w\" \"node ./dist/index.js\"",
     "lint": "eslint 'src/**/*.{js,ts,tsx,jsx}' --quiet --fix",
     "start": "yarn build && node dist/index.js",
     "test": "jest"

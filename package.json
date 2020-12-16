@@ -17,11 +17,13 @@
   },
   "scripts": {
     "chrome:nocors": "open -n -a /Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --args --user-data-dir=\"/tmp/chrome_dev_test\" --disable-web-security",
-    "build:client": "yarn workspace @jeopardai/client run build",
     "dev:client": "yarn workspace @jeopardai/client run dev",
     "dev:server": "yarn workspace @jeopardai/server run dev",
+    "build:client": "yarn workspace @jeopardai/client run build",
+    "build:server": "yarn workspace @jeopardai/server run build",
+    "prod:server": "yarn workspace @jeopardai/server run prod",
     "dev": "concurrently --kill-others-on-fail \"yarn dev:server\"  \"yarn dev:client\"",
-    "format": "prettier \"packages/**/*.{js,ts,jsx,tsx,vue}\" --write",
+    "format": "prettier \"packages/**/*.{js,ts,jsx,tsx,vue}\" \"!packages/**/dist/**/*.{js,ts,jsx,tsx,vue}\" --write",
     "test:client": "yarn workspace @jeopardai/client run test",
     "test:server": "yarn workspace @jeopardai/server run test",
     "test": "concurrently --kill-others-on-fail \"yarn test:server\"  \"yarn test:client\""
