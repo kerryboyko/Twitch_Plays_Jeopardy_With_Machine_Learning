@@ -32,7 +32,7 @@ const jwtParser = (
 
   jwt.verify(
     auth,
-    config.JEOPARDY_INTERACTION_SECRET,
+    Buffer.from(config.JEOPARDY_INTERACTION_EXTENSION_SECRET, "base64"),
     (err: any, decoded: any) => {
       if (err) {
         console.log("JWT Error", err);

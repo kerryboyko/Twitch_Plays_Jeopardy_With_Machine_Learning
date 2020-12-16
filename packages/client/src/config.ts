@@ -12,6 +12,7 @@ const config: Record<string, string> = pick(process.env, [
   "AUTH_0_CLIENT_ID",
   "JEOPARDY_INTERACTION_CLIENT_ID",
   "JEOPARDY_INTERACTION_SECRET",
+  "JEOPARDY_INTERACTION_EXTENSION_SECRET",
   "SERVER_URL",
   "SERVER_PORT",
 ]) as Record<string, string>;
