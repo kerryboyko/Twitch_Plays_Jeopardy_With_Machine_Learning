@@ -12,8 +12,6 @@ const postUserId = (app: Application, apiToken: string): void => {
         .json({ error: true, message: "Not Logged into Extension" });
       return;
     }
-    console.log(`Looking up ${userId}`);
-    console.log("APITOKEN", apiToken);
     try {
       const response = await axios.get("https://api.twitch.tv/helix/users", {
         params: {

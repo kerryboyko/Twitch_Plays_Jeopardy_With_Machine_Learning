@@ -14,19 +14,23 @@ interface TwitchState {
   isLoggedIn: boolean;
   isLoading: boolean;
   error: string;
-  profile: any;
+  displayName: string;
+  avatar: string;
   other: any;
 }
 interface TwitchHook {
   isLoggedIn: Ref<boolean>;
   isLoading: Ref<boolean>;
   error: Ref<string>;
-  profile: Ref<any>;
   other: Ref<any>;
   loadProfile: () => Promise<void>;
   requestId: () => void;
+  displayName: Ref<string>;
+  avatar: Ref<string>;
 }
-const useTwitch = (): TwitchHook => {
+const useTwitch = (
+  registerPlayerOnLogin: (name: string) => void
+): TwitchHook => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const twitchExt: any = window.Twitch!.ext;
 
@@ -34,8 +38,9 @@ const useTwitch = (): TwitchHook => {
     isLoggedIn: false,
     isLoading: false,
     error: "",
-    profile: {},
     other: {},
+    displayName: "",
+    avatar: "",
   });
 
   const loadProfile = async () => {
@@ -48,8 +53,9 @@ const useTwitch = (): TwitchHook => {
           headers: { authorization: `Bearer ${twitchExt.viewer.sessionToken}` },
         }
       );
-      console.log("response", response);
-      state.profile = response.data;
+      const profile = response.data.data.data[0]; // I have no idea why this is.
+      state.displayName = profile.display_name;
+      state.avatar = profile.profile_image_url;
     } catch (err) {
       state.error = err.message;
       console.error(err.message);
@@ -59,17 +65,16 @@ const useTwitch = (): TwitchHook => {
   };
 
   const requestId = () => {
-    console.log("What is this?");
-    const whateverThisReturns = twitchExt.actions.requestIdShare();
-    state.other.whateverThisReturns = whateverThisReturns;
+    twitchExt.actions.requestIdShare();
   };
 
   onMounted(() => {
-    twitchExt.onAuthorized((auth: any) => {
-      console.log("AUTH", auth);
+    twitchExt.onAuthorized((_auth: any) => {
       if (twitchExt.viewer.isLinked) {
         state.isLoggedIn = true;
-        loadProfile();
+        loadProfile().then(() => {
+          registerPlayerOnLogin(state.displayName);
+        });
       } else {
         state.isLoggedIn = false;
       }

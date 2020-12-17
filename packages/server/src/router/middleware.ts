@@ -21,7 +21,6 @@ const jwtParser = (
     return;
   }
   const authHeader = get(req, "headers.authorization", "");
-  console.log("AUTHHEADER:", authHeader);
   const [type, auth] = authHeader.split(" ");
   if (type !== "Bearer") {
     res
@@ -40,7 +39,6 @@ const jwtParser = (
         return;
       }
       req.extension = decoded;
-      console.log("Extension Data", req.extension);
       next();
     }
   );
