@@ -6,6 +6,7 @@ export const wsServer = makeEnum(
   "CHAT_LOG",
   "SEED_NAME",
   "PLAYER_REGISTERED",
+  "CURRENT_STATUS",
   "GAME_START_TIME",
   "SEND_CATEGORIES",
   "CHANGE_CONTROLLER",

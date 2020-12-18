@@ -106,3 +106,28 @@ export type ChatHandler = (
   message: string,
   isSelf: boolean
 ) => void;
+
+export interface Emitters {
+  toFrontEnd: (type: string, ...args: any[]) => void;
+  toPlayer: (type: string, socketId: string, ...args: any[]) => void;
+  toChat: (type: string, ...args: any[]) => void;
+}
+export interface CurrentClue {
+  id: number;
+  category: string;
+  question: string;
+  answer: string;
+  value: number;
+  indices: [number, number]; // index value on board, stored for convenience.
+  isDailyDouble: boolean;
+}
+export interface StateSnapshot {
+  seed: string;
+  clueState: ClueState;
+  finalJeopardyState: FinalJeopardyState;
+  gameState: GameState;
+  startTime: number;
+  currentClue: Omit<CurrentClue, "answer">;
+  controllingPlayer: string;
+  scoreboard: Record<string, number>;
+}

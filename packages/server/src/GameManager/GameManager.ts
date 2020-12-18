@@ -2,6 +2,7 @@
 import randomSeed, { RandomSeed } from "random-seed";
 import pick from "lodash/pick";
 import get from "lodash/get";
+import omit from "lodash/omit";
 import isInteger from "lodash/isInteger";
 import getClues from "../db/services/getClues";
 import createBoard from "./utils/createBoard";
@@ -21,11 +22,13 @@ import {
   FinalJeopardyState,
   ProvidedAnswers,
   JeopardyClue,
+  StateSnapshot,
+  Emitters,
+  CurrentClue,
 } from "../types";
 
 /* TODO: This is a refactor target.  What we PROBABLY should be doing is having four seperate classes:
    Game / Board / Clue / Final Jeopardy.  */
-type Emitter = (arg0: string, ...args: any[]) => void;
 
 class GameManager {
   private rand: RandomSeed;
@@ -49,15 +52,7 @@ class GameManager {
 
   public gameState: GameState = GameState.None;
 
-  public currentClue: {
-    id: number;
-    category: string;
-    question: string;
-    answer: string;
-    value: number;
-    indices: [number, number]; // index value on board, stored for convenience.
-    isDailyDouble: boolean;
-  } = {
+  public currentClue: CurrentClue = {
     id: -1,
     category: "",
     question: "",
@@ -77,11 +72,24 @@ class GameManager {
 
   /* CONSTRUCTOR! */
   constructor(
-    public readonly emit: { [key: string]: Emitter },
+    public readonly emit: Emitters,
     public seed: string = genSeedString()
   ) {
     this.rand = randomSeed.create(seed);
   }
+
+  public grabCurrentStatus = (): StateSnapshot => {
+    return {
+      seed: this.seed,
+      clueState: this.clueState,
+      finalJeopardyState: this.finalJeopardyState,
+      gameState: this.gameState,
+      startTime: this.gameStartTime,
+      currentClue: omit(this.currentClue, "answer"),
+      controllingPlayer: this.controllingPlayer,
+      scoreboard: this.scoreboard,
+    };
+  };
 
   public getSeed = (): string => this.seed;
 
@@ -503,13 +511,21 @@ class GameManager {
   // WS Event Handlers
 
   /* on wsClient.REGISTER_PLAYER */
-  public handleRegisterPlayer = (playerName: string): void => {
+  public handleRegisterPlayer = (
+    playerName: string,
+    socketId: string
+  ): void => {
     if (Object.keys(this.scoreboard).length === 0) {
       this.controllingPlayer = playerName;
     }
     if (!this.scoreboard[playerName]) {
       this.scoreboard[playerName] = 0;
       this.emit.toFrontEnd(wsServer.PLAYER_REGISTERED, playerName);
+      this.emit.toPlayer(
+        wsServer.CURRENT_STATUS,
+        socketId,
+        this.grabCurrentStatus()
+      );
     }
   };
 

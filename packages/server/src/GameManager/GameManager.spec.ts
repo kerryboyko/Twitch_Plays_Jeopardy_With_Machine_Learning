@@ -31,6 +31,7 @@ const makeFakeLogger = () =>
 
 const frontend = makeFakeLogger();
 const chat = makeFakeLogger();
+const playerEmits = makeFakeLogger();
 /* By casting the game instance as any, we can bypass 
    Typescript's checks on whether a member is "public" or "private"
    and therefore access the methods and properties directly. 
@@ -38,7 +39,11 @@ const chat = makeFakeLogger();
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
 const game = new GameManager(
-  { toFrontEnd: frontend.fakeEmit, toChat: chat.fakeEmit },
+  {
+    toFrontEnd: frontend.fakeEmit,
+    toChat: chat.fakeEmit,
+    toPlayer: playerEmits.fakeEmit,
+  },
   seedString
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ) as any;
