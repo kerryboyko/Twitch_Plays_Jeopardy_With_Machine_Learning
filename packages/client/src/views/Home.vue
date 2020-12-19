@@ -1,23 +1,19 @@
 <template>
   <div class="home">
-    <div class="login-data" v-if="isLoggedIn">
-      <img :src="avatar" />
-      <div>Display Name: {{ displayName }}</div>
-      <div>{{ state.log }}</div>
-    </div>
-
-    <login v-else @user-login="requestId" />
+    <login v-if="!isLoggedIn" @user-login="requestId" />
+    <MainContainer v-if="isLoggedIn" :twitchId="displayName" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
 import Login from "../components/Login.vue";
+import MainContainer from "../components/mainContainer/MainContainer.vue";
 import useTwitchExt from "../hooks/useTwitchExt";
 
 export default defineComponent({
   name: "Home",
-  components: { Login },
+  components: { Login, MainContainer },
   setup() {
     const state = reactive<{ log: any[] }>({ log: [] });
     const registerPlayerOnLogin = (name: string) => {

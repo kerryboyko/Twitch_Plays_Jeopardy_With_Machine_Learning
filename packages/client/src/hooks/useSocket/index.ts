@@ -45,7 +45,8 @@ export interface GameDispatchers {
   selectClue: (category: string, value: number) => void;
 }
 
-interface SocketHook {
+export interface SocketHook {
+  game: GameData;
   socketLoaded: Ref<boolean>;
   socketConnected: Ref<boolean>;
   error: Ref<string>;
@@ -81,10 +82,9 @@ const initializeGame = (): GameData => ({
 const useSocket = () => {
   let socket: Socket;
   let dispatch: GameDispatchers;
+  const state = reactive<SocketState>(initializeState());
+  const game = reactive<GameData>(initializeGame());
   return (): SocketHook => {
-    const state = reactive<SocketState>(initializeState());
-    const game = reactive<GameData>(initializeGame());
-
     const isPlayerInControl = computed(
       (): boolean => game.controllingPlayer === state.twitchId
     );
@@ -101,7 +101,7 @@ const useSocket = () => {
     const connectSocket = (twitchId: string) => {
       state.twitchId = twitchId;
       try {
-        socket = io("http://localhost:8000", {
+        socket = io("wss://jeopardai.frondendgineer.com", {
           query: `twitchId=${twitchId}`,
         });
         state.socketLoaded = true;
@@ -124,6 +124,7 @@ const useSocket = () => {
 
     return {
       ...toRefs(state),
+      game,
       connectSocket,
       isPlayerInControl,
       playerScore,

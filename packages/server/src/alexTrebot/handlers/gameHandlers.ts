@@ -44,6 +44,8 @@ export const gameHandlers = (
         {
           toFrontEnd: (type: string, ...rest: any[]) => io.emit(type, ...rest),
           toChat: staggerSay,
+          toPlayer: (type: string, socketId: string, ...rest: any[]) =>
+            io.to(socketId).emit(type, ...rest),
         },
         seed
       );
