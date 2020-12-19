@@ -1,11 +1,7 @@
 import { Socket } from "socket.io-client";
-import { wsServer, wsClient } from "@jeopardai/server/src/sockets/commands";
-import {
-  ClueState,
-  GameState,
-  StateSnapshot,
-} from "@jeopardai/server/src/types";
-import { SocketState, GameData, Clue } from "./index";
+import { wsClient } from "@jeopardai/server/src/sockets/commands";
+import { GameState } from "@jeopardai/server/src/types";
+import { SocketState, GameData, GameDispatchers } from "./index";
 import { ComputedRef } from "vue";
 
 export const loadDispatchers = (
@@ -13,7 +9,7 @@ export const loadDispatchers = (
   state: SocketState,
   game: GameData,
   isPlayerInControl: ComputedRef<boolean>
-): any => {
+): GameDispatchers => {
   const registerSelf = (): void => {
     if (state.twitchId && state.socketId) {
       socket.emit(wsClient.REGISTER_PLAYER, state.twitchId, state.socketId);
