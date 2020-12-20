@@ -51,7 +51,6 @@ export interface CorrectionsBody {
 }
 
 export interface ClueCategory {
-  key?: string;
   category: string;
   clues: (JeopardyClue | null)[];
 }
@@ -106,12 +105,6 @@ export type ChatHandler = (
   message: string,
   isSelf: boolean
 ) => void;
-
-export interface Emitters {
-  toFrontEnd: (type: string, ...args: any[]) => void;
-  toPlayer: (type: string, socketId: string, ...args: any[]) => void;
-  toChat: (type: string, ...args: any[]) => void;
-}
 export interface CurrentClue {
   id: number;
   category: string;

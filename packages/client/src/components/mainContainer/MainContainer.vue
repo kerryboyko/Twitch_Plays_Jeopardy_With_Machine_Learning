@@ -3,7 +3,7 @@
     <pre>
       twitchId: {{ twitchId }}
       socketConnected: {{ socketConnected }}
-      socketLoade: {{ socketLoaded }}
+      socketLoaded: {{ socketLoaded }}
     </pre>
   </div>
 </template>

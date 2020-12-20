@@ -14,6 +14,7 @@ export const wsServer = makeEnum(
   "END_OF_ROUND",
   "GET_DD_WAGER",
   "WAGER_RECEIVED",
+  "ANSWER_RECIEVED",
   "DISPLAY_CLUE",
   "DISPLAY_ANSWER",
   "PROMPT_SELECT_CLUE",
@@ -34,8 +35,8 @@ export const wsServer = makeEnum(
 export const wsClient = makeEnum(
   "wsClient",
   "CONNECTED",
-  "CONFIRM_CLUES",
   "START_GAME",
+  "CONFIRM_CLUES",
   "REGISTER_PLAYER",
   "PROVIDE_ANSWER",
   "PROVIDE_WAGER",
