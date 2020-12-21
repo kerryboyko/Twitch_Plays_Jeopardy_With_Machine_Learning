@@ -2,34 +2,36 @@
   <div>
     <pre>{{ JSON.stringify(store.state, null, 2) }}</pre>
   </div>
-  <div v-if="state.twitchId === ''">
-    <input type="text" v-model="state.input" /><button @click="handleLogin">
-      Login
-    </button>
-  </div>
-  <socket v-if="state.twitchId !== ''" :twitchId="state.twitchId" />
+  <register-player v-if="!store.state.game.seed" @login="handleLogin" />
+  <button @click="startGame">Start Game</button>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
 import { useStore } from "vuex";
-import Socket from "./components/Socket";
+import RegisterPlayer from "./components/RegisterPlayer.vue";
+import socketActions from "./socket/actions";
 
 export default defineComponent({
   name: "App",
-  components: {
-    Socket,
-  },
+  components: { RegisterPlayer },
   setup() {
-    const state = reactive<{ twitchId: string; input: string }>({
+    const store = useStore();
+    const state = reactive<{
+      twitchId: string;
+      input: string;
+    }>({
       twitchId: "",
       input: "",
     });
-    const store = useStore();
     const handleLogin = () => {
-      state.twitchId = state.input;
+      if (state.input !== "") {
+        state.twitchId = state.input;
+        socketActions.registerPlayer(state.twitchId);
+      }
     };
-    return { store, state, handleLogin };
+
+    return { store, state, startGame: socketActions.startGame, handleLogin };
   },
 });
 </script>

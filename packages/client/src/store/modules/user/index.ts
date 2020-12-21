@@ -1,5 +1,4 @@
 import mutations from "./mutations";
-
 export interface UserState {
   twitchId: string;
   socketId: string;

@@ -33,14 +33,15 @@ const sockets = (
       socket.emit(wsServer.CONNECTION_CONFIRMED);
     }
     console.log("New Connection: ", twitchId, socket.id);
-    socket.on(wsClient.REGISTER_PLAYER, async (playerName: string) => {
-      await game.handleRegisterPlayer(playerName, socket.id);
-      socket.emit(wsServer.PLAYER_REGISTERED, playerName);
-      socket.emit(wsServer.CURRENT_STATUS, game.grabCurrentStatus());
-    });
     socket.on(wsClient.START_GAME, async (seed?: string) => {
       await game.startGame(seed);
       socket.emit(wsServer.GAME_START_TIME, game.gameStartTime);
+    });
+    socket.on(wsClient.REGISTER_PLAYER, async (playerName: string) => {
+      setClient(playerName, socket.id);
+      await game.handleRegisterPlayer(playerName, socket.id);
+      socket.emit(wsServer.PLAYER_REGISTERED, game.getSeed());
+      socket.emit(wsServer.CURRENT_STATUS, game.grabCurrentStatus());
     });
     socket.on(
       wsClient.SELECT_CLUE,
