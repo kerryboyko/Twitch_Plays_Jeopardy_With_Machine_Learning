@@ -20,7 +20,7 @@ const main = async () => {
   app.use(cors());
   const apiToken: string = await getAccessToken();
   router(app, apiToken);
-  const io: SocketServer = sockets(http, game);
+  const { io }: { io: SocketServer } = sockets(http, game);
   alexTrebot(io);
   http.listen(PORT, () => {
     console.info(`JeopardAI REST app listening at http://localhost:${PORT}`);

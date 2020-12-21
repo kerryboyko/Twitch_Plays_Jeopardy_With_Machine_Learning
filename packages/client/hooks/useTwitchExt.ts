@@ -2,7 +2,6 @@
 import { onMounted, reactive, toRefs } from "vue";
 import axios from "axios";
 import { Ref } from "vue";
-import store from "../store";
 
 declare global {
   interface Window {

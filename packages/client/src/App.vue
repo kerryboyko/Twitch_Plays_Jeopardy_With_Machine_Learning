@@ -1,34 +1,45 @@
 <template>
-  <home />
+  <div>
+    <pre>{{ JSON.stringify(store.state, null, 2) }}</pre>
+  </div>
+  <div v-if="state.twitchId === ''">
+    <input type="text" v-model="state.input" /><button @click="handleLogin">
+      Login
+    </button>
+  </div>
+  <socket v-if="state.twitchId !== ''" :twitchId="state.twitchId" />
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import Home from "./views/Home.vue";
+import { defineComponent, reactive } from "vue";
+import { useStore } from "vuex";
+import Socket from "./components/Socket";
 
 export default defineComponent({
   name: "App",
-  components: { Home },
+  components: {
+    Socket,
+  },
+  setup() {
+    const state = reactive<{ twitchId: string; input: string }>({
+      twitchId: "",
+      input: "",
+    });
+    const store = useStore();
+    const handleLogin = () => {
+      state.twitchId = state.input;
+    };
+    return { store, state, handleLogin };
+  },
 });
 </script>
 
 <style lang="scss">
-@import url("https://fonts.googleapis.com/css2?family=Inter&family=BenchNine:wght@300;700&display=swap&family=Teko:wght@300&display=swap");
-
-@font-face {
-  font-family: "Korinna";
-  src: url("/fonts/OPTIKorinna-Agency.ttf.woff") format("woff"),
-    url("/fonts/OPTIKorinna-Agency.ttf.svg#OPTIKorinna-Agency") format("svg"),
-    url("/fonts/OPTIKorinna-Agency.ttf.eot"),
-    url("/fonts/OPTIKorinna-Agency.ttf.eot?#iefix") format("embedded-opentype");
-  font-weight: normal;
-  font-style: normal;
-}
-* {
-  box-sizing: border-box;
-}
-body {
-  margin: 0;
-  padding: 0;
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
+  margin-top: 60px;
 }
 </style>

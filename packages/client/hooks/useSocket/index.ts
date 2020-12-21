@@ -101,7 +101,7 @@ const useSocket = () => {
     const connectSocket = (twitchId: string) => {
       state.twitchId = twitchId;
       try {
-        socket = io("wss://jeopardai.frondendgineer.com", {
+        socket = io("http://localhost:8080", {
           query: `twitchId=${twitchId}`,
         });
         state.socketLoaded = true;

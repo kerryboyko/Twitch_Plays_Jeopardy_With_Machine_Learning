@@ -36,17 +36,9 @@ const playerEmits = makeFakeLogger();
    Typescript's checks on whether a member is "public" or "private"
    and therefore access the methods and properties directly. 
    */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 
-const game = new GameManager(
-  {
-    toFrontEnd: frontend.fakeEmit,
-    toChat: chat.fakeEmit,
-    toPlayer: playerEmits.fakeEmit,
-  },
-  seedString
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-) as any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const game = new GameManager() as any;
 
 const clearAllGameTimeouts = () =>
   Object.values(game.timeouts).forEach((timeout) =>

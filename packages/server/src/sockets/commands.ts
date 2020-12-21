@@ -2,6 +2,7 @@ import makeEnum from "../utils/makeEnum";
 
 export const wsServer = makeEnum(
   "wsServer",
+  "CONNECTION_CONFIRMED",
   "INFO",
   "CHAT_LOG",
   "SEED_NAME",

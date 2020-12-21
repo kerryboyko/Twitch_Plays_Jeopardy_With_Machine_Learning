@@ -30,25 +30,14 @@ export const gameHandlers = (
   })();
 
   // handlers
-  const startGame: ChatHandler = (target, _context, message, _isSelf) => {
+  const startGame: ChatHandler = (target, _context, _message, _isSelf) => {
     if (isLiveGame()) {
       staggerSay(
         target,
         `Sorry. Game is in progress. Current Status: ${game.gameState}`
       );
     } else {
-      const seed: string | undefined = message
-        .split(" ")
-        .filter((x) => x.length)[1];
-      game = new GameManager(
-        {
-          toFrontEnd: (type: string, ...rest: any[]) => io.emit(type, ...rest),
-          toChat: staggerSay,
-          toPlayer: (type: string, socketId: string, ...rest: any[]) =>
-            io.to(socketId).emit(type, ...rest),
-        },
-        seed
-      );
+      game = new GameManager();
     }
   };
   return {

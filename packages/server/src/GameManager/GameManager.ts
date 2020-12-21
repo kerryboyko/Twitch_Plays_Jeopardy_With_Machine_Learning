@@ -26,6 +26,7 @@ import {
   CurrentClue,
 } from "../types";
 import getDailyDoubles from "./utils/getDailyDoubles";
+import { noop } from "lodash";
 
 /* TODO: This is a refactor target.  What we PROBABLY should be doing is having four seperate classes:
    Game / Board / Clue / Final Jeopardy.  */
@@ -74,8 +75,18 @@ class GameManager {
 
   public io: Server | undefined;
 
-  public setIo = (io: Server): void => {
+  public clients: Record<string, string> = {};
+
+  public getClient: (twitchId: string) => string = () => "";
+
+  public setIo = (
+    io: Server,
+    getClient: (twitchId: string) => string,
+    clients: Record<string, string>
+  ): void => {
     this.io = io;
+    this.clients = clients;
+    this.getClient = getClient;
   };
 
   /* CONSTRUCTOR! */
@@ -177,7 +188,7 @@ class GameManager {
       return this.advanceRound(); // abort, advance
     }
     this.io
-      ?.to(this.players[this.controllingPlayer])
+      ?.to(this.getClient(this.controllingPlayer))
       .emit(wsServer.PROMPT_SELECT_CLUE);
 
     this.timeouts.promptSelectClue = setTimeout(() => {
@@ -209,7 +220,7 @@ class GameManager {
     ) {
       clearTimeout(this.timeouts.promptSelectClue);
       this.io
-        ?.to(this.players[this.controllingPlayer])
+        ?.to(this.getClient(this.controllingPlayer))
         .emit(wsServer.INVALID_CLUE_SELECTION);
       return this.changeClueState(ClueState.PromptSelectClue);
     }
@@ -245,6 +256,10 @@ class GameManager {
       id: this.currentClue.id,
       value: this.currentClue.value,
       category: this.currentClue.category,
+      valueIndex:
+        this.currentClue.value /
+          (this.gameState === GameState.DoubleJeopardy ? 400 : 200) -
+        1,
     });
     this.timeouts.answerTime = setTimeout(() => {
       this.changeClueState(ClueState.DisplayAnswer);
@@ -304,7 +319,7 @@ class GameManager {
       question: this.currentClue.question,
       id: this.currentClue.id,
       value: this.currentClue.value,
-      currentScores: this.scoreboard,
+      scoreboard: this.scoreboard,
     });
     // nullify the question;
     const [cat, val] = this.currentClue.indices;
@@ -402,13 +417,7 @@ class GameManager {
   };
 
   public onFinalScores = async (): Promise<void> => {
-    this.io?.emit(wsServer.FINAL_SCORES, {
-      finalScores: Object.entries(this.scoreboard).sort(
-        (p1, p2) => p2[1] - p1[1]
-      ),
-      message:
-        "Thanks for playing! A new game will start soon, type !register to join, or !judge to register as a judge",
-    });
+    this.io?.emit(wsServer.FINAL_SCORES);
   };
 
   // Game State Machine (must be public to use abstraction);
