@@ -1,8 +1,8 @@
 import { Server as HttpServer } from "http";
 import { Server, Socket } from "socket.io";
+import get from "lodash/get";
 import GameManager from "../GameManager";
 import { wsClient, wsServer } from "./commands";
-import get from "lodash/get";
 
 const clientStore = () => {
   const clients: Record<string, string> = {};
@@ -27,20 +27,27 @@ const sockets = (
   });
   game.setIo(io, getClient, clients);
   io.on("connection", (socket: Socket) => {
-    const twitchId = get(socket.handshake.query, ["twitchId"], "");
-    if (twitchId !== "") {
-      setClient(twitchId, socket.id);
-      socket.emit(wsServer.CONNECTION_CONFIRMED);
-    }
-    console.log("New Connection: ", twitchId, socket.id);
-    socket.on(wsClient.START_GAME, async (seed?: string) => {
-      await game.startGame(seed);
-      socket.emit(wsServer.GAME_START_TIME, game.gameStartTime);
+    console.log("New Connection: ", socket.id);
+    socket.on(wsClient.START_GAME, async ({ seed }: { seed?: string }) => {
+      console.log("socket on start game", "seed provided, if any", seed);
+      if (game.isGameRunning()) {
+        socket.emit(wsServer.GAME_IN_PROGRESS);
+      } else {
+        await game.startGame(seed);
+        socket.emit(wsServer.GAME_START_TIME, game.gameStartTime);
+      }
+      console.log(game.grabCurrentStatus());
+      socket.emit(wsServer.CURRENT_STATUS, game.grabCurrentStatus());
     });
-    socket.on(wsClient.REGISTER_PLAYER, async (playerName: string) => {
-      setClient(playerName, socket.id);
-      await game.handleRegisterPlayer(playerName, socket.id);
-      socket.emit(wsServer.PLAYER_REGISTERED, game.getSeed());
+    socket.on(wsClient.REGISTER_PLAYER, async (twitchId: string) => {
+      setClient(twitchId, socket.id);
+      console.log(wsClient.REGISTER_PLAYER, twitchId, getClient(twitchId));
+      await game.handleRegisterPlayer(twitchId, socket.id);
+      socket.emit(wsServer.PLAYER_REGISTERED, {
+        seed: game.getSeed(),
+        twitchId,
+        socketId: socket.id,
+      });
       socket.emit(wsServer.CURRENT_STATUS, game.grabCurrentStatus());
     });
     socket.on(

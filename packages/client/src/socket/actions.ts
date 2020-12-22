@@ -7,6 +7,7 @@ const startGame = (seed?: string): void => {
 };
 
 const registerPlayer = (twitchId: string): void => {
+  console.log(wsClient.REGISTER_PLAYER, twitchId);
   socket.emit(wsClient.REGISTER_PLAYER, twitchId);
 };
 

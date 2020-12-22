@@ -3,9 +3,12 @@ import { MutationTree } from "vuex";
 import { wsServer } from "@jeopardai/server/src/sockets/commands";
 
 export const mutations: MutationTree<UserState> = {
-  [wsServer.CONNECTION_CONFIRMED]: (state, payload) => {
-    state.socketId = payload.socketId;
-    state.twitchId = payload.twitchId;
+  [wsServer.PLAYER_REGISTERED]: (
+    state,
+    { twitchId, socketId }: { twitchId: string; socketId: string }
+  ) => {
+    state.socketId = socketId;
+    state.twitchId = twitchId;
     state.connected = true;
   },
   disconnect: (state) => {

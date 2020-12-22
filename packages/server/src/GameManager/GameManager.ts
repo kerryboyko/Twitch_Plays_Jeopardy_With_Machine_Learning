@@ -110,7 +110,12 @@ class GameManager {
   // as well as check to see if we should go to next round.
   public getNextClue = (): [number, number] | null => getNextClue(this.board);
 
+  public isGameRunning = (): boolean => {
+    return ![GameState.None, GameState.FinalScores].includes(this.gameState);
+  };
+
   public startGame = async (seed = genSeedString()): Promise<void> => {
+    console.log("seed generatored", seed);
     this.seed = seed;
     this.rand = randomSeed.create(seed);
     this.gameStartTime = Date.now() + JTiming.startGame;
