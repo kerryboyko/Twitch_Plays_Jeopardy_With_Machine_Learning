@@ -25,6 +25,7 @@ export interface GameData {
     finalScore?: number;
   };
   scoreboard: Record<string, number>;
+  [key: string]: any;
 }
 
 const initializeState = (): GameData => ({

@@ -34,6 +34,12 @@ export default defineComponent({
     socket.on(wsServer.CURRENT_STATUS, (payload: StateSnapshot) => {
       store.commit(wsServer.CURRENT_STATUS, payload);
     });
+    socket.on(wsServer.CHANGE_CONTROLLER, (controllingPlayer: string) => {
+      store.commit(wsServer.CHANGE_CONTROLLER, { controllingPlayer });
+    });
+    socket.on(wsServer.SEND_CATEGORIES, (categories: string[]) => {
+      store.commit(wsServer.SEND_CATEGORIES, { categories });
+    });
   },
   render() {
     return null;

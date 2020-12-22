@@ -100,6 +100,13 @@ class GameManager {
       startTime: this.gameStartTime,
       currentClue: omit(this.currentClue, "answer"),
       controllingPlayer: this.controllingPlayer,
+      categories: this.board.map((cc: ClueCategory) => cc.category),
+      board: this.board.reduce(
+        (pv: Record<string, boolean[]>, cc: ClueCategory) => ({
+          ...pv, [cc.category]: cc.clues.map((clue) => !!clue);
+        }),
+        {}
+      ),
       scoreboard: this.scoreboard,
     };
   };
@@ -291,7 +298,7 @@ class GameManager {
       this.currentPlayerAnswers.map(
         async ({ playerName, provided }, index: number) => {
           const { final } = await answerEvaluator(
-            this.currentClue.answer,
+            this.currentClue.answer as string,
             provided
           );
           const value =
@@ -391,7 +398,7 @@ class GameManager {
             return;
           }
           const { final } = await answerEvaluator(
-            this.currentClue.answer,
+            this.currentClue.answer as string,
             provided
           );
           this.currentPlayerAnswers[index].evaluated = final;

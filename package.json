@@ -33,6 +33,7 @@
     "commitizen": "^4.2.2",
     "concurrently": "^5.3.0",
     "cz-conventional-changelog": "3.3.0",
+    "date-fns": "^2.16.1",
     "eslint": "^7.15.0",
     "global": "^4.4.0",
     "jsonwebtoken": "^8.5.1",

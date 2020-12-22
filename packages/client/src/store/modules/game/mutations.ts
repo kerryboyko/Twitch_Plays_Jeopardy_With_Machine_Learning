@@ -13,22 +13,12 @@ export const mutations: MutationTree<GameData> = {
   [wsServer.GAME_STATE_CHANGE]: (state, payload: { gameState: GameState }) => {
     state.gameState = payload.gameState;
   },
-  [wsServer.CURRENT_STATUS]: (
-    state,
-    payload: {
-      seed: string;
-      gameState: GameState;
-      startTime: number;
-      controllingPlayer: string;
-      scoreboard: Record<string, number>;
-      board: Record<string, boolean[]>;
-    }
-  ) => {
-    state.seed = payload.seed;
-    state.gameState = payload.gameState;
-    state.startTime = payload.startTime;
-    state.controllingPlayer = payload.controllingPlayer;
-    state.scoreboard = payload.scoreboard;
+  [wsServer.CURRENT_STATUS]: (state: GameData, payload: Partial<GameData>) => {
+    Object.keys(payload).forEach((key: string) => {
+      if (state[key]) {
+        state[key] = payload[key];
+      }
+    });
   },
   [wsServer.CHANGE_CONTROLLER]: (
     state,

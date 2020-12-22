@@ -3,6 +3,7 @@
   <div>
     <pre>{{ JSON.stringify(store.state, null, 2) }}</pre>
   </div>
+  <game-timer />
   <register-player v-if="!store.state.user.connected" @login="handleLogin" />
   <button @click="startGame">Start Game</button>
 </template>
@@ -11,12 +12,13 @@
 import { defineComponent } from "vue";
 import { useStore } from "vuex";
 import RegisterPlayer from "./components/RegisterPlayer.vue";
+import GameTimer from "./components/GameTimer.vue";
 import socketActions from "./socket/actions";
 import SocketComponent from "./socket/SocketComponent.vue";
 
 export default defineComponent({
   name: "App",
-  components: { RegisterPlayer, SocketComponent },
+  components: { RegisterPlayer, SocketComponent, GameTimer },
   setup() {
     const store = useStore();
 
