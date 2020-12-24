@@ -17,13 +17,24 @@ export const provideAnswer = (twitchId: string, answer: string): void => {
   socket.emit(wsClient.PROVIDE_ANSWER, { twitchId, answer });
 };
 
+export const provideWager = (twitchId: string, wager: number): void => {
+  console.log(wsClient.PROVIDE_WAGER, { twitchId, wager });
+  socket.emit(wsClient.PROVIDE_WAGER, { twitchId, wager });
+};
+
 export const selectClue = (
   twitchId: string,
   category: string,
   value: number
 ): void => {
-  console.log(wsClient.PROVIDE_ANSWER, { twitchId, category, value });
-  socket.emit(wsClient.PROVIDE_ANSWER, { twitchId, category, value });
+  console.log(wsClient.SELECT_CLUE, { twitchId, category, value });
+  socket.emit(wsClient.SELECT_CLUE, { twitchId, category, value });
 };
 
-export default { startGame, registerPlayer, provideAnswer, selectClue };
+export default {
+  startGame,
+  registerPlayer,
+  provideAnswer,
+  selectClue,
+  provideWager,
+};

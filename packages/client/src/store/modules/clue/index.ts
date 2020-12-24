@@ -8,8 +8,11 @@ import {
 export interface ClueData extends CurrentClue {
   clueState: ClueState;
   ownAnswer: string;
+  answerLocked: boolean;
   wager: number | null;
+  wagerLocked: boolean;
   [key: string]: any;
+  isFinalJeopardy: boolean;
   provided: {
     correct: ProvidedAnswers[];
     incorrect: ProvidedAnswers[];
@@ -19,7 +22,9 @@ export interface ClueData extends CurrentClue {
 export const initializeState = (): ClueData => ({
   clueState: ClueState.None,
   wager: null,
+  wagerLocked: false,
   ownAnswer: "",
+  answerLocked: false,
   id: -1,
   category: "",
   question: "",
@@ -27,6 +32,7 @@ export const initializeState = (): ClueData => ({
   value: 0,
   indices: [-1, -1],
   isDailyDouble: false,
+  isFinalJeopardy: false,
   provided: { correct: [], incorrect: [] },
 });
 

@@ -9,6 +9,7 @@ export default defineComponent({
   name: "SocketComponent",
   setup() {
     const store = useStore();
+    // game listerners
     socket.on(wsServer.GAME_START_TIME, (startTime: number) => {
       console.log("start time");
       store.commit(wsServer.GAME_START_TIME, { startTime });
@@ -39,6 +40,18 @@ export default defineComponent({
     });
     socket.on(wsServer.SEND_CATEGORIES, (categories: string[]) => {
       store.commit(wsServer.SEND_CATEGORIES, { categories });
+    });
+    socket.on(wsServer.PROMPT_SELECT_CLUE, () => {
+      store.commit(wsServer.PROMPT_SELECT_CLUE);
+    });
+    socket.on(wsServer.INVALID_CLUE_SELECTION, () => {
+      // TODO: toast or something
+      console.warn(`INVALID CLUE SELECTION`);
+    });
+
+    // clue listeners
+    socket.on(wsServer.END_OF_ROUND, () => {
+      store.commit(wsServer.END_OF_ROUND);
     });
   },
   render() {

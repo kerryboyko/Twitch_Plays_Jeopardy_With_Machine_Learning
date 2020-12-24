@@ -201,10 +201,10 @@ class GameManager {
     }
     this.io
       ?.to(this.getClient(this.controllingPlayer))
-      .emit(wsServer.PROMPT_SELECT_CLUE);
+      .emit(wsServer.PROMPT_SELECT_CLUE, {twitchId: this.controllingPlayer});
 
     this.timeouts.promptSelectClue = setTimeout(() => {
-      this.io?.emit(wsServer.CLUE_SELECTION_TIMEOUT);
+      this.io?.emit(wsServer.CLUE_SELECTION_TIMEOUT, {twitchId: this.controllingPlayer});
       this.changeClueState(ClueState.ClueSelected, ...nextClue);
     }, JTiming.selectTime);
   };
@@ -279,7 +279,7 @@ class GameManager {
   };
 
   public onDailyDouble = (): void => {
-    this.io?.emit(wsServer.GET_DD_WAGER, {
+    this.io?.to(this.getClient(this.controllingPlayer)).emit(wsServer.GET_DD_WAGER, {
       player: this.controllingPlayer,
       maxWager: Math.max(
         this.gameState === GameState.Jeopardy ? 1000 : 2000,
@@ -365,7 +365,6 @@ class GameManager {
 
   public onDisplayFinalCategory = (): void => {
     this.io?.emit(wsServer.FJ_DISPLAY_CATEGORY, {
-      message: `And now, the Final Jeopardy category.  Place your final wagers`,
       category: this.currentClue.category,
     });
     this.timeouts.finalJeopardyWager = setTimeout(() => {
@@ -522,7 +521,7 @@ class GameManager {
     () => this.finalJeopardyState,
     (state: FinalJeopardyState): void => {
       this.finalJeopardyState = state;
-      this.io?.emit(wsServer.FINAL_JEOPARDY_STATE_CHANGE, state);
+      this.io?.emit(wsServer.FINAL_JEOPARDY_STATE_CHANGE, {fjState: state});
     }
   );
 

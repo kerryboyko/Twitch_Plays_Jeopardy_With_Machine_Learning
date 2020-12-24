@@ -3,11 +3,6 @@ import { MutationTree } from "vuex";
 import { ClueState, ProvidedAnswers } from "@jeopardai/server/src/types";
 import { wsServer } from "@jeopardai/server/src/sockets/commands";
 
-/* factoring out for clarity */
-const processClueStateChange = (_state: ClueData, clueState: ClueState) => {
-  console.log(clueState);
-};
-
 export const mutations: MutationTree<ClueData> = {
   [wsServer.CURRENT_STATUS]: (state: ClueData, payload: Partial<ClueData>) => {
     Object.keys(payload.currentClue).forEach((key: string) => {
@@ -19,12 +14,14 @@ export const mutations: MutationTree<ClueData> = {
   [wsServer.DISPLAY_CLUE]: (
     state,
     payload: {
+      id: number;
       isDailyDouble: boolean;
       category: string;
       value: number;
       question: string;
     }
   ) => {
+    state.id = payload.id;
     state.category = payload.category;
     state.value = payload.value;
     state.question = payload.question;
@@ -34,6 +31,7 @@ export const mutations: MutationTree<ClueData> = {
   [wsServer.DISPLAY_ANSWER]: (
     state,
     payload: {
+      id: number;
       answer: string;
       provided: ProvidedAnswers[];
     }
@@ -43,7 +41,16 @@ export const mutations: MutationTree<ClueData> = {
     state.provided.incorrect = payload.provided.filter((p) => !p.evaluated);
   },
   [wsServer.CLUE_STATE_CHANGE]: (state, clueState: ClueState) => {
-    processClueStateChange(state, clueState);
+    state.clueState = clueState;
+  },
+  [wsServer.END_OF_ROUND]: (state) => {
+    const clear = initializeState();
+    clear.forEach((prop: string) => {
+      state[prop] = clear[prop];
+    });
+  },
+  [wsServer.FJ_DISPLAY_CATEGORY]: (state, payload: { category: string }) => {
+    state.category = payload.category;
   },
 };
 
