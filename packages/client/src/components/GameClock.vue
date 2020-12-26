@@ -1,17 +1,32 @@
 <template>
   <div class="game-clock">
-    <div class="game-clock__display">
+    <div v-if="state.seed" class="game-clock__display">
+      JeopardAI game (seed: {{ state.seed }})
+      {{ state.gamePending ? "will begin in" : "has been running for" }}
       {{ state.timeElapsed }}
-      {{ state.gamePending ? "to game start" : "elapsed" }}
     </div>
-    <div class="game-clock__display">{{ state.formattedTime }}</div>
+    <div v-else>
+      No JeopardAI game currently running.
+      <div v-if="state.twitchId">
+        <button @click="handleStartGame">Launch Game</button>
+      </div>
+    </div>
   </div>
 </template>
+
 <script lang="ts">
-import { defineComponent, onBeforeUnmount, onMounted, reactive } from "vue";
+import {
+  computed,
+  ComputedRef,
+  defineComponent,
+  onBeforeUnmount,
+  onMounted,
+  reactive,
+} from "vue";
 import { useStore } from "vuex";
 import intervalToDuration from "date-fns/intervalToDuration";
 import { Duration, isBefore } from "date-fns";
+import { startGame } from "../socket/actions";
 
 const durationToClock = (d: Duration) => {
   const { days, hours, minutes, seconds } = d as Required<Duration>;
@@ -41,7 +56,7 @@ const durationToClock = (d: Duration) => {
 };
 
 export default defineComponent({
-  name: "GameTimer",
+  name: "GameClock",
   setup() {
     let interval: ReturnType<typeof setTimeout>;
     const store = useStore();
@@ -49,17 +64,20 @@ export default defineComponent({
       timeElapsed: string;
       gameQueued: boolean;
       gamePending: boolean;
+      gameStart: ComputedRef<number>;
+      seed: ComputedRef<string>;
+      twitchId: ComputedRef<string>;
     }>({
       timeElapsed: "00:00",
       gameQueued: false,
       gamePending: false,
+      gameStart: computed(() => store.state.game.startTime),
+      seed: computed(() => store.state.game.seed),
+      twitchId: computed(() => store.state.user.twitchId),
     });
-
     const checkTime = () => {
-      const gameStart = store.state.game.startTime;
-
-      if (gameStart !== 0) {
-        const launchTime = new Date(gameStart);
+      if (state.gameStart !== 0) {
+        const launchTime = new Date(state.gameStart);
         const now = new Date();
         const d = intervalToDuration({
           start: launchTime,
@@ -72,6 +90,9 @@ export default defineComponent({
         state.gameQueued = false;
       }
     };
+    const handleStartGame = () => {
+      startGame();
+    };
     onMounted(() => {
       interval = setInterval(() => {
         checkTime();
@@ -81,8 +102,12 @@ export default defineComponent({
       clearInterval(interval);
     });
 
-    return { state };
+    return { state, handleStartGame };
   },
 });
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.game-clock {
+  font-family: Bebas Neue;
+}
+</style>

@@ -2,8 +2,13 @@
   <div class="clue">
     <div class="clue__internals">
       <div class="clue__category">{{ category }} - ${{ value }}</div>
-      <div class="clue__question">
-        {{ question }}
+      <div class="clue__container">
+        <div v-if="question" class="clue__question">
+          {{ question }}
+        </div>
+        <div v-if="answer" class="clue__answer">
+          {{ answer }}
+        </div>
       </div>
     </div>
   </div>
@@ -15,7 +20,7 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "ClueDisplay",
-  props: ["category", "value", "question"],
+  props: ["category", "value", "question", "answer"],
 });
 </script>
 
@@ -40,6 +45,10 @@ export default defineComponent({
   &__internals {
     width: 100%;
     max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    height: 290px;
+    min-height: 290px;
   }
   &__category {
     height: 40px;
@@ -47,8 +56,10 @@ export default defineComponent({
     font-family: Bebas Neue;
     color: #e7ddcb;
   }
-  &__question {
+  &__container {
     display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     height: 290px;
     letter-spacing: 1px;
     text-align: center;

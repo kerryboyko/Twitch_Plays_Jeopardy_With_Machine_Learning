@@ -1,22 +1,30 @@
 <template>
-  <div class="game-board">
-    <div class="game-board__row">
-      <div
-        v-for="(category, categoryIndex) in state.categories"
-        :key="category.keyword"
-        class="head-tile"
-      >
-        <div class="head-tile__inner">
-          <category-name
-            v-if="!isCategoryDead(categoryIndex)"
-            :head="category.head"
-            :tail="category.tail"
-            :keyword="category.keyword"
-          />
-        </div>
-      </div>
-    </div>
-    <div
+  <table class="game-board">
+    <thead>
+      <tr>
+        <th
+          v-for="(category, index) in state.categories"
+          :key="category"
+          class="category-name"
+        >
+          <span v-if="!isCategoryDead(index)">{{ category }}</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="(value, valueIndex) in values" :key="`${value}-row`">
+        <td
+          v-for="(category, categoryIndex) in categories"
+          :key="`${category}-${value}`"
+          @click="handleClick(categoryIndex, valueIndex)"
+          class="value"
+          :class="{ dead: isDead(categoryIndex, valueIndex) }"
+        >
+          <span v-if="!isDead(categoryIndex, valueIndex)">${{ value }}</span>
+        </td>
+      </tr>
+    </tbody>
+    <!-- <div
       v-for="(value, valueIndex) in values"
       class="game-board__row"
       :key="value"
@@ -32,48 +40,31 @@
       >
         <div v-if="!isDead(categoryIndex, valueIndex)">${{ value }}</div>
       </div>
-    </div>
-  </div>
+    </div> -->
+  </table>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
-import CategoryName from "./minor/CategoryName.vue";
 import get from "lodash/get";
-interface Category {
-  keyword: string;
-  name: string;
-}
 
 interface GameBoardState {
   categories: { head: string; tail: string; keyword: string }[];
   deadClues: Record<number, Record<number, boolean>>;
 }
-const formatCategoryName = (category: string, keyword: string) => {
-  const index = category.indexOf(keyword);
-  const head = category.substring(0, index);
-  const tail = category.substring(index + keyword.length);
-  return {
-    head,
-    tail,
-    keyword,
-  };
-};
 
 export default defineComponent({
-  components: { CategoryName },
   name: "GameBoard",
   props: ["categories", "isDoubleJeopardy"],
   setup(props) {
     const multiplier: number = props.isDoubleJeopardy ? 200 : 400;
     const values = [1, 2, 3, 4, 5].map((n) => n * multiplier);
-
-    const formattedCategories = props.categories.map(
-      ({ keyword, name }: Category) => formatCategoryName(name, keyword)
+    const justTitles = props.categories.map(
+      ({ category }: { category: string }) => category
     );
 
     const state = reactive<GameBoardState>({
-      categories: formattedCategories,
+      categories: justTitles,
       deadClues: {},
     });
     const handleClick = (cat: number, val: number) => {
@@ -101,47 +92,41 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .game-board {
+  table-layout: fixed;
+
   height: 360px;
-  width: 640px;
+  width: 100%;
   background-image: url("/img/clue-background.jpg");
   color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  &__row {
-    flex: 1;
-    display: flex;
-    justify-content: space-evenly;
-    flex-direction: row;
-  }
 }
-.head-tile {
+.category-name {
+  height: 3rem;
   backdrop-filter: invert(10%);
-  font-family: BenchNine;
+  font-family: Bebas Neue;
   font-weight: 300;
-  font-size: 16px;
+  font-size: 1.25rem;
   text-transform: uppercase;
   padding: 3px;
-  flex: 1;
-  display: flex;
-  justify-content: center;
   align-items: center;
   text-align: center;
-  border: 1px solid black;
   text-shadow: 3px 4px 2px #000000;
+  @media screen and (max-width: 720px) {
+    font-size: 1rem;
+  }
 }
 .value {
-  flex: 1;
-  font-family: Teko;
+  min-height: 4rem;
+  font-family: Bebas Neue;
   font-weight: 400;
   color: #eca955;
   text-shadow: 3px 4px 2px #000000;
-  font-size: 30px;
-  display: flex;
-  justify-content: center;
+  font-size: 2rem;
   align-items: center;
   text-align: center;
-  border: 1px solid black;
   cursor: pointer;
+  @media screen and (max-width: 720px) {
+    font-size: 1.75rem;
+  }
   &:hover {
     backdrop-filter: invert(10%);
     color: #ebd0b0;

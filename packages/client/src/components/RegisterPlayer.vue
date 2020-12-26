@@ -1,12 +1,15 @@
 <template>
   <div class="hello">
     <div><input v-model="state.name" type="text" /></div>
-    <div><button @click="handleLogin">Login</button></div>
+    <div>
+      <button @click="handleLogin">Login</button>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from "vue";
+import { computed, ComputedRef, defineComponent, reactive } from "vue";
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "HelloWorld",
@@ -14,8 +17,10 @@ export default defineComponent({
     msg: String,
   },
   setup(_props, context) {
-    const state = reactive<{ name: string }>({
+    const store = useStore();
+    const state = reactive<{ name: string; seed: ComputedRef<string> }>({
       name: "",
+      seed: computed(() => store.state.game.seed),
     });
     const handleLogin = () => {
       context.emit("login", state.name);

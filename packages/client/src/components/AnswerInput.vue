@@ -1,5 +1,6 @@
 <template>
   <div class="answer-input">
+    <div>{{ state.twitchId }}'s response</div>
     <input
       class="answer-input__input"
       :class="{ [`answer-input__input--disabled`]: state.disabled }"
@@ -24,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, watch } from "vue";
+import { defineComponent, reactive, computed, watch, ComputedRef } from "vue";
 import { useStore } from "vuex";
 import { ClueState } from "@jeopardai/server/src/types";
 import useCountdown from "./AnswerTimer/useCountdown";
@@ -36,9 +37,16 @@ export default defineComponent({
   setup(_props, context) {
     const { value: timerValue, countdown, clearTimer } = useCountdown();
     const store = useStore();
-    const state = reactive<{ input: string; disabled: boolean }>({
+    const state = reactive<{
+      input: string;
+      disabled: boolean;
+      twitchId: ComputedRef<string>;
+      clueState: ComputedRef<ClueState>;
+    }>({
       input: "What is ",
       disabled: true,
+      twitchId: computed(() => store.getters.twitchId),
+      clueState: computed(() => store.state.clue.clueState),
     });
 
     const submit = () => {
@@ -59,13 +67,12 @@ export default defineComponent({
     };
 
     watch(
-      () => store.state.clue.clueState,
+      () => state.clueState,
       () => {
-        console.log("CHANGE!", store.state.clue.clueState);
-        if (store.state.clue.clueState === ClueState.DisplayClue) {
+        if (state.clueState === ClueState.DisplayClue) {
           launchTimer();
         }
-        if (store.state.clue.clueState === ClueState.DisplayAnswer) {
+        if (state.clueState === ClueState.DisplayAnswer) {
           state.disabled = true;
           clearTimer();
         }
@@ -87,7 +94,7 @@ $jeopardy-blue-disabled: #657c92;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 720px) {
     flex-direction: column;
   }
   &__input {
@@ -103,7 +110,7 @@ $jeopardy-blue-disabled: #657c92;
     border-radius: 0.5rem;
     outline: none;
     cursor: text;
-    @media screen and (max-width: 500px) {
+    @media screen and (max-width: 720px) {
       width: calc(100% - 1rem);
       font-size: 1rem;
     }
@@ -130,7 +137,7 @@ $jeopardy-blue-disabled: #657c92;
     outline: none;
     text-transform: uppercase;
     cursor: pointer;
-    @media screen and (max-width: 500px) {
+    @media screen and (max-width: 720px) {
       width: calc(100% - 1rem);
       font-size: 1rem;
       font-family: Poppins;

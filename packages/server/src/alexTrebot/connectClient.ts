@@ -10,7 +10,7 @@ export const getText = (): Promise<Record<string, Array<string>>> =>
   new Promise((resolve, reject) => {
     fs.readFile("./text.yaml", "utf8", (err, data) => {
       if (err) {
-        console.log(err);
+        console.error(err);
         reject(err);
       }
       resolve(yaml.parse(data));

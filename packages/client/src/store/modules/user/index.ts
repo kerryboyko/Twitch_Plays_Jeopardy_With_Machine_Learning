@@ -1,4 +1,5 @@
 import mutations from "./mutations";
+import getters from "./getters";
 export interface UserData {
   twitchId: string;
   socketId: string;
@@ -16,5 +17,5 @@ export default {
   state: initializeState(),
   mutations,
   actions: {},
-  getters: {},
+  getters,
 };

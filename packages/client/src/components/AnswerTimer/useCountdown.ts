@@ -13,7 +13,6 @@ const useCountdown = (
   }>({ value: 0 });
 
   const countdown = (callback?: () => void) => {
-    console.log("Countdown started");
     state.value = 1;
     const perSec = tickMs / 1000;
     const tick = perSec / timeInSec;

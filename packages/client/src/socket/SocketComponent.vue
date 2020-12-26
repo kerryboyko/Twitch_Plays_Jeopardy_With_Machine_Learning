@@ -9,18 +9,12 @@ export default defineComponent({
   name: "SocketComponent",
   setup() {
     const store = useStore();
-    onBeforeMount(() => {
-      for (const dispatchType in wsServer) {
-        socket.on(dispatchType, (payload?: any) => {
-          store.commit(dispatchType, payload);
-        });
-      }
-    });
-    onBeforeUnmount(() => {
-      for (const dispatchType in wsServer) {
-        socket.off(dispatchType);
-      }
-    });
+    for (const dispatchType of Object.values(wsServer)) {
+      socket.on(dispatchType, (payload?: any) => {
+        console.log("recieving", dispatchType, payload);
+        store.commit(dispatchType, payload);
+      });
+    }
   },
   render() {
     return null;

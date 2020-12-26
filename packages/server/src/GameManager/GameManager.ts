@@ -26,7 +26,6 @@ import {
   CurrentClue,
 } from "../types";
 import getDailyDoubles from "./utils/getDailyDoubles";
-import { noop } from "lodash";
 
 /* TODO: This is a refactor target.  What we PROBABLY should be doing is having four seperate classes:
    Game / Board / Clue / Final Jeopardy.  */
@@ -103,7 +102,8 @@ class GameManager {
       categories: this.board.map((cc: ClueCategory) => cc.category),
       board: this.board.reduce(
         (pv: Record<string, boolean[]>, cc: ClueCategory) => ({
-          ...pv, [cc.category]: cc.clues.map((clue) => !!clue);
+          ...pv,
+          [cc.category]: cc.clues.map((clue) => !!clue),
         }),
         {}
       ),
@@ -122,7 +122,6 @@ class GameManager {
   };
 
   public startGame = async (seed = genSeedString()): Promise<void> => {
-    console.log("seed generatored", seed);
     this.seed = seed;
     this.rand = randomSeed.create(seed);
     this.gameStartTime = Date.now() + JTiming.startGame;
@@ -135,7 +134,7 @@ class GameManager {
     this.clues = clues;
     this.timeouts.gameLoaded = setTimeout(() => {
       this.changeGameState(GameState.Jeopardy);
-    }, 3 * JTiming.startGame);
+    }, JTiming.startGame);
   };
 
   public onJeopardy = async (isDoubleJeopardy: boolean): Promise<void> => {
@@ -149,10 +148,11 @@ class GameManager {
         this.board[cat].clues[val]!.isDailyDouble = true;
       }
     });
-    this.io?.emit(
-      wsServer.SEND_CATEGORIES,
-      this.board.map((clueCategory: ClueCategory) => clueCategory.category)
-    );
+    this.io?.emit(wsServer.SEND_CATEGORIES, {
+      categories: this.board.map(
+        (clueCategory: ClueCategory) => clueCategory.category
+      ),
+    });
     if (!isDoubleJeopardy) {
       this.controllingPlayer = pickOneAtRandom(Object.keys(this.scoreboard));
     } else {
@@ -162,7 +162,9 @@ class GameManager {
         }
       }
     }
-    this.io?.emit(wsServer.CHANGE_CONTROLLER, {controllingPlayer: this.controllingPlayer});
+    this.io?.emit(wsServer.CHANGE_CONTROLLER, {
+      controllingPlayer: this.controllingPlayer,
+    });
     await this.changeClueState(ClueState.PromptSelectClue);
   };
 
@@ -201,10 +203,12 @@ class GameManager {
     }
     this.io
       ?.to(this.getClient(this.controllingPlayer))
-      .emit(wsServer.PROMPT_SELECT_CLUE, {twitchId: this.controllingPlayer});
+      .emit(wsServer.PROMPT_SELECT_CLUE, { twitchId: this.controllingPlayer });
 
     this.timeouts.promptSelectClue = setTimeout(() => {
-      this.io?.emit(wsServer.CLUE_SELECTION_TIMEOUT, {twitchId: this.controllingPlayer});
+      this.io?.emit(wsServer.CLUE_SELECTION_TIMEOUT, {
+        twitchId: this.controllingPlayer,
+      });
       this.changeClueState(ClueState.ClueSelected, ...nextClue);
     }, JTiming.selectTime);
   };
@@ -279,13 +283,15 @@ class GameManager {
   };
 
   public onDailyDouble = (): void => {
-    this.io?.to(this.getClient(this.controllingPlayer)).emit(wsServer.GET_DD_WAGER, {
-      player: this.controllingPlayer,
-      maxWager: Math.max(
-        this.gameState === GameState.Jeopardy ? 1000 : 2000,
-        this.scoreboard[this.controllingPlayer]
-      ),
-    });
+    this.io
+      ?.to(this.getClient(this.controllingPlayer))
+      .emit(wsServer.GET_DD_WAGER, {
+        player: this.controllingPlayer,
+        maxWager: Math.max(
+          this.gameState === GameState.Jeopardy ? 1000 : 2000,
+          this.scoreboard[this.controllingPlayer]
+        ),
+      });
     this.timeouts.wagerTime = setTimeout(() => {
       this.changeClueState(ClueState.DisplayClue);
     }, JTiming.wagerTime);
@@ -497,7 +503,7 @@ class GameManager {
     () => this.gameState,
     (state: GameState): void => {
       this.gameState = state;
-      this.io?.emit(wsServer.GAME_STATE_CHANGE, {gameState: state});
+      this.io?.emit(wsServer.GAME_STATE_CHANGE, { gameState: state });
     }
   );
 
@@ -509,7 +515,7 @@ class GameManager {
     () => this.clueState,
     (state: ClueState): void => {
       this.clueState = state;
-      this.io?.emit(wsServer.CLUE_STATE_CHANGE, {clueState: state});
+      this.io?.emit(wsServer.CLUE_STATE_CHANGE, { clueState: state });
     }
   );
 
@@ -521,7 +527,7 @@ class GameManager {
     () => this.finalJeopardyState,
     (state: FinalJeopardyState): void => {
       this.finalJeopardyState = state;
-      this.io?.emit(wsServer.FINAL_JEOPARDY_STATE_CHANGE, {fjState: state});
+      this.io?.emit(wsServer.FINAL_JEOPARDY_STATE_CHANGE, { fjState: state });
     }
   );
 
@@ -539,6 +545,7 @@ class GameManager {
     if (!this.scoreboard[playerName]) {
       this.scoreboard[playerName] = 0;
     }
+    console.log(`Registering ${playerName} to ${this.players[playerName]}`);
   };
 
   /* on wsClient.PROVIDE_ANSWER */

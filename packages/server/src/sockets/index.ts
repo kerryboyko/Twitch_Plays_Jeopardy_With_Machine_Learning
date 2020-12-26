@@ -28,30 +28,34 @@ const sockets = (
   game.setIo(io, getClient, clients);
   io.on("connection", (socket: Socket) => {
     console.log("New Connection: ", socket.id);
-    socket.on(wsClient.START_GAME, async ({ seed }: { seed?: string }) => {
-      console.log("socket on start game", "seed provided, if any", seed);
+    socket.emit(wsServer.CURRENT_STATUS, game.grabCurrentStatus());
+
+    socket.on(wsClient.START_GAME, async (payload?: { seed?: string }) => {
       if (game.isGameRunning()) {
         socket.emit(wsServer.GAME_IN_PROGRESS);
       } else {
-        await game.startGame(seed);
+        console.log("GAME STARTING");
+        await game.startGame(payload?.seed);
         socket.emit(wsServer.GAME_START_TIME, {
           startTime: game.gameStartTime,
         });
       }
-      console.log(game.grabCurrentStatus());
-      socket.emit(wsServer.CURRENT_STATUS, game.grabCurrentStatus());
+      // send to all connected, even if they didn't start the game themselves.
+      io.emit(wsServer.CURRENT_STATUS, game.grabCurrentStatus());
     });
-    socket.on(wsClient.REGISTER_PLAYER, async (twitchId: string) => {
-      setClient(twitchId, socket.id);
-      console.log(wsClient.REGISTER_PLAYER, twitchId, getClient(twitchId));
-      await game.handleRegisterPlayer(twitchId, socket.id);
-      socket.emit(wsServer.PLAYER_REGISTERED, {
-        seed: game.getSeed(),
-        twitchId,
-        socketId: socket.id,
-      });
-      socket.emit(wsServer.CURRENT_STATUS, game.grabCurrentStatus());
-    });
+    socket.on(
+      wsClient.REGISTER_PLAYER,
+      async ({ twitchId }: { twitchId: string }) => {
+        setClient(twitchId, socket.id);
+        await game.handleRegisterPlayer(twitchId, socket.id);
+        socket.emit(wsServer.PLAYER_REGISTERED, {
+          seed: game.getSeed(),
+          twitchId,
+          socketId: socket.id,
+        });
+        socket.emit(wsServer.CURRENT_STATUS, game.grabCurrentStatus());
+      }
+    );
     socket.on(
       wsClient.SELECT_CLUE,
       async (playerName: string, categoryName: string, value: number) => {

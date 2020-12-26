@@ -1,6 +1,10 @@
 import { GameData } from "./index";
 import { MutationTree } from "vuex";
-import { FinalJeopardyState, GameState } from "@jeopardai/server/src/types";
+import {
+  FinalJeopardyState,
+  GameState,
+  StateSnapshot,
+} from "@jeopardai/server/src/types";
 import { wsServer } from "@jeopardai/server/src/sockets/commands";
 
 export const mutations: MutationTree<GameData> = {
@@ -16,12 +20,15 @@ export const mutations: MutationTree<GameData> = {
   [wsServer.GAME_START_TIME]: (state, payload: { startTime: number }) => {
     state.startTime = payload.startTime;
   },
-  [wsServer.CURRENT_STATUS]: (state: GameData, payload: Partial<GameData>) => {
-    Object.keys(payload).forEach((key: string) => {
-      if (state[key]) {
-        state[key] = payload[key];
-      }
-    });
+  [wsServer.CURRENT_STATUS]: (state: GameData, payload: StateSnapshot) => {
+    state.board = payload.board;
+    state.categories = payload.categories;
+    state.controllingPlayer = payload.controllingPlayer;
+    state.finalJeopardyState = payload.finalJeopardyState;
+    state.gameState = payload.gameState;
+    state.scoreboard = payload.scoreboard;
+    state.seed = payload.seed;
+    state.startTime = payload.startTime;
   },
   [wsServer.CHANGE_CONTROLLER]: (
     state,
@@ -84,10 +91,6 @@ export const mutations: MutationTree<GameData> = {
   ) => {
     state.finalJeopardyState = payload.fjState;
   },
-  // [wsServer.FINAL_SCORES]: (state) => {
-  //   //TODO: something?
-  //   console.log(state);
-  // },
 };
 
 export default mutations;
