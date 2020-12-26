@@ -34,7 +34,9 @@ const sockets = (
         socket.emit(wsServer.GAME_IN_PROGRESS);
       } else {
         await game.startGame(seed);
-        socket.emit(wsServer.GAME_START_TIME, game.gameStartTime);
+        socket.emit(wsServer.GAME_START_TIME, {
+          startTime: game.gameStartTime,
+        });
       }
       console.log(game.grabCurrentStatus());
       socket.emit(wsServer.CURRENT_STATUS, game.grabCurrentStatus());

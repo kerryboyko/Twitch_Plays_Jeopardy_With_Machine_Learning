@@ -1,11 +1,11 @@
 import mutations from "./mutations";
-export interface UserState {
+export interface UserData {
   twitchId: string;
   socketId: string;
   connected: boolean;
 }
 
-const initializeState = (): UserState => ({
+const initializeState = (): UserData => ({
   twitchId: "",
   socketId: "",
   connected: false,

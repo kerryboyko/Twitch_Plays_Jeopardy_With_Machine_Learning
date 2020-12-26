@@ -4,6 +4,9 @@ import { ClueState, ProvidedAnswers } from "@jeopardai/server/src/types";
 import { wsServer } from "@jeopardai/server/src/sockets/commands";
 
 export const mutations: MutationTree<ClueData> = {
+  [wsServer.CLUE_STATE_CHANGE]: (state, payload: { clueState: ClueState }) => {
+    state.clueState = payload.clueState;
+  },
   [wsServer.CURRENT_STATUS]: (state: ClueData, payload: Partial<ClueData>) => {
     Object.keys(payload.currentClue).forEach((key: string) => {
       if (state[key]) {
@@ -39,9 +42,6 @@ export const mutations: MutationTree<ClueData> = {
     state.answer = payload.answer;
     state.provided.correct = payload.provided.filter((p) => p.evaluated);
     state.provided.incorrect = payload.provided.filter((p) => !p.evaluated);
-  },
-  [wsServer.CLUE_STATE_CHANGE]: (state, clueState: ClueState) => {
-    state.clueState = clueState;
   },
   [wsServer.END_OF_ROUND]: (state) => {
     const clear = initializeState();

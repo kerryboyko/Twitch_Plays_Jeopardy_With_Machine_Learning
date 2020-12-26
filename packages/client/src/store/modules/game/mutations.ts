@@ -7,7 +7,10 @@ export const mutations: MutationTree<GameData> = {
   [wsServer.GAME_STATE_CHANGE]: (state, payload: { gameState: GameState }) => {
     state.gameState = payload.gameState;
   },
-  [wsServer.PLAYER_REGISTERED]: (state, payload: { seed: string }) => {
+  [wsServer.PLAYER_REGISTERED]: (
+    state,
+    payload: { seed: string; twitchId: string; socketId: string }
+  ) => {
     state.seed = payload.seed;
   },
   [wsServer.GAME_START_TIME]: (state, payload: { startTime: number }) => {

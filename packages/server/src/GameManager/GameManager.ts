@@ -162,7 +162,7 @@ class GameManager {
         }
       }
     }
-    this.io?.emit(wsServer.CHANGE_CONTROLLER, this.controllingPlayer);
+    this.io?.emit(wsServer.CHANGE_CONTROLLER, {controllingPlayer: this.controllingPlayer});
     await this.changeClueState(ClueState.PromptSelectClue);
   };
 
@@ -497,7 +497,7 @@ class GameManager {
     () => this.gameState,
     (state: GameState): void => {
       this.gameState = state;
-      this.io?.emit(wsServer.GAME_STATE_CHANGE, state);
+      this.io?.emit(wsServer.GAME_STATE_CHANGE, {gameState: state});
     }
   );
 
@@ -509,7 +509,7 @@ class GameManager {
     () => this.clueState,
     (state: ClueState): void => {
       this.clueState = state;
-      this.io?.emit(wsServer.CLUE_STATE_CHANGE, state);
+      this.io?.emit(wsServer.CLUE_STATE_CHANGE, {clueState: state});
     }
   );
 
