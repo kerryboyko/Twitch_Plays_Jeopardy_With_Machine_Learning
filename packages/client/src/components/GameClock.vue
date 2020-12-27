@@ -8,7 +8,9 @@
     <div v-else>
       No JeopardAI game currently running.
       <div v-if="state.twitchId">
-        <button @click="handleStartGame">Launch Game</button>
+        <button disabled="state.gameLoading" @click="handleStartGame">
+          Launch Game
+        </button>
       </div>
     </div>
   </div>
@@ -58,7 +60,8 @@ const durationToClock = (d: Duration) => {
 export default defineComponent({
   name: "GameClock",
   setup() {
-    let interval: ReturnType<typeof setTimeout>;
+    let checkInterval: ReturnType<typeof setInterval>;
+    let startGameTimeout: ReturnType<typeof setTimeout>;
     const store = useStore();
     const state = reactive<{
       timeElapsed: string;
@@ -67,6 +70,7 @@ export default defineComponent({
       gameStart: ComputedRef<number>;
       seed: ComputedRef<string>;
       twitchId: ComputedRef<string>;
+      gameLoading: boolean;
     }>({
       timeElapsed: "00:00",
       gameQueued: false,
@@ -74,6 +78,7 @@ export default defineComponent({
       gameStart: computed(() => store.state.game.startTime),
       seed: computed(() => store.state.game.seed),
       twitchId: computed(() => store.state.user.twitchId),
+      gameLoading: false,
     });
     const checkTime = () => {
       if (state.gameStart !== 0) {
@@ -84,6 +89,7 @@ export default defineComponent({
           end: now,
         });
         state.timeElapsed = durationToClock(d);
+        state.gameLoading = false;
         state.gameQueued = true;
         state.gamePending = isBefore(now, launchTime);
       } else {
@@ -92,14 +98,20 @@ export default defineComponent({
     };
     const handleStartGame = () => {
       startGame();
+      state.gameLoading = true;
+      startGameTimeout = setTimeout(() => {
+        state.gameLoading = false;
+        console.warn("ERROR: GAME NOT LOADING");
+      }, 10000);
     };
     onMounted(() => {
-      interval = setInterval(() => {
+      checkInterval = setInterval(() => {
         checkTime();
       }, 1000);
     });
     onBeforeUnmount(() => {
-      clearInterval(interval);
+      clearInterval(checkInterval);
+      clearTimeout(startGameTimeout);
     });
 
     return { state, handleStartGame };

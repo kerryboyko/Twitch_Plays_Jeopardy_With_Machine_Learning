@@ -4,7 +4,11 @@
 
   <register-player v-if="!store.state.user.connected" @login="handleLogin" />
 
-  <game-board :categories="categories" :isDoubleJeopardy="false" />
+  <game-board
+    :categories="categories"
+    :board="board"
+    :isDoubleJeopardy="false"
+  />
   <clue-display
     :category="test.category"
     :value="test.value"
@@ -18,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent } from "vue";
 import { useStore } from "vuex";
 import RegisterPlayer from "./components/RegisterPlayer.vue";
 import socketActions from "./socket/actions";
@@ -27,8 +31,6 @@ import AnswerInput from "./components/AnswerInput.vue";
 import ClueDisplay from "./components/ClueDisplay.vue";
 import GameBoard from "./components/GameBoard.vue";
 import GameClock from "./components/GameClock.vue";
-
-import gBoard from "./mocks/gBoard.json";
 
 export default defineComponent({
   name: "App",
@@ -42,25 +44,25 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
-
     const test = {
       question:
         "Dexy's Midnight Runners No. 1 hit heard here in a version by ska band Save Ferris:",
       value: 800,
       category: "under the covers",
     };
-    const categories = gBoard;
     const handleLogin = (twitchId: string) => {
       if (twitchId !== "") {
         socketActions.registerPlayer(twitchId);
       }
     };
-
+    const categories = computed(() => store.state.game.categories);
+    const board = computed(() => store.state.game.board);
     return {
       store,
       handleLogin,
       test,
       categories,
+      board,
     };
   },
 });
