@@ -56,7 +56,7 @@ export interface ClueCategory {
 }
 
 export interface ProvidedAnswers {
-  playerName: string;
+  twitchId: string;
   provided: string;
   evaluated: boolean | null;
   wager?: number;

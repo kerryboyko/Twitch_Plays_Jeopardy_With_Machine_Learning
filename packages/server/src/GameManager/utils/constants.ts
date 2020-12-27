@@ -8,7 +8,7 @@ export const SECOND = 1000;
 export const MINUTE = 60 * SECOND;
 
 export const JTiming: Record<string, number> = {
-  startGame: 3 * MINUTE,
+  startGame: (3 * MINUTE) / 6,
   clueTime: 30 * SECOND,
   selectTime: 30 * SECOND,
   wagerTime: 30 * SECOND,

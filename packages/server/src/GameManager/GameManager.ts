@@ -213,27 +213,31 @@ class GameManager {
     }, JTiming.selectTime);
   };
 
-  public onClueSelected = async (
-    playerName: string,
-    nameOfCategory: string,
-    value: number
-  ): Promise<void> => {
-    if (playerName !== this.controllingPlayer) {
+  public onClueSelected = async (payload: {
+    twitchId: string;
+    category: string;
+    value: number; // index value;
+  }): Promise<void> => {
+    console.log("onClueSelected", payload);
+    if (payload.twitchId !== this.controllingPlayer) {
+      console.log(
+        "this should be false: payload.twitchId !== this.controllingPlayer",
+        payload.twitchId !== this.controllingPlayer
+      );
       return;
     }
     const categoryIndex = this.board.findIndex(
-      (catSet: ClueCategory) => catSet.category === nameOfCategory
+      (catSet: ClueCategory) => catSet.category === payload.category
     );
-    const valueIndex =
-      value / (this.gameState === GameState.DoubleJeopardy ? 400 : 200) - 1;
+
     // bad clue
     if (
-      categoryIndex === undefined ||
-      !isInteger(valueIndex) ||
-      valueIndex < 0 ||
-      valueIndex > 4 ||
-      get(this.board, [categoryIndex, "clues", valueIndex], null) === null
+      categoryIndex === -1 ||
+      payload.value < 0 ||
+      payload.value > 4 ||
+      get(this.board, [categoryIndex, "clues", payload.value], null) === null
     ) {
+      console.log("bad clue");
       clearTimeout(this.timeouts.promptSelectClue);
       this.io
         ?.to(this.getClient(this.controllingPlayer))
@@ -242,8 +246,9 @@ class GameManager {
     }
 
     // good clue.
+    console.log("good clue");
     const { question, answer, category, isDailyDouble, id } = pick(
-      this.board[categoryIndex].clues[valueIndex],
+      this.board[categoryIndex].clues[payload.value],
       ["question", "answer", "category", "isDailyDouble", "id"]
     );
     this.currentClue = {
@@ -252,9 +257,9 @@ class GameManager {
       question: question as string,
       answer: answer as string,
       value:
-        (valueIndex + 1) *
+        (payload.value + 1) *
         (this.gameState === GameState.DoubleJeopardy ? 400 : 200),
-      indices: [categoryIndex, valueIndex],
+      indices: [categoryIndex, payload.value],
       isDailyDouble: isDailyDouble || false,
     };
     if (this.currentClue.isDailyDouble) {
@@ -302,7 +307,7 @@ class GameManager {
     // judge recieved answers
     await Promise.all(
       this.currentPlayerAnswers.map(
-        async ({ playerName, provided }, index: number) => {
+        async ({ twitchId, provided }, index: number) => {
           const { final } = await answerEvaluator(
             this.currentClue.answer as string,
             provided
@@ -310,12 +315,12 @@ class GameManager {
           const value =
             this.gameState === GameState.FinalJeopardy ||
             this.currentClue.isDailyDouble
-              ? this.wagers[playerName]
+              ? this.wagers[twitchId]
               : this.currentClue.value;
           this.currentPlayerAnswers[index].evaluated = final;
           // adjust scores
           if (final !== null) {
-            this.scoreboard[playerName] += value * (final ? 1 : -1);
+            this.scoreboard[twitchId] += value * (final ? 1 : -1);
           }
         }
       )
@@ -325,7 +330,7 @@ class GameManager {
       ({ evaluated }) => evaluated === true
     );
     if (controlAnswer !== undefined) {
-      this.controllingPlayer = controlAnswer.playerName;
+      this.controllingPlayer = controlAnswer.twitchId;
     }
     // TODO: We may want to push the results to memory here,
     // or even store in the DB.
@@ -397,8 +402,8 @@ class GameManager {
 
     await Promise.all(
       this.currentPlayerAnswers.map(
-        async ({ playerName, provided }, index: number) => {
-          const wager = this.wagers[playerName];
+        async ({ twitchId, provided }, index: number) => {
+          const wager = this.wagers[twitchId];
           if (wager === undefined || wager < 0) {
             return;
           }
@@ -410,7 +415,7 @@ class GameManager {
 
           // adjust scores
           if (final !== null && wager > 0) {
-            this.scoreboard[playerName] += wager * (final ? 1 : -1);
+            this.scoreboard[twitchId] += wager * (final ? 1 : -1);
           }
         }
       )
@@ -535,92 +540,94 @@ class GameManager {
 
   /* on wsClient.REGISTER_PLAYER */
   public handleRegisterPlayer = async (
-    playerName: string,
+    twitchId: string,
     socketId: string
   ): Promise<void> => {
     if (Object.keys(this.scoreboard).length === 0) {
-      this.controllingPlayer = playerName;
+      this.controllingPlayer = twitchId;
     }
-    this.players[playerName] = socketId;
-    if (!this.scoreboard[playerName]) {
-      this.scoreboard[playerName] = 0;
+    this.players[twitchId] = socketId;
+    if (!this.scoreboard[twitchId]) {
+      this.scoreboard[twitchId] = 0;
     }
-    console.log(`Registering ${playerName} to ${this.players[playerName]}`);
+    console.log(`Registering ${twitchId} to ${this.players[twitchId]}`);
   };
 
   /* on wsClient.PROVIDE_ANSWER */
   public handleAnswer = async (
-    playerName: string,
+    twitchId: string,
     provided: string
   ): Promise<void> => {
     if (this.currentClue.isDailyDouble) {
-      if (playerName === this.controllingPlayer) {
+      if (twitchId === this.controllingPlayer) {
         this.currentPlayerAnswers = [
           {
-            playerName,
+            twitchId,
             provided,
             evaluated: null,
           },
         ];
-        this.io?.to(this.players[playerName]).emit(wsServer.ANSWER_RECIEVED);
+        this.io?.to(this.players[twitchId]).emit(wsServer.ANSWER_RECIEVED);
         return this.changeClueState(ClueState.DisplayAnswer);
       }
     } else {
       this.currentPlayerAnswers.push({
-        playerName,
+        twitchId,
         provided,
         evaluated: null,
       });
-      this.io?.to(this.players[playerName]).emit(wsServer.ANSWER_RECIEVED);
+      this.io?.to(this.players[twitchId]).emit(wsServer.ANSWER_RECIEVED);
     }
   };
 
   /* on wsClient.PROVIDE_WAGER */
-  public handleWager = async (
-    playerName: string,
-    wager: number
-  ): Promise<void> => {
+  public handleWager = async (payload: {
+    twitchId: string;
+    wager: number;
+  }): Promise<void> => {
     if (
       [GameState.Jeopardy, GameState.DoubleJeopardy].includes(this.gameState) &&
       this.clueState === ClueState.DailyDouble
     ) {
-      if (playerName !== this.controllingPlayer) {
+      if (payload.twitchId !== this.controllingPlayer) {
         return;
       }
       const maxWager = Math.max(
         this.gameState === GameState.Jeopardy ? 1000 : 2000,
-        this.scoreboard[playerName]
+        this.scoreboard[payload.twitchId]
       );
-      this.wagers[playerName] = Math.min(wager, maxWager);
-      this.io?.emit(wsServer.WAGER_RECEIVED, playerName, wager);
+      this.wagers[payload.twitchId] = Math.min(payload.wager, maxWager);
+      this.io?.emit(wsServer.WAGER_RECEIVED, payload.twitchId, payload.wager);
       clearTimeout(this.timeouts.wagerTime);
       return this.changeClueState(ClueState.DisplayClue);
     }
     if (this.gameState === GameState.FinalJeopardy) {
-      if (this.scoreboard[playerName] <= 0) {
+      if (this.scoreboard[payload.twitchId] <= 0) {
         return;
       }
-      this.wagers[playerName] = Math.min(wager, this.scoreboard[playerName]);
+      this.wagers[payload.twitchId] = Math.min(
+        payload.wager,
+        this.scoreboard[payload.twitchId]
+      );
       this.io
-        ?.to(this.players[playerName])
-        .emit(wsServer.WAGER_RECEIVED, playerName, wager);
+        ?.to(this.players[payload.twitchId])
+        .emit(wsServer.WAGER_RECEIVED, {
+          twitchId: payload.twitchId,
+          wager: this.wagers[payload.twitchId],
+        });
     }
   };
 
   /* on wsClient.SELECT_CLUE */
-  public handleSelectClue = (
-    playerName: string,
-    nameOfCategory: string,
-    value: number
-  ): Promise<void> | void => {
-    if (playerName === this.controllingPlayer) {
+  public handleSelectClue = (payload: {
+    twitchId: string;
+    category: string;
+    value: number;
+  }): Promise<void> | void => {
+    console.log("HANDLING SELECT CLUE", payload);
+    if (payload.twitchId === this.controllingPlayer) {
       clearTimeout(this.timeouts.promptSelectClue);
-      return this.changeClueState(
-        ClueState.ClueSelected,
-        playerName,
-        nameOfCategory,
-        value
-      );
+      return this.changeClueState(ClueState.ClueSelected, payload);
     }
   };
 }

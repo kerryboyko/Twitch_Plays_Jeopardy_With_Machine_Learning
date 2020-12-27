@@ -8,7 +8,7 @@
     <div v-else>
       No JeopardAI game currently running.
       <div v-if="state.twitchId">
-        <button disabled="state.gameLoading" @click="handleStartGame">
+        <button :disabled="state.gameLoading" @click="handleStartGame">
           Launch Game
         </button>
       </div>
@@ -82,6 +82,7 @@ export default defineComponent({
     });
     const checkTime = () => {
       if (state.gameStart !== 0) {
+        clearTimeout(startGameTimeout);
         const launchTime = new Date(state.gameStart);
         const now = new Date();
         const d = intervalToDuration({

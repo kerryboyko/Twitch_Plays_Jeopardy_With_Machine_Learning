@@ -4,17 +4,8 @@
 
   <register-player v-if="!store.state.user.connected" @login="handleLogin" />
 
-  <game-board
-    :categories="categories"
-    :board="board"
-    :isDoubleJeopardy="false"
-  />
-  <clue-display
-    :category="test.category"
-    :value="test.value"
-    :question="test.question"
-    :answer="'What is Come On Eileen?'"
-  />
+  <game-board :isDoubleJeopardy="false" />
+  <clue-display />
   <answer-input />
   <div>
     <pre>{{ JSON.stringify(store.state, null, 2) }}</pre>
@@ -55,14 +46,11 @@ export default defineComponent({
         socketActions.registerPlayer(twitchId);
       }
     };
-    const categories = computed(() => store.state.game.categories);
-    const board = computed(() => store.state.game.board);
+
     return {
       store,
       handleLogin,
       test,
-      categories,
-      board,
     };
   },
 });

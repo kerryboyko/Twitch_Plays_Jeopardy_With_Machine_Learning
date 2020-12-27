@@ -1,6 +1,5 @@
 import { Server as HttpServer } from "http";
 import { Server, Socket } from "socket.io";
-import get from "lodash/get";
 import GameManager from "../GameManager";
 import { wsClient, wsServer } from "./commands";
 
@@ -58,20 +57,24 @@ const sockets = (
     );
     socket.on(
       wsClient.SELECT_CLUE,
-      async (playerName: string, categoryName: string, value: number) => {
-        await game.handleSelectClue(playerName, categoryName, value);
+      async (payload: {
+        twitchId: string;
+        category: string;
+        value: number;
+      }) => {
+        await game.handleSelectClue(payload);
       }
     );
     socket.on(
       wsClient.PROVIDE_WAGER,
-      async (playerName: string, wager: number) => {
-        await game.handleWager(playerName, wager);
+      async (payload: { twitchId: string; wager: number }) => {
+        await game.handleWager(payload);
       }
     );
     socket.on(
       wsClient.PROVIDE_ANSWER,
-      async (playerName: string, provided: string) => {
-        await game.handleAnswer(playerName, provided);
+      async (payload: { twitchId: string; provided: string }) => {
+        await game.handleAnswer(payload);
       }
     );
   });
