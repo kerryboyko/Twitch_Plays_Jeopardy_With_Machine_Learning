@@ -111,6 +111,7 @@ export interface CurrentClue {
   question: string;
   answer?: string;
   value: number;
+  valueIndex: number;
   indices: [number, number]; // index value on board, stored for convenience.
   isDailyDouble: boolean;
 }

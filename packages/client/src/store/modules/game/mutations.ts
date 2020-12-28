@@ -54,21 +54,29 @@ export const mutations: MutationTree<GameData> = {
   },
   [wsServer.DISPLAY_CLUE]: (
     state,
-    payload: { category: string; valueIndex: number }
+    payload: {
+      category: string;
+      valueIndex: number;
+      board: Record<string, boolean[]>;
+    }
   ) => {
     state.answerLocked = false;
     state.promptedForWager = false;
     state.promptedForClue = false;
-    state.board[payload.category][payload.valueIndex] = false;
+    state.board = payload.board;
   },
   [wsServer.ANSWER_RECIEVED]: (state) => {
     state.answerLocked = true;
   },
   [wsServer.DISPLAY_ANSWER]: (
     state,
-    payload: { scoreboard: Record<string, number> }
+    payload: {
+      scoreboard: Record<string, number>;
+      board: Record<string, boolean[]>;
+    }
   ) => {
     state.scoreboard = payload.scoreboard;
+    state.board = payload.board;
     state.wagerLocked = true;
     state.answerLocked = false;
     state.promptedForWager = false;

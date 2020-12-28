@@ -122,5 +122,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 .game-clock {
   font-family: Bebas Neue;
+  text-align: center;
 }
 </style>

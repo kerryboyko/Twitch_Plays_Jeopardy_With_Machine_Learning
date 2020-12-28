@@ -8,8 +8,8 @@
         <div v-if="state.question" class="clue__question">
           {{ state.question }}
         </div>
-        <div v-if="state.shouldShowAnswer" class="clue__answer">
-          {{ state.answer }}
+        <div v-if="state.answer" class="clue__answer">
+          What is {{ state.answer }}?
         </div>
       </div>
     </div>
@@ -18,7 +18,7 @@
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ClueState } from "@jeopardai/server/src/types";
+import { ClueState, GameState } from "@jeopardai/server/src/types";
 import { computed, defineComponent, reactive } from "vue";
 import { useStore } from "vuex";
 
@@ -29,7 +29,11 @@ export default defineComponent({
     const state = reactive({
       question: computed(() => store.state.clue.question),
       answer: computed(() => store.state.clue.answer),
-      value: computed(() => store.state.clue.value),
+      value: computed(
+        () =>
+          (store.state.clue.valueIndex + 1) *
+          (store.state.game.gameState === GameState.DoubleJeopardy ? 400 : 200)
+      ),
       category: computed(() => store.state.clue.category),
       shouldShowClue: computed(() => {
         return (

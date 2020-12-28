@@ -60,7 +60,7 @@ const sockets = (
       async (payload: {
         twitchId: string;
         category: string;
-        value: number;
+        valueIndex: number;
       }) => {
         await game.handleSelectClue(payload);
       }

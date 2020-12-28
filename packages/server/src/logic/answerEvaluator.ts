@@ -13,12 +13,15 @@ export const answerEvaluatorSync = (
     .toLowerCase()
     .split(" ")
     .filter((x) => x !== "")
-    .join(" ");
+    .join(" ")
+    .replace(/[^\w\s!?]/g, ""); // removes punctuation, hyphens, etc - everything but letters, numbers, spaces.
   const formattedProvided = provided
     .toLowerCase()
     .split(" ")
+    .slice(2) // removes "What is, who is, etc"
     .filter((x) => x !== "")
-    .join(" ");
+    .join(" ")
+    .replace(/[^\w\s!?]/g, ""); // removes punctuation marks, etc.
 
   const strategyResults = Object.entries(strategies).map(([stratName, strat]): [
     string,

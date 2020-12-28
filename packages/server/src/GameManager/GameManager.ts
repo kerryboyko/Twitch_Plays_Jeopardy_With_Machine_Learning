@@ -3,13 +3,13 @@ import randomSeed, { RandomSeed } from "random-seed";
 import pick from "lodash/pick";
 import get from "lodash/get";
 import omit from "lodash/omit";
-import isInteger from "lodash/isInteger";
 import { Server } from "socket.io";
 import getClues from "../db/services/getClues";
 import { JTiming } from "./utils/constants";
 import genSeedString from "./utils/genSeedString";
 import getNextClue from "./utils/getNextClue";
 import pickOneAtRandom from "./utils/pickOneAtRandom";
+import checkLiveClues from "./utils/checkLiveClues";
 import { wsServer } from "../sockets/commands";
 import answerEvaluator from "../logic/answerEvaluator";
 
@@ -57,6 +57,7 @@ class GameManager {
     question: "",
     answer: "",
     value: 0, // usually determined by indices, but not in the case of daily double or final jeopardy
+    valueIndex: -1,
     indices: [-1, -1],
     isDailyDouble: false,
   };
@@ -100,13 +101,7 @@ class GameManager {
       currentClue: omit(this.currentClue, "answer"),
       controllingPlayer: this.controllingPlayer,
       categories: this.board.map((cc: ClueCategory) => cc.category),
-      board: this.board.reduce(
-        (pv: Record<string, boolean[]>, cc: ClueCategory) => ({
-          ...pv,
-          [cc.category]: cc.clues.map((clue) => !!clue),
-        }),
-        {}
-      ),
+      board: checkLiveClues(this.board),
       scoreboard: this.scoreboard,
     };
   };
@@ -115,7 +110,7 @@ class GameManager {
 
   // used to grab the next clue automatically
   // as well as check to see if we should go to next round.
-  public getNextClue = (): [number, number] | null => getNextClue(this.board);
+  public getNextClue = (): [string, number] | null => getNextClue(this.board);
 
   public isGameRunning = (): boolean => {
     return ![GameState.None, GameState.FinalScores].includes(this.gameState);
@@ -206,24 +201,28 @@ class GameManager {
       .emit(wsServer.PROMPT_SELECT_CLUE, { twitchId: this.controllingPlayer });
 
     this.timeouts.promptSelectClue = setTimeout(() => {
+      console.log("TIMED OUT");
       this.io?.emit(wsServer.CLUE_SELECTION_TIMEOUT, {
         twitchId: this.controllingPlayer,
       });
-      this.changeClueState(ClueState.ClueSelected, ...nextClue);
+      const [nextCategory, nextValue] = nextClue;
+      this.changeClueState(ClueState.ClueSelected, {
+        timeout: true,
+        category: nextCategory,
+        valueIndex: nextValue,
+        twitchId: this.controllingPlayer,
+      });
     }, JTiming.selectTime);
   };
 
   public onClueSelected = async (payload: {
-    twitchId: string;
+    twitchId?: string;
+    timeout?: boolean;
     category: string;
-    value: number; // index value;
+    valueIndex: number; // index valueIndex;
   }): Promise<void> => {
-    console.log("onClueSelected", payload);
+    console.log(payload);
     if (payload.twitchId !== this.controllingPlayer) {
-      console.log(
-        "this should be false: payload.twitchId !== this.controllingPlayer",
-        payload.twitchId !== this.controllingPlayer
-      );
       return;
     }
     const categoryIndex = this.board.findIndex(
@@ -233,9 +232,10 @@ class GameManager {
     // bad clue
     if (
       categoryIndex === -1 ||
-      payload.value < 0 ||
-      payload.value > 4 ||
-      get(this.board, [categoryIndex, "clues", payload.value], null) === null
+      payload.valueIndex < 0 ||
+      payload.valueIndex > 4 ||
+      get(this.board, [categoryIndex, "clues", payload.valueIndex], null) ===
+        null
     ) {
       console.log("bad clue");
       clearTimeout(this.timeouts.promptSelectClue);
@@ -246,9 +246,8 @@ class GameManager {
     }
 
     // good clue.
-    console.log("good clue");
     const { question, answer, category, isDailyDouble, id } = pick(
-      this.board[categoryIndex].clues[payload.value],
+      this.board[categoryIndex].clues[payload.valueIndex],
       ["question", "answer", "category", "isDailyDouble", "id"]
     );
     this.currentClue = {
@@ -257,9 +256,10 @@ class GameManager {
       question: question as string,
       answer: answer as string,
       value:
-        (payload.value + 1) *
+        (payload.valueIndex + 1) *
         (this.gameState === GameState.DoubleJeopardy ? 400 : 200),
-      indices: [categoryIndex, payload.value],
+      valueIndex: payload.valueIndex,
+      indices: [categoryIndex, payload.valueIndex],
       isDailyDouble: isDailyDouble || false,
     };
     if (this.currentClue.isDailyDouble) {
@@ -277,6 +277,7 @@ class GameManager {
       id: this.currentClue.id,
       value: this.currentClue.value,
       category: this.currentClue.category,
+      board: checkLiveClues(this.board),
       valueIndex:
         this.currentClue.value /
           (this.gameState === GameState.DoubleJeopardy ? 400 : 200) -
@@ -288,15 +289,20 @@ class GameManager {
   };
 
   public onDailyDouble = (): void => {
-    this.io
-      ?.to(this.getClient(this.controllingPlayer))
-      .emit(wsServer.GET_DD_WAGER, {
-        player: this.controllingPlayer,
-        maxWager: Math.max(
-          this.gameState === GameState.Jeopardy ? 1000 : 2000,
-          this.scoreboard[this.controllingPlayer]
-        ),
-      });
+    this.io?.emit(wsServer.GET_DD_WAGER, {
+      player: this.controllingPlayer,
+      maxWager: Math.max(
+        this.gameState === GameState.Jeopardy ? 1000 : 2000,
+        this.scoreboard[this.controllingPlayer]
+      ),
+      selection: {
+        valueIndex:
+          this.currentClue.value /
+            (this.gameState === GameState.DoubleJeopardy ? 400 : 200) -
+          1,
+        category: this.currentClue.category,
+      },
+    });
     this.timeouts.wagerTime = setTimeout(() => {
       this.changeClueState(ClueState.DisplayClue);
     }, JTiming.wagerTime);
@@ -335,18 +341,20 @@ class GameManager {
     // TODO: We may want to push the results to memory here,
     // or even store in the DB.
 
+    // nullify the question;
+    const [cat, val] = this.currentClue.indices;
+    this.board[cat].clues[val] = null;
+
     // display the results
     this.io?.emit(wsServer.DISPLAY_ANSWER, {
       answer: this.currentClue.answer,
       provided: this.currentPlayerAnswers,
       question: this.currentClue.question,
       id: this.currentClue.id,
-      value: this.currentClue.value,
+      valueIndex: this.currentClue.value,
       scoreboard: this.scoreboard,
+      board: checkLiveClues(this.board),
     });
-    // nullify the question;
-    const [cat, val] = this.currentClue.indices;
-    this.board[cat].clues[val] = null;
 
     // clear answers and wagers;
 
@@ -365,6 +373,7 @@ class GameManager {
       question: fjClue.question as string,
       answer: fjClue.answer as string,
       value: 0,
+      valueIndex: 4,
       isDailyDouble: false,
       indices: [-1, -1],
       category: fjCategory,
@@ -554,29 +563,32 @@ class GameManager {
   };
 
   /* on wsClient.PROVIDE_ANSWER */
-  public handleAnswer = async (
-    twitchId: string,
-    provided: string
-  ): Promise<void> => {
+  public handleAnswer = async (payload: {
+    twitchId: string;
+    provided: string;
+  }): Promise<void> => {
     if (this.currentClue.isDailyDouble) {
-      if (twitchId === this.controllingPlayer) {
+      if (payload.twitchId === this.controllingPlayer) {
         this.currentPlayerAnswers = [
           {
-            twitchId,
-            provided,
+            ...payload,
             evaluated: null,
           },
         ];
-        this.io?.to(this.players[twitchId]).emit(wsServer.ANSWER_RECIEVED);
+        this.io
+          ?.to(this.players[payload.twitchId])
+          .emit(wsServer.ANSWER_RECIEVED);
         return this.changeClueState(ClueState.DisplayAnswer);
       }
     } else {
       this.currentPlayerAnswers.push({
-        twitchId,
-        provided,
+        ...payload,
         evaluated: null,
       });
-      this.io?.to(this.players[twitchId]).emit(wsServer.ANSWER_RECIEVED);
+      console.log(this.currentPlayerAnswers);
+      this.io
+        ?.to(this.players[payload.twitchId])
+        .emit(wsServer.ANSWER_RECIEVED);
     }
   };
 
@@ -622,7 +634,7 @@ class GameManager {
   public handleSelectClue = (payload: {
     twitchId: string;
     category: string;
-    value: number;
+    valueIndex: number;
   }): Promise<void> | void => {
     console.log("HANDLING SELECT CLUE", payload);
     if (payload.twitchId === this.controllingPlayer) {

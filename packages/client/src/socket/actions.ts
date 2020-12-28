@@ -12,23 +12,29 @@ export const registerPlayer = (twitchId: string): void => {
   socket.emit(wsClient.REGISTER_PLAYER, { twitchId });
 };
 
-export const provideAnswer = (twitchId: string, answer: string): void => {
-  console.log("emitting", wsClient.PROVIDE_ANSWER, { twitchId, answer });
-  socket.emit(wsClient.PROVIDE_ANSWER, { twitchId, answer });
+export const provideAnswer = (payload: {
+  twitchId: string;
+  provided: string;
+}): void => {
+  console.log("emitting", wsClient.PROVIDE_ANSWER, payload);
+  socket.emit(wsClient.PROVIDE_ANSWER, payload);
 };
 
-export const provideWager = (twitchId: string, wager: number): void => {
-  console.log("emitting", wsClient.PROVIDE_WAGER, { twitchId, wager });
-  socket.emit(wsClient.PROVIDE_WAGER, { twitchId, wager });
+export const provideWager = (payload: {
+  twitchId: string;
+  wager: number;
+}): void => {
+  console.log("emitting", wsClient.PROVIDE_WAGER, payload);
+  socket.emit(wsClient.PROVIDE_WAGER, payload);
 };
 
-export const selectClue = (
-  twitchId: string,
-  category: string,
-  value: number
-): void => {
-  console.log("emitting", wsClient.SELECT_CLUE, { twitchId, category, value });
-  socket.emit(wsClient.SELECT_CLUE, { twitchId, category, value });
+export const selectClue = (payload: {
+  twitchId: string;
+  category: string;
+  valueIndex: number;
+}): void => {
+  console.log("emitting", wsClient.SELECT_CLUE, payload);
+  socket.emit(wsClient.SELECT_CLUE, payload);
 };
 
 export default {

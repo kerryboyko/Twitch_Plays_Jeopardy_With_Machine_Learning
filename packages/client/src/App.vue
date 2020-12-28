@@ -7,19 +7,21 @@
   <game-board :isDoubleJeopardy="false" />
   <clue-display />
   <answer-input />
+  <score-display />
   <div>
     <pre>{{ JSON.stringify(store.state, null, 2) }}</pre>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { defineComponent } from "vue";
 import { useStore } from "vuex";
 import RegisterPlayer from "./components/RegisterPlayer.vue";
 import socketActions from "./socket/actions";
 import SocketComponent from "./socket/SocketComponent.vue";
 import AnswerInput from "./components/AnswerInput.vue";
 import ClueDisplay from "./components/ClueDisplay.vue";
+import ScoreDisplay from "./components/ScoreDisplay.vue";
 import GameBoard from "./components/GameBoard.vue";
 import GameClock from "./components/GameClock.vue";
 
@@ -32,6 +34,7 @@ export default defineComponent({
     ClueDisplay,
     GameBoard,
     GameClock,
+    ScoreDisplay,
   },
   setup() {
     const store = useStore();
@@ -57,7 +60,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,400;0,600;1,400;1,600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:ital,wght@0,400;0,600;1,400;1,600&display=swap");
 @font-face {
   font-family: "Korinna";
   src: url("/fonts/OPTIKorinna-Agency.ttf.woff") format("woff"); /* Pretty Modern Browsers */
@@ -75,7 +78,7 @@ pre {
 }
 $jeopardy-blue: #2c3e50;
 #app {
-  font-family: Poppins, Helvetica, Arial, sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: $jeopardy-blue;

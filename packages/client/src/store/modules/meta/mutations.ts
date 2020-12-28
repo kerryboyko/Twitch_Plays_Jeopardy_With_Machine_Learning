@@ -1,5 +1,6 @@
-import { MetaData } from "./index";
+import pick from "lodash/pick";
 import { MutationTree } from "vuex";
+import { MetaData } from "./index";
 import { wsServer } from "@jeopardai/server/src/sockets/commands";
 import { ProvidedAnswers } from "@jeopardai/server/src/types";
 
@@ -16,7 +17,10 @@ export const mutations: MutationTree<MetaData> = {
       correct: payload.provided.filter((p) => p.evaluated),
       incorrect: payload.provided.filter((p) => !p.evaluated),
     };
-    state.answerMarks.push({ ...payload, provided: sortedProvided });
+    state.answerMarks.push({
+      ...pick(payload, ["id", "answer"]),
+      provided: sortedProvided,
+    });
   },
 };
 

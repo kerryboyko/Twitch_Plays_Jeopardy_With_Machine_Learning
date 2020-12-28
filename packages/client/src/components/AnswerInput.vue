@@ -30,11 +30,12 @@ import { useStore } from "vuex";
 import { ClueState } from "@jeopardai/server/src/types";
 import useCountdown from "./AnswerTimer/useCountdown";
 import AnswerTimer from "./AnswerTimer/AnswerTimer.vue";
+import { provideAnswer } from "../socket/actions";
 
 export default defineComponent({
   name: "AnswerInput",
   components: { AnswerTimer },
-  setup(_props, context) {
+  setup() {
     const { value: timerValue, countdown, clearTimer } = useCountdown();
     const store = useStore();
     const state = reactive<{
@@ -45,7 +46,7 @@ export default defineComponent({
     }>({
       input: "What is ",
       disabled: true,
-      twitchId: computed(() => store.getters.twitchId),
+      twitchId: computed(() => store.state.user.twitchId),
       clueState: computed(() => store.state.clue.clueState),
     });
 
@@ -53,7 +54,7 @@ export default defineComponent({
       if (state.input.trim() === "What is") {
         return;
       }
-      context.emit("submit-question", state.input);
+      provideAnswer({ twitchId: state.twitchId, provided: state.input });
       state.disabled = true;
       clearTimer();
     };
@@ -127,7 +128,7 @@ $jeopardy-blue-disabled: #657c92;
     margin: 0.5rem;
     height: 46px;
     font-size: 1rem;
-    font-family: Poppins;
+    font-family: Roboto;
     background-color: $jeopardy-blue;
     color: white;
     margin: 0.5rem;
@@ -140,7 +141,7 @@ $jeopardy-blue-disabled: #657c92;
     @media screen and (max-width: 720px) {
       width: calc(100% - 1rem);
       font-size: 1rem;
-      font-family: Poppins;
+      font-family: Roboto;
     }
     &:hover {
       color: $jeopardy-blue;

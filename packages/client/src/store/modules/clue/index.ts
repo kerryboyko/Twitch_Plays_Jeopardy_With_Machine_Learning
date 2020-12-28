@@ -17,6 +17,8 @@ export interface ClueData extends CurrentClue {
     correct: ProvidedAnswers[];
     incorrect: ProvidedAnswers[];
   };
+  valueIndex: number;
+  value: number;
 }
 
 export const initializeState = (): ClueData => ({
@@ -29,6 +31,7 @@ export const initializeState = (): ClueData => ({
   category: "",
   question: "",
   answer: "",
+  valueIndex: -1,
   value: 0,
   indices: [-1, -1],
   isDailyDouble: false,

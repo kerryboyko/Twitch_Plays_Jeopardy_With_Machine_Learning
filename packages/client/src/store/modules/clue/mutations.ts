@@ -20,16 +20,17 @@ export const mutations: MutationTree<ClueData> = {
       id: number;
       isDailyDouble: boolean;
       category: string;
-      value: number;
+      valueIndex: number;
       question: string;
     }
   ) => {
     state.id = payload.id;
     state.category = payload.category;
-    state.value = payload.value;
+    state.valueIndex = payload.valueIndex;
     state.question = payload.question;
     state.isDailyDouble = payload.isDailyDouble;
     state.answer = "";
+    state.answerLocked = false;
   },
   [wsServer.DISPLAY_ANSWER]: (
     state,
@@ -51,6 +52,20 @@ export const mutations: MutationTree<ClueData> = {
   },
   [wsServer.FJ_DISPLAY_CATEGORY]: (state, payload: { category: string }) => {
     state.category = payload.category;
+  },
+  [wsServer.ANSWER_RECIEVED]: (state) => {
+    state.answerLocked = true;
+  },
+  [wsServer.GET_DD_WAGER]: (
+    state,
+    payload: { selected: { valueIndex: number; category: string } }
+  ) => {
+    state.category = payload.selected.category;
+    state.valueIndex = payload.selected.valueIndex;
+    state.isDailyDouble = true;
+  },
+  SET_WAGER: (state, wager: number) => {
+    state.wager = wager;
   },
 };
 
