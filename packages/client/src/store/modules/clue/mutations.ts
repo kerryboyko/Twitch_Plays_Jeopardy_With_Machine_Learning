@@ -14,6 +14,10 @@ export const mutations: MutationTree<ClueData> = {
       }
     });
   },
+  [wsServer.PROMPT_SELECT_CLUE]: (state, payload: { twitchId: string }) => {
+    state.indices = [-1, -1];
+    state.promptedForClue = payload.twitchId === state.controllingPlayer;
+  },
   [wsServer.DISPLAY_CLUE]: (
     state,
     payload: {
@@ -22,6 +26,7 @@ export const mutations: MutationTree<ClueData> = {
       category: string;
       valueIndex: number;
       question: string;
+      indices: [number, number];
     }
   ) => {
     state.id = payload.id;
@@ -30,6 +35,7 @@ export const mutations: MutationTree<ClueData> = {
     state.question = payload.question;
     state.isDailyDouble = payload.isDailyDouble;
     state.answer = "";
+    state.indices = payload.indices;
     state.answerLocked = false;
   },
   [wsServer.DISPLAY_ANSWER]: (

@@ -24,21 +24,41 @@
           <td
             v-for="category in state.categories"
             :key="`${category}-${value}`"
-            @click="handleClick(category, valueIndex)"
+            @click="handleClueSelection(category, valueIndex)"
             class="value"
             :class="{
-              dead: !isLive(category, valueIndex),
+              dead: !(
+                clueIsCurrent(category, valueIndex) ||
+                isLive(category, valueIndex)
+              ),
               [`daily-double`]: clueIsDailyDouble(category, valueIndex),
               [`current-clue`]: clueIsCurrent(category, valueIndex),
+              [`selected`]:
+                category === state.selectedCategory &&
+                valueIndex === state.selectedValueIndex,
             }"
           >
-            <span v-if="state.isLoading && clueIsLoading(category, valueIndex)"
+            <span
+              v-if="
+                category === state.selectedCategory &&
+                valueIndex === state.selectedValueIndex
+              "
               >Loading</span
             >
-            <span v-else-if="clueIsDailyDouble(category, valueIndex)"
+            <span
+              v-else-if="
+                clueIsCurrent(category, valueIndex) &&
+                clueIsDailyDouble(category, valueIndex)
+              "
               >Daily Double</span
             >
-            <span v-else-if="isLive(category, valueIndex)">${{ value }}</span>
+            <span
+              v-else-if="
+                clueIsCurrent(category, valueIndex) ||
+                isLive(category, valueIndex)
+              "
+              >${{ value }}</span
+            >
           </td>
         </tr>
       </tbody>
@@ -83,65 +103,64 @@ export default defineComponent({
       controllingPlayer: computed<string>(
         () => store.state.game.controllingPlayer
       ),
-      currentClue: computed(() => ({
-        category: store.state.clue.category,
-        value: store.state.clue.value,
-      })),
-      isLoading: false,
-      clueSelected: ["", -1],
+      currentClue: computed(() => store.state.clue),
+      selectedCategory: "",
+      selectedValueIndex: -1,
     });
     const multiplier: number = state.isDoubleJeopardy ? 400 : 200;
     const values = [1, 2, 3, 4, 5].map((n) => n * multiplier);
-    const handleClick = (category: string, valueIndex: number) => {
+
+    const handleClueSelection = (category: string, valueIndex: number) => {
       selectClue({
         twitchId: state.twitchId,
         category,
         valueIndex,
       });
-      state.clueSelected = [category, valueIndex];
-      state.isLoading = true;
+      state.selectedCategory = category;
+      state.selectedValueIndex = valueIndex;
     };
     const isLive = (category: string, valueIndex: number): boolean =>
       state.board[category][valueIndex];
     const isCategoryLive = (category: string): boolean =>
       state.board[category].some((el: boolean) => el);
-    const clueIsSelected = (category: string, valueIndex: number) => {
-      const [selectedCategory, selectedValueIndex] = state.clueSelected;
-      return category === selectedCategory && valueIndex === selectedValueIndex;
-    };
-    const clueIsLoading = (category: string, valueIndex: number) => {
+
+    const clueIsCurrent = (category: string, valueIndex: number): boolean => {
       return (
-        store.state.clue.clueState === ClueState.PromptSelectClue &&
-        clueIsSelected(category, valueIndex)
+        category === state.currentClue.category &&
+        valueIndex === state.currentClue.valueIndex
       );
     };
-    const clueIsCurrent = (category: string, valueIndex: number) => {
+    const clueIsDailyDouble = (
+      category: string,
+      valueIndex: number
+    ): boolean => {
       return (
-        category === store.state.clue.category &&
-        valueIndex === store.state.clue.value
+        clueIsCurrent(category, valueIndex) && state.currentClue.isDailyDouble
       );
     };
-    const clueIsDailyDouble = (category: string, valueIndex: number) => {
-      return (
-        clueIsSelected(category, valueIndex) &&
-        store.state.clue.clueState === ClueState.DailyDouble
-      );
-    };
+
     watch(
       () => store.state.clue.clueState,
       () => {
-        if (store.state.clue.clueState === ClueState.DisplayClue) {
-          state.isLoading = false;
+        if (
+          [
+            ClueState.DisplayClue,
+            ClueState.DisplayAnswer,
+            ClueState.DailyDouble,
+          ].includes(store.state.clue.clueState)
+        ) {
+          state.selectedCategory = "";
+          state.selectedValueIndex = -1;
         }
       }
     );
+
     return {
       values,
       isLive,
       isCategoryLive,
       state,
-      handleClick,
-      clueIsLoading,
+      handleClueSelection,
       clueIsCurrent,
       clueIsDailyDouble,
     };

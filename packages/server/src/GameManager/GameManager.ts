@@ -31,13 +31,15 @@ import getDailyDoubles from "./utils/getDailyDoubles";
    Game / Board / Clue / Final Jeopardy.  */
 
 class GameManager {
-  public seed = "";
-
-  public rand: RandomSeed = randomSeed.create();
+  public gameState: GameState = GameState.None;
 
   public clueState: ClueState = ClueState.None;
 
   public finalJeopardyState: FinalJeopardyState = FinalJeopardyState.None;
+
+  public seed = "";
+
+  public rand: RandomSeed = randomSeed.create();
 
   public gameStartTime = 0;
 
@@ -49,8 +51,7 @@ class GameManager {
   // this is the live board which is mutable
   public board: ClueCategory[] = [];
 
-  public gameState: GameState = GameState.None;
-
+  // probably should make it's own class, no?
   public currentClue: CurrentClue = {
     id: -1,
     category: "",
@@ -62,8 +63,6 @@ class GameManager {
     isDailyDouble: false,
   };
 
-  public currentPlayerAnswers: ProvidedAnswers[] = [];
-
   public controllingPlayer = ""; // player has control of the board. Only the controlling player can play a Daily Double.
 
   // key: player name, value: socket ID
@@ -73,23 +72,20 @@ class GameManager {
 
   public wagers: Record<string, number> = {};
 
-  public io: Server | undefined;
+  public currentPlayerAnswers: ProvidedAnswers[] = [];
 
   public clients: Record<string, string> = {};
 
-  public getClient: (twitchId: string) => string = () => "";
+  // getters?
+  public getClient = (twitchId: string): string => this.clients[twitchId];
 
-  public setIo = (
-    io: Server,
-    getClient: (twitchId: string) => string,
-    clients: Record<string, string>
-  ): void => {
+  private io: Server | undefined;
+
+  public setIo = (io: Server): void => {
     this.io = io;
-    this.clients = clients;
-    this.getClient = getClient;
   };
 
-  /* CONSTRUCTOR! */
+  /* NO CONSTRUCTOR! */
 
   public grabCurrentStatus = (): StateSnapshot => {
     return {
@@ -117,6 +113,12 @@ class GameManager {
   };
 
   public startGame = async (seed = genSeedString()): Promise<void> => {
+    const debugInterval = setInterval(() => {
+      this.debugEmitter();
+    }, 30000);
+    setTimeout(() => {
+      clearInterval(debugInterval);
+    }, 600000);
     this.seed = seed;
     this.rand = randomSeed.create(seed);
     this.gameStartTime = Date.now() + JTiming.startGame;
@@ -278,6 +280,7 @@ class GameManager {
       value: this.currentClue.value,
       category: this.currentClue.category,
       board: checkLiveClues(this.board),
+      indices: this.currentClue.indices,
       valueIndex:
         this.currentClue.value /
           (this.gameState === GameState.DoubleJeopardy ? 400 : 200) -
@@ -641,6 +644,41 @@ class GameManager {
       clearTimeout(this.timeouts.promptSelectClue);
       return this.changeClueState(ClueState.ClueSelected, payload);
     }
+  };
+
+  /* DEBUG HANDLER!!!! */
+  public debugHandler = async (payload: any[]): Promise<void> => {
+    // ALL_DAILY_DOUBLES
+    if (payload[0] === "ALL_DAILY_DOUBLES") {
+      for (const clueCategory of this.board) {
+        for (const clue of clueCategory.clues) {
+          if (clue !== null) {
+            clue.isDailyDouble = true;
+          }
+        }
+      }
+    }
+  };
+
+  /* DEBUG EMITTER!!! */
+  public debugEmitter = (): void => {
+    this.io?.emit(
+      wsServer.BACKEND_GAME_STATE,
+      pick(this, [
+        "seed",
+        "clueState",
+        "finalJeopardyState",
+        "board",
+        "gameState",
+        "currentClue",
+        "currentPlayerAnswers",
+        "controllingPlayer",
+        "scoreboard",
+        "wagers",
+        "clients",
+        "gameStartTime",
+      ])
+    );
   };
 }
 

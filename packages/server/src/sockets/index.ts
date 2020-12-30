@@ -1,30 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Server as HttpServer } from "http";
 import { Server, Socket } from "socket.io";
 import GameManager from "../GameManager";
 import { wsClient, wsServer } from "./commands";
-
-const clientStore = () => {
-  const clients: Record<string, string> = {};
-  const setClient = (twitchId: string, socketId: string): void => {
-    clients[twitchId] = socketId;
-  };
-  const getClient = (twitchId: string): string => clients[twitchId];
-  return { clients, setClient, getClient };
-};
 
 const sockets = (
   http: HttpServer,
   game: GameManager
 ): {
   io: Server;
-  getClient: (twitchId: string) => string;
-  clients: Record<string, string>;
 } => {
-  const { clients, setClient, getClient } = clientStore();
   const io = new Server(http, {
     cors: { origin: "http://localhost:8080", methods: ["GET", "POST"] },
   });
-  game.setIo(io, getClient, clients);
+  game.setIo(io);
   io.on("connection", (socket: Socket) => {
     console.log("New Connection: ", socket.id);
     socket.emit(wsServer.CURRENT_STATUS, game.grabCurrentStatus());
@@ -45,7 +34,6 @@ const sockets = (
     socket.on(
       wsClient.REGISTER_PLAYER,
       async ({ twitchId }: { twitchId: string }) => {
-        setClient(twitchId, socket.id);
         await game.handleRegisterPlayer(twitchId, socket.id);
         socket.emit(wsServer.PLAYER_REGISTERED, {
           seed: game.getSeed(),
@@ -77,9 +65,13 @@ const sockets = (
         await game.handleAnswer(payload);
       }
     );
+    socket.on(wsClient.DEBUG, async (params: any[]) => {
+      console.log(params);
+      await game.debugHandler(params);
+    });
   });
 
-  return { io, clients, getClient };
+  return { io };
 };
 
 export default sockets;
