@@ -64,14 +64,12 @@ export const mutations: MutationTree<ClueData> = {
   },
   [wsServer.GET_DD_WAGER]: (
     state,
-    payload: { selected: { valueIndex: number; category: string } }
+    payload: { selection: { valueIndex: number; category: string } }
   ) => {
-    state.category = payload.selected.category;
-    state.valueIndex = payload.selected.valueIndex;
+    // these are loaded in early so that the display will be correct.
+    state.category = payload.selection.category;
+    state.valueIndex = payload.selection.valueIndex;
     state.isDailyDouble = true;
-  },
-  SET_WAGER: (state, wager: number) => {
-    state.wager = wager;
   },
 };
 

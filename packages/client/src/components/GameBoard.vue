@@ -1,12 +1,14 @@
 <template>
+  <pre>{{ JSON.stringify(state.currentClue, null, 2) }}</pre>
   <div
     class="game-board-container"
     :class="{
       highlight: state.showCluePrompt && state.isControllingPlayer,
-      [`disable-all`]: !state.isControllingPlayer,
+      [`disable-all`]:
+        !state.isControllingPlayer || state.clueState !== PROMPT_SELECT_CLUE,
     }"
   >
-    <div class="game-state">{{ state.gameState }}</div>
+    <div class="game-state">{{ state.gameState }} - {{ state.clueState }}</div>
     <table class="game-board">
       <thead>
         <tr>
@@ -31,34 +33,14 @@
                 clueIsCurrent(category, valueIndex) ||
                 isLive(category, valueIndex)
               ),
-              [`daily-double`]: clueIsDailyDouble(category, valueIndex),
+              [`daily-double`]:
+                clueIsCurrent(category, valueIndex) &&
+                state.currentClue.isDailyDouble,
               [`current-clue`]: clueIsCurrent(category, valueIndex),
-              [`selected`]:
-                category === state.selectedCategory &&
-                valueIndex === state.selectedValueIndex,
+              [`selected`]: clueIsSelected(category, valueIndex),
             }"
           >
-            <span
-              v-if="
-                category === state.selectedCategory &&
-                valueIndex === state.selectedValueIndex
-              "
-              >Loading</span
-            >
-            <span
-              v-else-if="
-                clueIsCurrent(category, valueIndex) &&
-                clueIsDailyDouble(category, valueIndex)
-              "
-              >Daily Double</span
-            >
-            <span
-              v-else-if="
-                clueIsCurrent(category, valueIndex) ||
-                isLive(category, valueIndex)
-              "
-              >${{ value }}</span
-            >
+            {{ clueDisplayText(category, valueIndex, value) }}
           </td>
         </tr>
       </tbody>
@@ -77,6 +59,7 @@
 </template>
 
 <script lang="ts">
+import get from "lodash/get";
 import { ClueState, GameState } from "@jeopardai/server/src/types";
 import { computed, defineComponent, reactive, watch } from "vue";
 import { useStore } from "vuex";
@@ -90,7 +73,8 @@ export default defineComponent({
       categories: computed(() => store.state.game.categories),
       board: computed(() => store.state.game.board),
       twitchId: computed<string>(() => store.state.user.twitchId),
-      gameState: computed<string>(() => `${store.state.game.gameState}`),
+      gameState: computed<GameState>(() => store.state.game.gameState),
+      clueState: computed<ClueState>(() => store.state.clue.clueState),
       showCluePrompt: computed<boolean>(
         () => store.state.clue.clueState === ClueState.PromptSelectClue
       ),
@@ -116,27 +100,52 @@ export default defineComponent({
         category,
         valueIndex,
       });
+      store.commit("clue/CLEAR_CLUE");
       state.selectedCategory = category;
       state.selectedValueIndex = valueIndex;
     };
+
     const isLive = (category: string, valueIndex: number): boolean =>
-      state.board[category][valueIndex];
+      get(state.board, [category, valueIndex], false);
+
     const isCategoryLive = (category: string): boolean =>
       state.board[category].some((el: boolean) => el);
 
+    const clueIsSelected = (category: string, valueIndex: number): boolean =>
+      category === state.selectedCategory &&
+      valueIndex === state.selectedValueIndex;
+
     const clueIsCurrent = (category: string, valueIndex: number): boolean => {
       return (
-        category === state.currentClue.category &&
-        valueIndex === state.currentClue.valueIndex
+        category === state.currentClue?.category &&
+        valueIndex === state.currentClue?.valueIndex &&
+        [
+          ClueState.DisplayClue,
+          ClueState.DisplayAnswer,
+          ClueState.DailyDouble,
+        ].includes(state.clueState) &&
+        !clueIsSelected(category, valueIndex)
       );
     };
-    const clueIsDailyDouble = (
+
+    const clueDisplayText = (
       category: string,
-      valueIndex: number
-    ): boolean => {
-      return (
-        clueIsCurrent(category, valueIndex) && state.currentClue.isDailyDouble
-      );
+      valueIndex: number,
+      value: number
+    ): string => {
+      if (clueIsCurrent(category, valueIndex)) {
+        if (state.currentClue?.isDailyDouble) {
+          return "Daily Double";
+        }
+        return `$${value}`;
+      }
+      if (clueIsSelected(category, valueIndex)) {
+        return "Loading";
+      }
+      if (isLive(category, valueIndex)) {
+        return `$${value}`;
+      }
+      return "";
     };
 
     watch(
@@ -162,7 +171,10 @@ export default defineComponent({
       state,
       handleClueSelection,
       clueIsCurrent,
-      clueIsDailyDouble,
+      clueIsSelected,
+      clueDisplayText,
+      DAILY_DOUBLE: ClueState.DailyDouble,
+      PROMPT_SELECT_CLUE: ClueState.PromptSelectClue,
     };
   },
 });

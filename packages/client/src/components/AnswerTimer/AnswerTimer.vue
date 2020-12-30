@@ -1,13 +1,16 @@
 <template>
-  <div class="meter">
-    <span
-      :class="{
-        warn: value < 0.3,
-        danger: value < 0.15,
-        inactive: inactive,
-      }"
-      :style="{ width: inactive ? '100%' : `${value * 100}%` }"
-    ></span>
+  <div class="meter--container">
+    <div v-if="seconds !== undefined" class="seconds">{{ seconds }}</div>
+    <div class="meter" :class="{ inactive: inactive }">
+      <span
+        :class="{
+          warn: value < 0.3,
+          danger: value < 0.15,
+          inactive: inactive,
+        }"
+        :style="{ width: inactive ? '100%' : `${value * 100}%` }"
+      ></span>
+    </div>
   </div>
 </template>
 
@@ -26,17 +29,35 @@ export default defineComponent({
       required: false,
       default: true,
     },
+    seconds: {
+      type: Number,
+      required: false,
+    },
   },
 });
 </script>
 <style lang="scss">
+.meter--container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+.seconds {
+  width: 30px;
+}
 .meter {
+  width: 100%;
   height: 30px; /* Can be anything */
   position: relative;
   background: rgb(231, 231, 231);
   border-radius: 25px;
   padding: 8px;
   box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
+  &.inactive {
+    visibility: hidden;
+  }
 }
 .meter > span {
   display: block;

@@ -8,9 +8,10 @@ export const createStateMachine = <TEnum extends States, TMachine>(
 ) => async (nextState: TEnum, ...args: unknown[]): Promise<void> => {
   const next = get(stateMachine, [stateGetter(), nextState], null);
   if (next === null) {
-    throw new Error(
+    console.warn(
       `Illegal state transition. ${stateGetter()} does not support transition ${stateGetter()} -> ${nextState}`
     );
+    return;
   }
   stateSetter(nextState);
   await next(...args);

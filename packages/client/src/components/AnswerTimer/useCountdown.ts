@@ -2,7 +2,7 @@ import { reactive, Ref, toRefs } from "vue";
 
 const useCountdown = (
   timeInSec = 30,
-  tickMs = 200
+  tickMs = 33 // 30 fps
 ): {
   value: Ref<number>;
   countdown: (callback?: () => void) => void;
@@ -26,7 +26,7 @@ const useCountdown = (
           callback();
         }
       }
-    }, 200);
+    }, tickMs);
   };
   const clearTimer = () => {
     state.value = 0;

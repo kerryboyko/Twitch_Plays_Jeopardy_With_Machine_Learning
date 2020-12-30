@@ -281,6 +281,7 @@ class GameManager {
       category: this.currentClue.category,
       board: checkLiveClues(this.board),
       indices: this.currentClue.indices,
+      isDailyDouble: this.currentClue.isDailyDouble,
       valueIndex:
         this.currentClue.value /
           (this.gameState === GameState.DoubleJeopardy ? 400 : 200) -
@@ -647,9 +648,13 @@ class GameManager {
   };
 
   /* DEBUG HANDLER!!!! */
-  public debugHandler = async (payload: any[]): Promise<void> => {
+  public debugHandler = async (...payload: any[]): Promise<void> => {
     // ALL_DAILY_DOUBLES
+    console.log({ payload });
     if (payload[0] === "ALL_DAILY_DOUBLES") {
+      if (this.board.length) {
+        console.log("changing all to daily double");
+      }
       for (const clueCategory of this.board) {
         for (const clue of clueCategory.clues) {
           if (clue !== null) {

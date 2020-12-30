@@ -65,9 +65,9 @@ const sockets = (
         await game.handleAnswer(payload);
       }
     );
-    socket.on(wsClient.DEBUG, async (params: any[]) => {
-      console.log(params);
-      await game.debugHandler(params);
+    socket.on(wsClient.DEBUG, async (...params: any[]) => {
+      console.log(...params);
+      await game.debugHandler(...params);
     });
   });
 

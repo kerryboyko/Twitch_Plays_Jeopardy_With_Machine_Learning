@@ -20,7 +20,11 @@
     </button>
   </div>
   <div class="answer-timer-container">
-    <answer-timer :inactive="state.disabled" :value="timerValue" />
+    <answer-timer
+      :seconds="state.seconds"
+      :inactive="state.disabled"
+      :value="timerValue"
+    />
   </div>
 </template>
 
@@ -43,11 +47,15 @@ export default defineComponent({
       disabled: boolean;
       twitchId: ComputedRef<string>;
       clueState: ComputedRef<ClueState>;
+      seconds: ComputedRef<number>;
     }>({
       input: "What is ",
       disabled: true,
       twitchId: computed(() => store.state.user.twitchId),
       clueState: computed(() => store.state.clue.clueState),
+      seconds: computed(() => {
+        return Math.round(timerValue.value * 30);
+      }),
     });
 
     const submit = () => {
@@ -56,7 +64,6 @@ export default defineComponent({
       }
       provideAnswer({ twitchId: state.twitchId, provided: state.input });
       state.disabled = true;
-      clearTimer();
     };
     const launchTimer = () => {
       state.input = "What is ";
