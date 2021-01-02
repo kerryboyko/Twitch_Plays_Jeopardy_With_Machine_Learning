@@ -625,6 +625,7 @@ class GameManager {
         payload.wager,
         this.scoreboard[payload.twitchId]
       );
+      // emit ONLY to the wagering player!
       this.io
         ?.to(this.players[payload.twitchId])
         .emit(wsServer.WAGER_RECEIVED, {

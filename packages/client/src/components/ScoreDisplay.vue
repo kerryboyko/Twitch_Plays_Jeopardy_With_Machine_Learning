@@ -1,11 +1,12 @@
 <template>
+  <wager-display v-if="state.promptedForWager" />
   <div class="score-display" :class="{ negative: state.myScore < 0 }">
     ${{ state.myScore }}
   </div>
-  <wager-display v-if="state.promptedForWager" />
 </template>
 
 <script lang="ts">
+import { GameState } from "@jeopardai/server/src/types";
 import { defineComponent, reactive, computed, ComputedRef } from "vue";
 import { useStore } from "vuex";
 import WagerDisplay from "./WagerDisplay.vue";
@@ -24,7 +25,15 @@ export default defineComponent({
       ),
 
       promptedForWager: computed(() => {
-        return true || store.state.game.promptedForWager;
+        if (store.state.game.promptedForWager) {
+          const thisIsDailyDouble = store.state.clue.isDailyDouble;
+          const playerHasControl =
+            store.state.game.controllingPlayer === store.state.user.twitchId;
+          const thisIsFinalJeopardy =
+            store.state.game.gameState === GameState.FinalJeopardy;
+          return (thisIsDailyDouble && playerHasControl) || thisIsFinalJeopardy;
+        }
+        return false;
       }),
     });
 

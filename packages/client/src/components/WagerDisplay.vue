@@ -6,26 +6,39 @@
         <span>$</span>
         <input
           class="wager__input"
+          :class="{ disabled: state.wagerLocked }"
           type="number"
           v-model="state.myWager"
           @blur="checkWager"
-          :disabled="state.disabled"
+          :disabled="state.wagerLocked"
           v-on:keyup.enter="submit"
         />
       </div>
-      <button class="wager__button" :disabled="state.disabled" @click="submit">
+      <button v-if="!state.wagerLocked" class="wager__button" @click="submit">
         Submit
       </button>
     </div>
-    <div class="wager__header">
+    <div v-if="!state.wagerLocked" class="wager__header">
       (Min: ${{ state.minWager }}/Max: ${{ state.maxWager }})
     </div>
+    <answer-timer
+      :seconds="state.seconds"
+      :inactive="state.wagerLocked"
+      :value="timerValue"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { GameState } from "@jeopardai/server/src/types";
-import { defineComponent, reactive, computed, ComputedRef } from "vue";
+import { ClueState, GameState } from "@jeopardai/server/src/types";
+import {
+  defineComponent,
+  reactive,
+  computed,
+  ComputedRef,
+  watch,
+  onBeforeMount,
+} from "vue";
 import { useStore } from "vuex";
 import { provideWager } from "../socket/actions";
 import AnswerTimer from "./AnswerTimer/AnswerTimer.vue";
@@ -33,15 +46,21 @@ import useCountdown from "./AnswerTimer/useCountdown";
 
 export default defineComponent({
   name: "ScoreDisplay",
+  components: { AnswerTimer },
   setup() {
+    const { value: timerValue, countdown, clearTimer } = useCountdown();
     const store = useStore();
     const state = reactive<{
+      clueState: ComputedRef<ClueState>;
       myScore: ComputedRef<number>;
       maxWager: ComputedRef<number>;
       minWager: ComputedRef<number>;
       promptedForWager: ComputedRef<boolean>;
+      wagerLocked: ComputedRef<boolean>;
+      seconds: ComputedRef<number>;
       myWager: number;
     }>({
+      clueState: computed(() => store.state.clue.clueState),
       myScore: computed(
         () => store.state.game.scoreboard[store.state.user.twitchId]
       ),
@@ -60,7 +79,11 @@ export default defineComponent({
         return store.state.game.gameState === GameState.FinalJeopardy ? 0 : 5;
       }),
       promptedForWager: computed(() => {
-        return true || store.state.game.promptedForWager;
+        return store.state.game.promptedForWager;
+      }),
+      wagerLocked: computed(() => store.state.clue.wager !== null),
+      seconds: computed(() => {
+        return Math.round(timerValue.value * 30);
       }),
       myWager: 5,
     });
@@ -73,7 +96,22 @@ export default defineComponent({
       }
       return state.myWager;
     };
-
+    const launchTimer = () => {
+      countdown(() => {
+        clearTimer();
+      });
+    };
+    onBeforeMount(() => {
+      launchTimer();
+    });
+    watch(
+      () => state.clueState,
+      () => {
+        if (state.clueState !== ClueState.DailyDouble) {
+          clearTimer();
+        }
+      }
+    );
     const submit = () => {
       provideWager({
         twitchId: store.state.user.twitchId,
@@ -81,7 +119,7 @@ export default defineComponent({
       });
     };
 
-    return { state, checkWager, submit };
+    return { state, checkWager, submit, timerValue };
   },
 });
 </script>
@@ -98,9 +136,9 @@ $jeopardy-blue-disabled: #657c92;
   background-size: cover;
   &__area {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    font-size: 4rem;
+    font-size: 2rem;
     color: #eea955;
 
     padding: 0.5rem 2rem;
@@ -111,14 +149,16 @@ $jeopardy-blue-disabled: #657c92;
   }
   &__input {
     padding: 5px;
-    margin: 5px 5px 5px 30px;
-    font-size: 4rem;
-    width: 80%;
+    margin-left: 5px;
+    font-size: 2rem;
     cursor: text;
     background-color: transparent;
     color: white;
     border: 2px solid white;
     border-radius: 0.25rem;
+    &.disabled {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
   }
   &__button {
     font-size: 1rem;

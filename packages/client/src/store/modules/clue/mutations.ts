@@ -6,6 +6,10 @@ import { wsServer } from "@jeopardai/server/src/sockets/commands";
 export const mutations: MutationTree<ClueData> = {
   [wsServer.CLUE_STATE_CHANGE]: (state, payload: { clueState: ClueState }) => {
     state.clueState = payload.clueState;
+    if (payload.clueState === ClueState.PromptSelectClue) {
+      state.wager = null;
+      state.wagerLocked = false;
+    }
   },
   [wsServer.CURRENT_STATUS]: (state: ClueData, payload: Partial<ClueData>) => {
     Object.keys(payload.currentClue).forEach((key: string) => {
@@ -70,6 +74,13 @@ export const mutations: MutationTree<ClueData> = {
     state.category = payload.selection.category;
     state.valueIndex = payload.selection.valueIndex;
     state.isDailyDouble = true;
+  },
+  [wsServer.WAGER_RECEIVED]: (
+    state,
+    payload: { twitchId: string; wager: number }
+  ) => {
+    state.wager = payload.wager;
+    state.wagerLocked = true;
   },
 };
 

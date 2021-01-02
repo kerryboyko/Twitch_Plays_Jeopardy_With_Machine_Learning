@@ -1,6 +1,8 @@
 <template>
   <div class="meter--container">
-    <div v-if="seconds !== undefined" class="seconds">{{ seconds }}</div>
+    <div v-if="!inactive && seconds !== undefined" class="seconds">
+      {{ seconds }}
+    </div>
     <div class="meter" :class="{ inactive: inactive }">
       <span
         :class="{

@@ -100,7 +100,6 @@ export default defineComponent({
         category,
         valueIndex,
       });
-      store.commit("clue/CLEAR_CLUE");
       state.selectedCategory = category;
       state.selectedValueIndex = valueIndex;
     };

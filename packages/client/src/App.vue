@@ -4,7 +4,7 @@
 
   <register-player v-if="!store.state.user.connected" @login="handleLogin" />
 
-  <game-board :isDoubleJeopardy="false" />
+  <game-board />
   <clue-display />
   <answer-input />
   <score-display />
