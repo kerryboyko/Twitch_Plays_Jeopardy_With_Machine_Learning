@@ -48,6 +48,8 @@ export default defineComponent({
       twitchId: ComputedRef<string>;
       clueState: ComputedRef<ClueState>;
       seconds: ComputedRef<number>;
+      isDailyDouble: ComputedRef<boolean>;
+      playerHasControl: ComputedRef<boolean>;
     }>({
       input: "What is ",
       disabled: true,
@@ -56,6 +58,10 @@ export default defineComponent({
       seconds: computed(() => {
         return Math.round(timerValue.value * 30);
       }),
+      isDailyDouble: computed(() => store.state.clue.isDailyDouble),
+      playerHasControl: computed(
+        () => store.state.user.twitchId === store.state.game.controllingPlayer
+      ),
     });
 
     const submit = () => {
@@ -78,11 +84,18 @@ export default defineComponent({
       () => state.clueState,
       () => {
         if (state.clueState === ClueState.DisplayClue) {
-          launchTimer();
+          if (!state.isDailyDouble || state.playerHasControl) {
+            state.input = "What is ";
+            launchTimer();
+          }
         }
         if (state.clueState === ClueState.DisplayAnswer) {
           state.disabled = true;
           clearTimer();
+        }
+        if (state.clueState === ClueState.PromptSelectClue) {
+          state.input = "";
+          state.disabled = true;
         }
       }
     );
@@ -127,7 +140,6 @@ $jeopardy-blue-disabled: #657c92;
     }
     &--disabled {
       background-color: $jeopardy-blue-disabled;
-      text-align: center;
     }
   }
   &__button {
