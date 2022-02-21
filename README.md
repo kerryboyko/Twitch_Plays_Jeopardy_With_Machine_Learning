@@ -1,5 +1,18 @@
 # Twitch Plays Jeopardy With Machine Learning
 
+## This project is currently abandoned but is on Github as a code example.
+
+While I never got to the point where I could install Tenserflow and start mucking with the machine AI, this is a pretty good example of work I can do with the following tools:
+
+* Node.js
+* Websockets/Socket.io
+* MongoDB
+* Twitch API (and other third party APIs)
+* JWT/Auth0
+* Vue 3 w/ composition API
+
+
+
 ### A very experimental library/side project. 
 
 
